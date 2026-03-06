@@ -6,7 +6,7 @@ type Word = {
   created_at: string;
 };
 export default async function WordsList() {
-  const res = await fetch("http://localhost:3000/api/words", {
+  const res = await fetch(`${process.env.BASE_URL}/api/words`, {
     cache: "no-store",
   });
   const words = await res.json();
