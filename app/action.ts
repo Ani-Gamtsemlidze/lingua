@@ -12,3 +12,13 @@ export async function addWord(formData: FormData) {
   `
   revalidatePath('/words')
 }
+
+export async function addUser(formData: FormData) {
+  const email = formData.get("email")
+  const password = formData.get("password")
+  await sql`
+    INSERT INTO users (email, password)
+    VALUES (${email}, ${password})
+  `
+  revalidatePath('/login')
+}
