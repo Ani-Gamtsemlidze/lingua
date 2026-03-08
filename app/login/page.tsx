@@ -1,6 +1,7 @@
 "use client"
 
 import { signIn } from "next-auth/react"
+import Link from "next/link"
 import { useState } from "react"
 
 export default function LoginPage() {
@@ -14,7 +15,7 @@ export default function LoginPage() {
       email,
       password,
       redirect: true,
-      callbackUrl: "/"
+      callbackUrl: "/words"
     })
   }
 
@@ -42,10 +43,13 @@ export default function LoginPage() {
 
         <button
           type="submit"
-          className="bg-black text-white p-2 rounded"
+          className="bg-black text-white p-2 rounded cursor-pointer hover:bg-gray-800"
         >
           Login
         </button>
+        <Link href="/signup" className="text-sm text-blue-500 hover:underline">
+          Don't have an account? Sign up
+        </Link>
       </form>
     </div>
   )

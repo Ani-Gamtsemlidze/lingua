@@ -1,5 +1,5 @@
-
 import { addUser } from "@/app/action";
+import Link from "next/link";
 
 export default function SignupPage() {
   return (
@@ -17,18 +17,15 @@ export default function SignupPage() {
           name="password"
           className="border p-2 rounded"
         />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          className="border p-2 rounded"
-          name="password"
-        />
         <button
           type="submit"
-          className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition"
+          className="bg-black text-white p-2 rounded cursor-pointer"
         >
           Create Account
         </button>
+          <Link href="/login" className="text-sm text-blue-500 hover:underline">
+            Already have an account? Login
+          </Link>
       </form>
     </div>
   )
