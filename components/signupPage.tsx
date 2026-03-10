@@ -17,6 +17,12 @@ export default function SignupPage() {
           name="password"
           className="border p-2 rounded"
         />
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          name="confirmPassword"
+          className="border p-2 rounded"
+        />
         <button
           type="submit"
           className="bg-black text-white p-2 rounded cursor-pointer"

@@ -10,4 +10,4 @@ export default withAuth(
   },
 )
 
-export const config = { matcher: ["/words/:path*", "/reader/:path*", "/study/:path*", "/auth/login", "/"] }
+export const config = { matcher: ["/words/:path*", "/reader/:path*", "/study/:path*", "/auth/login","/auth/signout", "/"] }
