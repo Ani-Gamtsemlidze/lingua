@@ -1,7 +1,12 @@
+import Header from "@/components/header";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <p>Lingua</p>
+    <div>
+      <Header />
+
+      <p>Lingua</p>
+    </div>
   );
 }

@@ -1,3 +1,7 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { sql } from "@/lib/db";
+import { getServerSession } from "next-auth";
+import { cookies } from "next/headers";
 import Image from "next/image";
 type Word = {
   id: number;
@@ -6,13 +10,15 @@ type Word = {
   created_at: string;
 };
 export default async function WordsList() {
-  const res = await fetch(`${process.env.BASE_URL}/api/words`, {
-    cache: "no-store",
-  });
-  const words = await res.json();
+   const session = await getServerSession(authOptions);
+
+  if (!session?.user?.id) return <p>Not logged in</p>;
+   const words = await sql`
+    SELECT * FROM words WHERE user_id = ${session.user.id}
+  `;
   return (
     <div className="">
-      {words.map((word: Word) => (
+      {words.map((word) => (
         <div
           key={word.id}
           className="grid grid-cols-3 px-4 py-3 border-b border-slate-200 hover:bg-slate-50"
