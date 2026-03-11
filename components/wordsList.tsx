@@ -1,23 +1,18 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { sql } from "@/lib/db";
 import { getServerSession } from "next-auth";
-import { cookies } from "next/headers";
-import Image from "next/image";
-type Word = {
-  id: number;
-  word: string;
-  translation: string;
-  created_at: string;
-};
+import EditWord from "./editWord";
+import { Word } from "@/types/words";
+
 export default async function WordsList() {
   const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) return <p>Not logged in</p>;
-  const words = await sql`
+    const words = (await sql`
     SELECT * FROM words WHERE user_id = ${session.user.id}
-  `;
+  `) as Word[];
   return (
-    <div className="">
+    <div className="overflow-y-auto max-h-100">
       {words.map((word) => (
         <div
           key={word.id}
@@ -26,15 +21,7 @@ export default async function WordsList() {
           <p>{word.word}</p>
           <p className="text-indigo-600">{word.translation}</p>
           <p>{word.note}</p>
-          <div className="flex justify-end">
-            <Image
-              className="w-5 h-5"
-              src="/images/trash.png"
-              width={200}
-              height={200}
-              alt="image"
-            />
-          </div>
+          <EditWord wordData={word} wordId={word.id} />
         </div>
       ))}
     </div>

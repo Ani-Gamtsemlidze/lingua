@@ -13,9 +13,34 @@ export async function addWord(formData: FormData) {
   const word = formData.get("word");
   const translation = formData.get("translation");
   const note = formData.get("note");
+
+  if(`${word}`.trim() === "") {
+    return;
+  }
   await sql`
     INSERT INTO words (word, translation, note, user_id)
     VALUES (${word}, ${translation}, ${note}, ${session?.user?.id})
+  `;
+  revalidatePath("/words");
+}
+
+export async function deleteWord(wordId: number) {
+  const session = await getServerSession(authOptions);
+
+  await sql`
+    DELETE FROM words WHERE id = ${wordId} AND user_id = ${session?.user?.id}
+  `;
+  revalidatePath("/words");
+}
+
+export async function updateWord(formData: FormData) {
+  const session = await getServerSession(authOptions);
+  const wordId = formData.get("wordId");
+  const word = formData.get("word");
+  const translation = formData.get("translation");
+  const note = formData.get("note");
+  await sql`
+    UPDATE words SET word = ${word}, translation = ${translation}, note = ${note} WHERE id = ${wordId} AND user_id = ${session?.user?.id}
   `;
   revalidatePath("/words");
 }

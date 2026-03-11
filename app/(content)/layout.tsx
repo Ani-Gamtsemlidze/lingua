@@ -11,7 +11,7 @@ export default function ContentLayout({
       <Sidebar />
       <div className="flex flex-col flex-1">
         <Header />
-        <main className="flex-1 overflow-y-auto bg-gray-50 p-6">{children}</main>
+        <main className="flex-1  bg-gray-50 p-6">{children}</main>
       </div>
     </div>
   );
