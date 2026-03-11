@@ -10,10 +10,10 @@ type Word = {
   created_at: string;
 };
 export default async function WordsList() {
-   const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) return <p>Not logged in</p>;
-   const words = await sql`
+  const words = await sql`
     SELECT * FROM words WHERE user_id = ${session.user.id}
   `;
   return (
@@ -21,11 +21,20 @@ export default async function WordsList() {
       {words.map((word) => (
         <div
           key={word.id}
-          className="grid grid-cols-3 px-4 py-3 border-b border-slate-200 hover:bg-slate-50"
+          className="grid grid-cols-4 px-4 py-3 border-b border-slate-200 hover:bg-slate-50"
         >
           <p>{word.word}</p>
           <p className="text-indigo-600">{word.translation}</p>
-        <Image className="w-5 h-5" src="/images/trash.png" width={200} height={200} alt="image" />
+          <p>{word.note}</p>
+          <div className="flex justify-end">
+            <Image
+              className="w-5 h-5"
+              src="/images/trash.png"
+              width={200}
+              height={200}
+              alt="image"
+            />
+          </div>
         </div>
       ))}
     </div>

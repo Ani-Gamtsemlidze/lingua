@@ -12,9 +12,10 @@ export async function addWord(formData: FormData) {
 
   const word = formData.get("word");
   const translation = formData.get("translation");
+  const note = formData.get("note");
   await sql`
-    INSERT INTO words (word, translation, user_id)
-    VALUES (${word}, ${translation}, ${session?.user?.id})
+    INSERT INTO words (word, translation, note, user_id)
+    VALUES (${word}, ${translation}, ${note}, ${session?.user?.id})
   `;
   revalidatePath("/words");
 }

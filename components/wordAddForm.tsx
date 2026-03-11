@@ -1,17 +1,15 @@
-'use client'
+"use client";
 
-import { addWord } from "@/app/action"
+import { addWord } from "@/app/action";
 
 type Props = {
-  closeModal: () => void
-}
+  closeModal: () => void;
+};
 
 export default function WordAddForm({ closeModal }: Props) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-
       <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-lg">
-
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold">Add New Word</h2>
           <button
@@ -23,7 +21,6 @@ export default function WordAddForm({ closeModal }: Props) {
         </div>
 
         <form action={addWord} className="space-y-4">
-
           <input
             name="word"
             placeholder="Word"
@@ -35,6 +32,12 @@ export default function WordAddForm({ closeModal }: Props) {
             placeholder="Translation"
             className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-indigo-500"
           />
+          <textarea
+            name="note"
+            id=""
+            placeholder="Explanation (optional)"
+            className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-indigo-500"
+          />
 
           <button
             type="submit"
@@ -42,9 +45,8 @@ export default function WordAddForm({ closeModal }: Props) {
           >
             Save Word
           </button>
-
         </form>
       </div>
     </div>
-  )
+  );
 }
