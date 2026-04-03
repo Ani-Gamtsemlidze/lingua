@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
+import { title } from "process";
 
 export async function addWord(formData: FormData) {
   const session = await getServerSession(authOptions);
@@ -67,4 +68,13 @@ export async function addUser(formData: FormData) {
     VALUES (${email}, ${hashedPassword})
   `;
   redirect("/login");
+}
+
+export async function saveText (formData: FormData) {
+  const session = await getServerSession(authOptions);
+  const text = formData.get("content");
+  const title = formData.get("title");
+  await sql `
+    INSERT INTO user_texts (content,title, user_id) VALUES (${text},${title}, ${session?.user?.id})
+  `;
 }
