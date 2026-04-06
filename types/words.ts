@@ -9,4 +9,6 @@ export type Props = {
   closeModal: () => void;
   showEdit?: boolean;
   wordData?: Word;
+  selectedWord?: string;
+  textEdit?: boolean;
 };

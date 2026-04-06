@@ -5,8 +5,9 @@ import { Props } from "@/types/words";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
 import SubmitButton from "./submitButton";
+import { text } from "stream/consumers";
 
-export default function WordAddForm({ closeModal, showEdit, wordData }: Props) {
+export default function WordAddForm({ closeModal, showEdit, wordData, selectedWord, textEdit}: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const { pending } = useFormStatus();
   async function handleSubmit(formData: FormData) {
@@ -17,6 +18,7 @@ export default function WordAddForm({ closeModal, showEdit, wordData }: Props) {
     setIsLoading(true);
     await addWord(formData);
     setIsLoading(false);
+    textEdit && closeModal();
   }
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
@@ -41,7 +43,7 @@ export default function WordAddForm({ closeModal, showEdit, wordData }: Props) {
           <input
             name="word"
             placeholder="Word"
-            defaultValue={showEdit ? wordData?.word : undefined}
+            defaultValue={showEdit ? wordData?.word : textEdit ? selectedWord : undefined}
             className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-indigo-500"
           />
 

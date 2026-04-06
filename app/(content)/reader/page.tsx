@@ -12,7 +12,7 @@ export default async function reader() {
   return (
     <div>
       <Link href="/reader/new">add text</Link>
-      <ul>
+      <ul className="flex flex-col">
         {TextData.map((text, index) => (
           <Link
             className="cursor-pointer"
