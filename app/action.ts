@@ -74,7 +74,11 @@ export async function saveText (formData: FormData) {
   const session = await getServerSession(authOptions);
   const text = formData.get("content");
   const title = formData.get("title");
-  await sql `
+  const result = await sql `
     INSERT INTO user_texts (content,title, user_id) VALUES (${text},${title}, ${session?.user?.id})
+    RETURNING id
   `;
+  const id = result[0].id;
+  revalidatePath("/reader");
+  redirect(`/reader/${id}`);
 }

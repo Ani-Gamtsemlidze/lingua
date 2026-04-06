@@ -7,7 +7,7 @@ export default function SidebarItem({ label }: {label: string}) {
     const isActive = pathName.startsWith(`/${label}`)
     return (
       <Link
-      href={label}
+      href={`/${label}`}
         className={`w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition
         ${
             isActive

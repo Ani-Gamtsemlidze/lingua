@@ -8,9 +8,9 @@ export default function Reader({
 }) {
   return (
     <div>
-      {initialText ? (
+      {/* {initialText ? (
         <div className="mb-4 p-4 rounded">{initialText}</div>
-      ) : (
+      ) : ( */}
         <form action={saveText} className="flex flex-col gap-3">
           <input
             name="title"
@@ -29,7 +29,7 @@ export default function Reader({
             {initialText ? null : "Save"}
           </button>
         </form>
-      )}
+      {/* )} */}
     </div>
   );
 }
