@@ -1,8 +1,9 @@
 export type Word = {
-  word: string;
-  translation: string;
-  note: string;
-  id: number;
+  word?: string;
+  translation?: string;
+  note?: string;
+  id?: number;
+  token?: string;
 };
 
 export type Props = {
