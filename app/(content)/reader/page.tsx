@@ -10,14 +10,20 @@ export default async function reader() {
     SELECT * FROM user_texts WHERE user_id = ${session?.user?.id} ORDER BY created_at DESC 
  `;
   return (
-    <div>
-      <Link href="/reader/new">add text</Link>
-      <ul className="flex flex-col">
+    <div className="px-4 py-6 max-w-md">
+      <Link
+        href="/reader/new"
+        className="inline-block mb-4 text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors"
+      >
+        + add text
+      </Link>
+
+      <ul className="flex flex-col divide-y divide-zinc-100">
         {TextData.map((text, index) => (
           <Link
-            className="cursor-pointer"
             key={index}
             href={`/reader/${text.id}`}
+            className="py-3 text-sm text-zinc-800 hover:text-zinc-500 transition-colors cursor-pointer"
           >
             {text.title}
           </Link>
