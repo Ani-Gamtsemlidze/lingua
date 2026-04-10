@@ -6,6 +6,11 @@ interface TokenWithTranslation {
   token: string;
   translation?: string;
 }
+interface userText {
+  id: number;
+  title: string;
+  content: string;
+}
 export default async function text({
   params,
 }: {
@@ -36,7 +41,7 @@ const tokensWithTranslations: TokenWithTranslation[] = tokens.map((token: string
 
   return (
     <div>
-      <TextEdit  matchWords={tokensWithTranslations} />
+      <TextEdit userText={userText[0] as userText} matchWords={tokensWithTranslations} />
     </div>
   );
 }

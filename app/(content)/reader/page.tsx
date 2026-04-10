@@ -1,8 +1,11 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import Reader from "@/components/readerText";
+import TextsList from "@/components/textsList";
 import { sql } from "@/lib/db";
+import { textData } from "@/types/text";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
+import { RiDeleteBin6Line } from "react-icons/ri";
+
 
 export default async function reader() {
   const session = await getServerSession(authOptions);
@@ -17,18 +20,7 @@ export default async function reader() {
       >
         + add text
       </Link>
-
-      <ul className="flex flex-col divide-y divide-zinc-100">
-        {TextData.map((text, index) => (
-          <Link
-            key={index}
-            href={`/reader/${text.id}`}
-            className="py-3 text-sm text-zinc-800 hover:text-zinc-500 transition-colors cursor-pointer"
-          >
-            {text.title}
-          </Link>
-        ))}
-      </ul>
+      <TextsList textData={TextData as textData[]} />
     </div>
   );
 }

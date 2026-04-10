@@ -82,3 +82,23 @@ export async function saveText (formData: FormData) {
   revalidatePath("/reader");
   redirect(`/reader/${id}`);
 }
+export async function deleteText(textId: number) {
+  const session = await getServerSession(authOptions);
+
+  await sql`
+    DELETE FROM user_texts WHERE id = ${textId} AND user_id = ${session?.user?.id}
+  `;
+  revalidatePath("/reader");
+  redirect("/reader");
+}
+
+export async function updateText(formData: FormData) {
+  const session = await getServerSession(authOptions);
+  const textId = formData.get("textId");
+  const text = formData.get("content");
+  await sql`
+    UPDATE user_texts SET content = ${text} WHERE id = ${textId} AND user_id = ${session?.user?.id}
+  `;
+  revalidatePath("/reader");
+  redirect(`/reader/${textId}`);
+}
