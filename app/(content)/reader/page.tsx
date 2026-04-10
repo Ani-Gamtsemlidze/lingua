@@ -13,13 +13,8 @@ export default async function reader() {
     SELECT * FROM user_texts WHERE user_id = ${session?.user?.id} ORDER BY created_at DESC 
  `;
   return (
-    <div className="px-4 py-6 max-w-md">
-      <Link
-        href="/reader/new"
-        className="inline-block mb-4 text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors"
-      >
-        + add text
-      </Link>
+    <div className="">
+
       <TextsList textData={TextData as textData[]} />
     </div>
   );

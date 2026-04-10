@@ -7,11 +7,11 @@ export default function ContentLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-screen">
+    <div className="flex">
       <Sidebar />
       <div className="flex flex-col flex-1">
         <Header />
-        <main className="flex-1  bg-gray-50 p-6">{children}</main>
+        <main className="">{children}</main>
       </div>
     </div>
   );
