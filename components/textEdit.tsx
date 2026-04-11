@@ -32,6 +32,8 @@ export default function TextEdit({
     const cleanWord = token.replace(/[^\p{L}\p{N}']/gu, "");
     setSelectedWord(cleanWord);
   };
+  const found = matchWords.find(w => w.word === selectedWord);
+  if (!found || found.id == null) return null;
 
   return (
     <div className=" bg-fuchsia-50 px-6 py-10">
@@ -79,7 +81,7 @@ export default function TextEdit({
         )}
         {showEdit && (
           <WordAddForm
-            wordData={matchWords.find((w: any) => w.word === selectedWord)}
+            wordData={found}
             closeModal={() => setShowEdit(false)}
             showEdit={showEdit}
           />

@@ -8,8 +8,8 @@ import SubmitButton from "./submitButton";
 import { text } from "stream/consumers";
 
 export default function WordAddForm({ closeModal, showEdit, wordData, selectedWord, textEdit }: Props) {
-  const [isLoading, setIsLoading] = useState(false);
-  const { pending } = useFormStatus();
+
+  if(!wordData) return null;
 
   async function handleSubmit(formData: FormData) {
     await updateWord(formData);
@@ -17,9 +17,7 @@ export default function WordAddForm({ closeModal, showEdit, wordData, selectedWo
   }
 
   async function handleAddWord(formData: FormData) {
-    setIsLoading(true);
     await addWord(formData);
-    setIsLoading(false);
     textEdit && closeModal();
   }
 

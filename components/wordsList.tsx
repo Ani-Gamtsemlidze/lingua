@@ -17,9 +17,9 @@ export default function WordsList({
           key={word.id}
           className="grid grid-cols-4 px-4 py-3 border-b border-slate-200 hover:bg-slate-50"
         >
-          <HighlightText text={word.word} query={query} />
-          <HighlightText text={word.translation} query={query} />
-          <HighlightText text={word.note} query={query} />
+          <HighlightText text={word.word ?? ""} query={query} />
+          <HighlightText text={word.translation ?? ""} query={query} />
+          <HighlightText text={word.note ?? ""} query={query} />
           <EditWord wordData={word} wordId={word.id} />
         </div>
       ))}
