@@ -35,7 +35,7 @@ export default function TextEdit({
   };
   const found = matchWords.find(w => w.word === selectedWord);
   // if (!found || found.id == null) return null;
-
+console.log(showWordAddForm, isEditMode,  "msg")
   return (
     <div className=" bg-fuchsia-50 px-6 py-10">
       <div className="max-w-2xl mx-auto">

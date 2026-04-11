@@ -9,7 +9,6 @@ import { text } from "stream/consumers";
 
 export default function WordAddForm({ closeModal, showEdit, wordData, selectedWord, textEdit }: Props) {
 
-  if(!wordData) return null;
 
   async function handleSubmit(formData: FormData) {
     await updateWord(formData);
