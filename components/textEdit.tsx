@@ -23,6 +23,7 @@ export default function TextEdit({
     content: string;
   };
 }) {
+  console.log(userText, "user text")
   const [showWordAddForm, setShowWordAddForm] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [selectedWord, setSelectedWord] = useState("");
@@ -33,7 +34,7 @@ export default function TextEdit({
     setSelectedWord(cleanWord);
   };
   const found = matchWords.find(w => w.word === selectedWord);
-  if (!found || found.id == null) return null;
+  // if (!found || found.id == null) return null;
 
   return (
     <div className=" bg-fuchsia-50 px-6 py-10">
