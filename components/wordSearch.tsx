@@ -3,11 +3,11 @@
 export default function WordSearch({ setQuery }: { setQuery: (query: string) => void }) {
 
   return (
-    <input
+     <input
       type="search"
       onChange={(e) => setQuery(e.target.value)}
       placeholder="Search words..."
-      className="w-full rounded-lg border border-slate-300 px-4 py-2 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+      className="w-full rounded-xl border-2 border-purple-200 bg-white px-3 py-1.5 text-sm font-semibold text-purple-950 placeholder-purple-200 outline-none focus:border-violet-500 transition"
     />
   );
 }
