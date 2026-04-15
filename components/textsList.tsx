@@ -6,7 +6,7 @@ import { HiPlus, HiX } from "react-icons/hi";
 
 export default function TextsList({ textData }: { textData: textData[] }) {
   return (
-    <div className="min-h-screen bg-fuchsia-50 px-6 py-10">
+    <div className="h-full bg-fuchsia-50 px-6 py-10">
       <div className="max-w-xl">
 
         {/* Header */}
