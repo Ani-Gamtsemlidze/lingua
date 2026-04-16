@@ -1,4 +1,7 @@
-export default function CardButtons({isFlipped, onFuzzy, onDontKnow, onKnowIt}: {isFlipped: boolean; onDontKnow: () => void; onFuzzy: () => void; onKnowIt: () => void }) {
+import { Word } from "@/types/words";
+
+export default function CardButtons({isFlipped, onFuzzy, onDontKnow, onKnowIt}: {isFlipped: boolean; onDontKnow: () => void; onFuzzy: () => void; onKnowIt: () => void}) {
+  
   return (
     <div
         className={`flex gap-3 transition-opacity duration-300 mt-8 ${

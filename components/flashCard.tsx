@@ -5,14 +5,11 @@ import { Archivo_Black } from "next/font/google";
 import { Roboto } from "next/font/google";
 import CardButtons from "./cardButtons";
 import { Word } from "@/types/words";
+import { updateWord, updateWordStatus } from "@/app/action";
 const archivoBlack = Archivo_Black({ weight: "400", subsets: ["latin"] });
 const roboto = Roboto({ weight: "400", subsets: ["latin"] });
 
-export default function FlashCard({
-  userWords,
-}: {
-  userWords: Word[];
-}) {
+export default function FlashCard({ userWords }: { userWords: Word[] }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [queue, setQueue] = useState(userWords);
   const [currentCard, setCurrentCard] = useState(0);
@@ -20,7 +17,11 @@ export default function FlashCard({
   const currentWord = queue[currentCard];
 
   useEffect(() => {
-    setQueue([...userWords].sort(() => Math.random() - 0.5));
+    const session = userWords
+      .filter((word) => word.status !== "known")
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 5);
+    setQueue(session);
   }, []);
 
   const nextCard = () => {
@@ -34,6 +35,7 @@ export default function FlashCard({
       newQueue.splice(currentCard + 3, 0, word);
       setQueue(newQueue);
     }, 350);
+    updateWordStatus("learning", currentWord?.id ?? 0);
     nextCard();
   };
 
@@ -44,13 +46,17 @@ export default function FlashCard({
       newQueue.push(word);
       setQueue(newQueue);
     }, 350);
+    updateWordStatus("fuzzy", currentWord?.id ?? 0);
     nextCard();
   };
 
   const handleKnowIt = () => {
     const newQueue = [...queue];
-    newQueue.splice(currentCard, 1);
-    setQueue(newQueue);
+    setTimeout(() => {
+      newQueue.splice(currentCard, 1);
+      setQueue(newQueue);
+    }, 350);
+    updateWordStatus("known", currentWord?.id ?? 0);
     setIsFlipped(false);
   };
 
@@ -67,7 +73,7 @@ export default function FlashCard({
         <div
           className={`relative [transform-style:preserve-3d] transition-transform duration-[800ms] rounded-3xl ${isFlipped ? "rotate-y-180" : ""}  text-center justify-center w-full h-full  bg-[#3C3489]`}
         >
-          <div className=" [backface-visibility:hidden] flash-card absolute w-full h-full justify-center items-center flex flex-col">
+          <div className=" bg-[#534AB7] rounded-3xl [backface-visibility:hidden] flash-card absolute w-full h-full justify-center items-center flex flex-col">
             <h2 className={`text-white text-4xl ${archivoBlack.className}`}>
               {currentWord?.word}
             </h2>

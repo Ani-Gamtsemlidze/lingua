@@ -102,3 +102,10 @@ export async function updateText(formData: FormData) {
   revalidatePath("/reader");
   redirect(`/reader/${textId}`);
 }
+
+export async function updateWordStatus(status: string, wordId: number) {
+  const session = await getServerSession(authOptions);
+  await sql`
+    UPDATE words SET status = ${status} WHERE id = ${wordId} AND user_id = ${session?.user?.id}
+  `;
+}

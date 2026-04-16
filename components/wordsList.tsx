@@ -20,16 +20,18 @@ export default function WordsList({
     );
   }
 
+
   return (
     <div className="overflow-y-auto max-h-[520px]">
       {words.map((word) => (
         <div
           key={word.id}
-          className="grid grid-cols-4 items-center px-5 py-3.5 border-b-2 border-dashed border-purple-100 last:border-none hover:bg-fuchsia-50 transition-colors gap-4"
+          className="grid grid-cols-5 items-center px-5 py-3.5 border-b-2 border-dashed border-purple-100 last:border-none hover:bg-fuchsia-50 transition-colors gap-5"
         >
           <HighlightText text={word.word ?? ""} query={query} />
           <HighlightText text={word.translation ?? ""} query={query} />
           <HighlightText text={word.note ?? ""} query={query} />
+          <p className="text-sm font-bold text-purple-950">{word.status}</p>
           <EditWord wordData={word} wordId={word.id} />
         </div>
       ))}

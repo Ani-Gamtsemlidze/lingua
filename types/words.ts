@@ -4,6 +4,7 @@ export type Word = {
   note?: string;
   id: number;
   token: string;
+  status: string;
 };
 
 export type PartialWord = {
