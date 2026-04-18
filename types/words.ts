@@ -5,6 +5,7 @@ export type Word = {
   id: number;
   token: string;
   status: string;
+  fail_count: number;
 };
 
 export type PartialWord = {

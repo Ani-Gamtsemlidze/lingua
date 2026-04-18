@@ -109,3 +109,9 @@ export async function updateWordStatus(status: string, wordId: number) {
     UPDATE words SET status = ${status} WHERE id = ${wordId} AND user_id = ${session?.user?.id}
   `;
 }
+export async function updateFailCount(wordId: number) {
+  const session = await getServerSession(authOptions);
+  await sql`
+    UPDATE words SET fail_count = fail_count + 1 WHERE id = ${wordId} AND user_id = ${session?.user?.id}
+  `;
+}
