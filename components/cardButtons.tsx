@@ -1,12 +1,10 @@
 import { Word } from "@/types/words";
 
-export default function CardButtons({isFlipped, onFuzzy, onDontKnow, onKnowIt}: {isFlipped: boolean; onDontKnow: () => void; onFuzzy: () => void; onKnowIt: () => void}) {
+export default function CardButtons({onFuzzy, onDontKnow, onKnowIt}: {isFlipped: boolean; onDontKnow: () => void; onFuzzy: () => void; onKnowIt: () => void}) {
   
   return (
     <div
-        className={`flex gap-3 transition-opacity duration-300 mt-8 ${
-          isFlipped ? "opacity-100" : "opacity-30 pointer-events-none"
-        }`}
+        className={`flex gap-3 transition-opacity duration-300 mt-8 `}
       >
         <button onClick={onDontKnow}  className="flex flex-col items-center gap-1 px-8 py-3 rounded-xl border border-red-200 bg-red-50 text-red-700 hover:bg-red-100 transition-colors cursor-pointer">
           <span className="font-medium text-sm">Don't know</span>

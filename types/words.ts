@@ -23,3 +23,10 @@ export type PartialWord = {
     selectedWord?: string;
     textEdit?: boolean;
   };
+
+  export type ProgressBarProps = {
+  knownWidth: number;
+  learningWidth: number;
+  stats: { known: number; fuzzy: number; learning: number };
+  cardsCount: number;
+};
