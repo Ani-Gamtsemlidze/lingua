@@ -13,7 +13,7 @@ export default async function flashcards() {
     `;
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center bg-fuchsia-50 min-h-screen">
       {/* <div className="flex mb-3.5 "> {userWords.length} cards</div> */}
 
       <FlashCard userWords={userWords as Word[]} />

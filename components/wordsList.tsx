@@ -22,7 +22,7 @@ export default function WordsList({
 
 
   return (
-    <div className="overflow-y-auto max-h-[520px]">
+    <div className="overflow-y-auto max-h-[280px]">
       {words.map((word) => (
         <div
           key={word.id}

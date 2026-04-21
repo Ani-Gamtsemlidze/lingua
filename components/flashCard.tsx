@@ -58,6 +58,15 @@ export default function FlashCard({ userWords }: { userWords: Word[] }) {
       </div>
     );
   }
+  if (userWords.length === 0 || !currentWord) {
+  return (
+    <div className="flex flex-col items-center gap-3 text-center">
+      <p className="text-2xl">📚</p>
+      <h2 className="text-xl font-bold text-purple-600">No words yet</h2>
+      <p className="text-gray-400 text-sm">Add some words to start practicing.</p>
+    </div>
+  );
+}
   return (
     <div className="flex flex-col items-center justify-center gap-6">
       {/* Progress */}
