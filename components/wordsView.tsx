@@ -30,7 +30,7 @@ export default function WordsView({ words }: { words: Word[] }) {
         {/* Table */}
         <div className="bg-white rounded-3xl border-2 border-purple-100 overflow-hidden">
           {/* Table header */}
-          <div className="grid grid-cols-4 items-center bg-purple-50 border-b-2 border-purple-100 px-5 py-3 gap-4">
+          <div className="grid grid-cols-5 items-center bg-purple-50 border-b-2 border-purple-100 px-5 py-3 gap-5">
             <p className="text-xs font-extrabold uppercase tracking-widest text-purple-400">
               Word
             </p>
@@ -39,6 +39,9 @@ export default function WordsView({ words }: { words: Word[] }) {
             </p>
             <p className="text-xs font-extrabold uppercase tracking-widest text-purple-400">
               Note
+            </p>
+            <p className="text-xs font-extrabold uppercase tracking-widest text-purple-400">
+              Status
             </p>
             <WordSearch setQuery={setQuery} />
           </div>

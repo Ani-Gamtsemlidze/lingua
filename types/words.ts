@@ -4,6 +4,8 @@ export type Word = {
   note?: string;
   id: number;
   token: string;
+  status: string;
+  fail_count: number;
 };
 
 export type PartialWord = {
@@ -21,3 +23,10 @@ export type PartialWord = {
     selectedWord?: string;
     textEdit?: boolean;
   };
+
+  export type ProgressBarProps = {
+  knownWidth: number;
+  learningWidth: number;
+  stats: { known: number; fuzzy: number; learning: number };
+  cardsCount: number;
+};
