@@ -1,5 +1,6 @@
 import Link from "next/link"
 import SidebarItem from "./sidebarItem"
+import { Logo } from "./logo"
 
 export default function Sidebar() {
   return (
@@ -7,9 +8,7 @@ export default function Sidebar() {
 
       {/* Logo */}
       <Link href="/" className="h-16 flex items-center px-5 border-b-2 border-purple-200">
-        <h1 className="font-serif text-2xl font-bold text-purple-950">
-          L<span className="text-violet-600">i</span>ngua
-        </h1>
+        <Logo />
       </Link>
 
       {/* Nav */}
