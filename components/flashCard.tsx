@@ -26,7 +26,7 @@ export default function FlashCard({ userWords }: { userWords: Word[] }) {
     cardKey,
     isExiting,
     exitDirection,
-    cardsCount
+    cardsCount,
   } = useFlashCard(userWords);
 
   if (isComplete) {

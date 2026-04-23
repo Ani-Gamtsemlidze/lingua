@@ -28,7 +28,7 @@ export function useFlashCard(userWords: Word[]) {
     SESSION_SIZE,
     userWords.filter((w) => w.status !== "known").length,
   );
-  let cardsCount = Math.max(0, queue.length);
+  let cardsCount = sessionSize - cardsAnswered;
 
   useEffect(() => {
     if (isComplete) return;
@@ -57,7 +57,7 @@ export function useFlashCard(userWords: Word[]) {
   const finishOrContinue = (newQueue: Word[]) => {
     setCardsAnswered((prev) => prev + 1);
 
-    if (newQueue.length === 0) {
+    if (cardsAnswered + 1 >= sessionSize) {
       setIsComplete(true);
     } else {
       setQueue(newQueue);
@@ -134,16 +134,11 @@ export function useFlashCard(userWords: Word[]) {
     );
   };
 
-  const uniqueLearning = Object.keys(sessionFailMap.current).length;
-  const uniqueFuzzy = Object.keys(sessionFuzzyMap.current).length;
-  const knownWidth = sessionSize > 0 ? (stats.known / sessionSize) * 100 : 0;
-  const learningWidth = Math.max(
-    0,
-    Math.min(
-      ((uniqueLearning + uniqueFuzzy) / sessionSize) * 100,
-      100 - knownWidth,
-    ),
-  );
+ const knownWidth = (stats.known / sessionSize) * 100;
+
+const learningWidth =
+  ((stats.learning + stats.fuzzy) / sessionSize) * 100;
+
 
   return {
     isFlipped,
