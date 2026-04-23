@@ -1,5 +1,12 @@
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
+import { DM_Sans } from "next/font/google";
+
+const dmSans = DM_Sans({
+subsets: ["latin"],
+weight: "400",
+variable: "--font-dm-sans",
+});
 
 export default function ContentLayout({
   children,
@@ -7,11 +14,11 @@ export default function ContentLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex ">
+    <div className={`flex h-screen overflow-hidden ${dmSans.variable} font-sans`}>
       <Sidebar />
       <div className="flex flex-col flex-1">
-        <Header />
-        <main className="h-screen">{children}</main>
+        {/* <Header /> */}
+        <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
     </div>
   );

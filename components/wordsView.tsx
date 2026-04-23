@@ -2,10 +2,13 @@
 import { Word } from "@/types/words";
 import WordSearch from "./wordSearch";
 import WordsList from "./wordsList";
+import WordAddForm from "./wordAddForm";
 import { useState } from "react";
+import { BiPlus } from "react-icons/bi";
 
 export default function WordsView({ words }: { words: Word[] }) {
   const [query, setQuery] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   const filteredWords = words.filter(
     (word) =>
@@ -14,42 +17,48 @@ export default function WordsView({ words }: { words: Word[] }) {
   );
 
   return (
-    <div className="min-h-screen bg-fuchsia-50 px-6 py-10">
+    <div className="min-h-screen bg-slate-50 px-6 py-10">
       <div className="max-w-3xl mx-auto">
+
         {/* Header */}
-        <p className="text-xs font-extrabold uppercase tracking-widest text-purple-300 mb-1">
-          Vocabulary
-        </p>
-        <h1 className="font-serif text-4xl font-bold text-purple-950 mb-1">
-          My Words
-        </h1>
-        <p className="text-sm text-purple-400 font-semibold mb-8">
-          {words.length} words saved so far.
-        </p>
+        <div className="flex items-end justify-between mb-6">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
+              Vocabulary
+            </p>
+            <h1 className="text-2xl font-sans font-semibold text-slate-800 tracking-tight">
+              My words
+            </h1>
+            <p className="text-sm text-slate-400 mt-1">
+              {words.length} word{words.length !== 1 ? "s" : ""} saved
+            </p>
+          </div>
+          <button
+            onClick={() => setIsOpen(true)}
+            className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 active:bg-slate-900
+              transition-colors text-white text-sm font-medium px-4 py-2 rounded-lg cursor-pointer"
+          >
+            <BiPlus className="w-4 h-4" />
+            Add word
+          </button>
+        </div>
 
         {/* Table */}
-        <div className="bg-white rounded-3xl border-2 border-purple-100 overflow-hidden">
-          {/* Table header */}
-          <div className="grid grid-cols-5 items-center bg-purple-50 border-b-2 border-purple-100 px-5 py-3 gap-5">
-            <p className="text-xs font-extrabold uppercase tracking-widest text-purple-400">
-              Word
-            </p>
-            <p className="text-xs font-extrabold uppercase tracking-widest text-purple-400">
-              Translation
-            </p>
-            <p className="text-xs font-extrabold uppercase tracking-widest text-purple-400">
-              Note
-            </p>
-            <p className="text-xs font-extrabold uppercase tracking-widest text-purple-400">
-              Status
-            </p>
+        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+          <div className="grid grid-cols-5 items-center bg-slate-50 border-b border-slate-200 px-5 py-3 gap-5">
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Word</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Translation</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Note</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Status</p>
             <WordSearch setQuery={setQuery} />
           </div>
-
-          {/* Words list */}
           <WordsList query={query} words={filteredWords} />
         </div>
+
       </div>
+
+      {/* Modal */}
+      {isOpen && <WordAddForm closeModal={() => setIsOpen(false)} />}
     </div>
   );
 }

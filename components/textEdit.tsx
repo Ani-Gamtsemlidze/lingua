@@ -16,6 +16,7 @@ export default function TextEdit({
     note?: string;
     translation?: string;
     id?: number;
+    isEmpty?: boolean;
   }[];
   userText: {
     id: number;
@@ -32,12 +33,11 @@ export default function TextEdit({
     const cleanWord = token.replace(/[^\p{L}\p{N}']/gu, "");
     setSelectedWord(cleanWord);
   };
-  const found = matchWords.find(w => w.word === selectedWord);
+  const found = matchWords.find((w) => w.word === selectedWord);
 
   return (
     <div className=" bg-fuchsia-50 px-6 py-10">
-      <div className="max-w-2xl mx-auto">
-
+      <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="flex items-start justify-between mb-6">
           <div>
@@ -111,16 +111,19 @@ export default function TextEdit({
             </p>
 
             {/* Text reader */}
-            <div className="bg-white rounded-3xl border-2 border-purple-100 px-6 py-6 leading-8 text-base text-purple-950 font-semibold">
+            <div className="bg-white rounded-3xl border-2 border-purple-100 px-2 py-2 leading-8 text-base text-purple-950 font-semibold overflow-y-auto overflow-x-hidden max-h-[300px]">
               {matchWords.map((t, i) => (
                 <span
                   key={i}
                   className={`relative group cursor-pointer rounded-md px-0.5 transition-colors ${
-                    t.translation
-                      ? "text-violet-600 underline decoration-dotted decoration-violet-300 underline-offset-4"
-                      : "hover:bg-purple-100 hover:text-violet-700"
+                    t.isEmpty
+                      ? "pointer-events-none"
+                      : t.translation
+                        ? "text-violet-600 underline decoration-dotted decoration-violet-300 underline-offset-4"
+                        : "hover:bg-purple-100 hover:text-violet-700"
                   }`}
                   onClick={() => {
+                    if (t.isEmpty) return;
                     if (!t.translation) {
                       handleClick(t.token);
                       setShowWordAddForm(true);
@@ -144,7 +147,10 @@ export default function TextEdit({
             {matchWords.some((w) => w.translation) && (
               <p className="mt-4 text-xs font-extrabold uppercase tracking-widest text-purple-300">
                 {matchWords.filter((w) => w.translation).length} word
-                {matchWords.filter((w) => w.translation).length !== 1 ? "s" : ""} saved
+                {matchWords.filter((w) => w.translation).length !== 1
+                  ? "s"
+                  : ""}{" "}
+                saved
               </p>
             )}
           </>

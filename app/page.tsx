@@ -1,12 +1,14 @@
 import Header from "@/components/header";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 export default function Home() {
   return (
-    <div>
-      <Header />
+      redirect("/words")
 
-      <p>Lingua</p>
-    </div>
+    // <div>
+    //   Dashboard
+    // </div>
+
   );
 }

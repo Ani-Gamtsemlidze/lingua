@@ -13,7 +13,7 @@ export default function TextsList({ textData }: { textData: textData[] }) {
         <p className="text-xs font-extrabold uppercase tracking-widest text-purple-300 mb-1">
           Reader
         </p>
-        <h1 className="font-serif text-4xl font-bold text-purple-950 mb-1">
+        <h1 className=" text-4xl font-bold text-purple-950 mb-1">
           Your Texts
         </h1>
         <p className="text-sm text-purple-400 font-semibold mb-8">

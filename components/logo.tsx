@@ -4,8 +4,8 @@ const nunito = Nunito({ weight: "900", subsets: ["latin"] });
 
 export function Logo() {
   return (
-    <div className="flex items-center gap-3">
-      <svg width="40" height="40" viewBox="0 0 58 58" fill="none">
+    <div className="flex items-center gap-2">
+      <svg width="30" height="30" viewBox="0 0 58 58" fill="none">
         <rect width="58" height="58" rx="18" fill="#534AB7"/>
         <ellipse cx="29" cy="31" rx="15" ry="12" fill="white"/>
         <ellipse cx="22" cy="28" rx="3" ry="3.5" fill="#534AB7"/>
@@ -22,7 +22,7 @@ export function Logo() {
         <ellipse cx="22" cy="49.5" rx="3" ry="1.5" fill="#AFA9EC"/>
         <ellipse cx="36" cy="49.5" rx="3" ry="1.5" fill="#AFA9EC"/>
       </svg>
-      <span className={`${nunito.className} text-3xl text-[#534AB7] tracking-tight`}>
+      <span className={`${nunito.className} text-2xl text-[#fff] tracking-tight`}>
         lingua
         {/* <span className="text-[#AFA9EC]">a</span> */}
       </span>

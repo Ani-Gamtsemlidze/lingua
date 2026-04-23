@@ -29,7 +29,7 @@ const tokensWithTranslations: TokenWithTranslation[] = tokens.map((token: string
   const cleanToken = token.replace(/[^\p{L}\p{N}']/gu, "");
 
   if (!cleanToken) {
-    return { token }; 
+    return { token, isEmpty : true }; 
   }
 
   const match = userWords.find((w) => w.word === cleanToken);
