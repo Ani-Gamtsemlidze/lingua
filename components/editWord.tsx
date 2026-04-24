@@ -5,6 +5,9 @@ import { useState } from "react";
 import Modal from "./modal";
 import WordAddForm from "./wordAddForm";
 import { Word } from "@/types/words";
+import { MdDeleteSweep } from "react-icons/md";
+import { BiPencil, BiSolidMessageSquareEdit } from "react-icons/bi";
+import { BsTrash2 } from "react-icons/bs";
 export default function EditWord({
   wordId,
   wordData,
@@ -25,6 +28,7 @@ export default function EditWord({
         show={showConfirm}
         onClose={() => setShowConfirm(false)}
         handleDelete={handleDelete}
+        title="Delete this word?"
       />
       {showEdit && (
         <WordAddForm
@@ -33,7 +37,16 @@ export default function EditWord({
           closeModal={() => setShowEdit(false)}
         />
       )}
-      <Image
+      <BsTrash2
+        className="w-4 h-4 mr-2 text-slate-400 hover:text-red-400 cursor-pointer transition-colors"
+        onClick={() => setShowConfirm(true)}
+      />
+      <BiPencil
+        className="w-4 h-4 text-slate-400 hover:text-slate-600 cursor-pointer transition-colors"
+        onClick={() => setShowEdit(true)}
+      />
+
+      {/* <Image
         className="w-5 h-5"
         src="/images/trash.png"
         width={200}
@@ -47,8 +60,8 @@ export default function EditWord({
         width={200}
         height={200}
         alt="image"
-        onClick={() => setShowEdit(true)}
-      />
+          
+      /> */}
     </div>
   );
 }

@@ -3,8 +3,16 @@ import { deleteText } from "@/app/action";
 import { textData } from "@/types/text";
 import Link from "next/link";
 import { BiBookOpen, BiPlus, BiX } from "react-icons/bi";
+import Modal from "./modal";
+import { useState } from "react";
 
 export default function TextsList({ textData }: { textData: textData[] }) {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedTextId, setSelectedTextId] = useState<number | null>(null);
+  function handleDeleteText(id: number) {
+    setSelectedTextId(id);
+    setShowModal(true);
+  }
   return (
     <div className="min-h-screen bg-slate-50 px-6 py-10">
       <div className="max-w-xl mx-auto">
@@ -70,12 +78,24 @@ export default function TextsList({ textData }: { textData: textData[] }) {
 
                   {/* Delete */}
                   <button
-                    onClick={() => deleteText(text?.id)}
+                    onClick={() => handleDeleteText(text?.id)}
                     aria-label="Delete text"
                     className="opacity-0 group-hover:opacity-100 text-slate-300 hover:text-red-400 transition-all"
                   >
                     <BiX className="w-4 h-4" />
                   </button>
+                  <Modal 
+                  show={showModal}
+                  
+                  onClose={() => setShowModal(false)}
+                  handleDelete={() => {
+                    if (selectedTextId !== null) {
+                      deleteText(selectedTextId);
+                    }
+                    setShowModal(false);
+                  }}
+                  title="Delete this text?"
+                  />
                 </li>
               ))}
             </ul>

@@ -7,9 +7,11 @@ export default function SubmitButton({ showEdit }: { showEdit?: boolean }) {
     <button
       type="submit"
       disabled={pending}
-      className="w-full rounded-lg bg-indigo-600 py-2 text-white font-medium hover:bg-indigo-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+      className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 active:bg-slate-900
+        transition-colors text-white text-sm font-medium px-5 py-2.5 rounded-lg
+        disabled:opacity-50 disabled:cursor-not-allowed"
     >
-      {pending ? "Saving..." : showEdit ? "Update Word" : "Save Word"}
+      {pending ? "Saving…" : showEdit ? "Update word" : "Save word"}
     </button>
   );
 }

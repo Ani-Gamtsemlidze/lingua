@@ -98,7 +98,7 @@ export default function TextEdit({
             <textarea
               name="content"
               rows={12}
-              defaultValue={userText.content}
+              defaultValue={userText.content.replace(/\n/g, " ").replace(/\s+/g, " ").trim()}
               className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800
                 leading-relaxed resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition"
             />

@@ -21,7 +21,7 @@ export default function WordsList({
   }
 
   const statusConfig: Record<string, { label: string; className: string }> = {
-    known:    { label: "Known",    className: "bg-green-50 text-green-700 border-green-200" },
+    known:    { label: "nailed it",    className: "bg-green-50 text-green-700 border-green-200" },
     learning: { label: "Learning", className: "bg-blue-50 text-blue-700 border-blue-200" },
     fuzzy:    { label: "Fuzzy",    className: "bg-amber-50 text-amber-700 border-amber-200" },
     new:      { label: "New",      className: "bg-slate-100 text-slate-600 border-slate-200" },
