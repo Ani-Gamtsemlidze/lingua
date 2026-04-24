@@ -40,8 +40,6 @@ const tokensWithTranslations: TokenWithTranslation[] = tokens.map((token: string
 
 
   return (
-    <div>
       <TextEdit userText={userText[0] as userText} matchWords={tokensWithTranslations} />
-    </div>
   );
 }

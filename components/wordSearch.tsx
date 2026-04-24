@@ -1,13 +1,13 @@
 "use client";
 
 export default function WordSearch({ setQuery }: { setQuery: (query: string) => void }) {
-
   return (
-     <input
+    <input
       type="search"
       onChange={(e) => setQuery(e.target.value)}
-      placeholder="Search words..."
-      className="w-full rounded-xl border-2 border-purple-200 bg-white px-3 py-1.5 text-sm font-semibold text-purple-950 placeholder-purple-200 outline-none focus:border-violet-500 transition"
+      placeholder="Search…"
+      className="w-full rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-700
+        placeholder-slate-300 outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition"
     />
   );
 }
