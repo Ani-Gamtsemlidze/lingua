@@ -1,11 +1,11 @@
 "use client";
 
-import { TbClick } from "react-icons/tb";
 import { Archivo_Black, Roboto } from "next/font/google";
 import CardButtons from "./cardButtons";
 import { Word } from "@/types/words";
 import { useFlashCard } from "./useFlashcard";
 import ProgressBar from "./progressBar";
+import { LuMousePointerClick } from "react-icons/lu";
 
 const archivoBlack = Archivo_Black({ weight: "400", subsets: ["latin"] });
 const roboto = Roboto({ weight: "400", subsets: ["latin"] });
@@ -31,46 +31,59 @@ export default function FlashCard({ userWords }: { userWords: Word[] }) {
 
   if (isComplete) {
     return (
-      <div className="flex flex-col items-center gap-6">
-        <h2 className="text-2xl font-bold text-purple-600">
-          Session complete! 🎉
-        </h2>
-        <div className="flex gap-4">
-          <div className="bg-green-50 text-green-700 px-6 py-4 rounded-xl text-center">
-            <p className="text-2xl font-bold">{stats.known}</p>
-            <p className="text-sm">Known</p>
+      <div className="flex flex-col items-center gap-6 text-center">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
+            Session complete
+          </p>
+          <h2 className="text-2xl font-semibold text-slate-800 tracking-tight">
+            Great work! 🎉
+          </h2>
+        </div>
+
+        <div className="flex gap-3">
+          <div className="bg-green-50 border border-green-100 text-green-700 px-6 py-4 rounded-xl text-center">
+            <p className="text-2xl font-semibold">{stats.known}</p>
+            <p className="text-xs font-medium text-green-500 mt-0.5">Known</p>
           </div>
-          <div className="bg-amber-50 text-amber-700 px-6 py-4 rounded-xl text-center">
-            <p className="text-2xl font-bold">{stats.fuzzy}</p>
-            <p className="text-sm">Fuzzy</p>
+          <div className="bg-amber-50 border border-amber-100 text-amber-700 px-6 py-4 rounded-xl text-center">
+            <p className="text-2xl font-semibold">{stats.fuzzy}</p>
+            <p className="text-xs font-medium text-amber-500 mt-0.5">Fuzzy</p>
           </div>
-          <div className="bg-red-50 text-red-700 px-6 py-4 rounded-xl text-center">
-            <p className="text-2xl font-bold">{stats.learning}</p>
-            <p className="text-sm">Learning</p>
+          <div className="bg-red-50 border border-red-100 text-red-700 px-6 py-4 rounded-xl text-center">
+            <p className="text-2xl font-semibold">{stats.learning}</p>
+            <p className="text-xs font-medium text-red-400 mt-0.5">Learning</p>
           </div>
         </div>
+
         <button
           onClick={handleNextSession}
-          className="px-6 py-3 bg-purple-600 text-white rounded-xl font-medium hover:bg-purple-700 transition-colors"
+          className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 active:bg-slate-900
+            transition-colors text-white text-sm font-medium px-5 py-2.5 rounded-lg"
         >
           Next session →
         </button>
       </div>
     );
   }
+
   if (userWords.length === 0 || !currentWord) {
     return (
       <div className="flex flex-col items-center gap-3 text-center">
-        <p className="text-2xl">📚</p>
-        <h2 className="text-xl font-bold text-purple-600">No words yet</h2>
-        <p className="text-gray-400 text-sm">
-          Add some words to start practicing.
+        <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
+          Study
+        </p>
+        <h2 className="text-xl font-semibold text-slate-800">No words yet</h2>
+        <p className="text-sm text-slate-400">
+          Add some words in the Reader to start practicing.
         </p>
       </div>
     );
   }
+
   return (
     <div className="flex flex-col items-center justify-center gap-6">
+
       {/* Progress */}
       <ProgressBar
         knownWidth={knownWidth}
@@ -93,33 +106,39 @@ export default function FlashCard({ userWords }: { userWords: Word[] }) {
         }`}
         onClick={() => setIsFlipped(!isFlipped)}
       >
-        <div className="bg-[#AFA9EC] w-full h-full rounded-3xl absolute top-1 left-1 opacity-60" />
-        <div className="bg-[#CECBF6] w-full h-full rounded-3xl absolute top-2 left-2 opacity-50" />
+        {/* Card shadows */}
+        <div className="bg-slate-500 w-full h-full rounded-2xl absolute top-1 left-1 opacity-50" />
+        <div className="bg-slate-400 w-full h-full rounded-2xl absolute top-2 left-2 opacity-40" />
+
         <div
           className={`relative w-full h-full transition-transform duration-700 ${
             isFlipped ? "rotate-y-180" : ""
           } [transform-style:preserve-3d]`}
         >
-          <div className="absolute w-full h-full [backface-visibility:hidden] flex items-center justify-center flex-col bg-[#534AB7] rounded-3xl">
+          {/* Front */}
+          <div className="absolute w-full h-full [backface-visibility:hidden] flex items-center justify-center flex-col  bg-[#2d3f55] rounded-2xl gap-3">
             <h2 className={`text-white text-4xl ${archivoBlack.className}`}>
               {currentWord?.word}
             </h2>
-            <span className="text-[#AFA9EC] flex items-center text-sm mt-4">
-              <TbClick className="mr-2" />
+            <span className="text-slate-400 flex items-center gap-1.5 text-xs">
+              <LuMousePointerClick className="w-3.5 h-3.5" />
               Click to reveal
             </span>
           </div>
-          <div className="absolute w-full h-full rotate-y-180 [backface-visibility:hidden] flex items-center justify-center flex-col bg-[#534AB7] rounded-3xl gap-2">
-            <span
-              className={`text-[#AFA9EC] text-xs uppercase ${roboto.className}`}
-            >
-              Definition
-            </span>
 
+          {/* Back */}
+          <div className="absolute w-full h-full rotate-y-180 [backface-visibility:hidden] flex items-center justify-center flex-col bg-[#2d3f55] rounded-2xl gap-2">
+            <span className={`text-slate-400 text-xs uppercase tracking-widest ${roboto.className}`}>
+              Translation
+            </span>
             <h2 className={`text-white text-xl ${roboto.className}`}>
               {currentWord?.translation}
             </h2>
-            <span>{currentWord?.note}</span>
+            {currentWord?.note && (
+              <p className="text-slate-400 text-xs mt-1 px-8 text-center">
+                {currentWord.note}
+              </p>
+            )}
           </div>
         </div>
       </div>
