@@ -1,66 +1,97 @@
 import { addUser } from "@/app/action";
+import { Logo } from "@/components/logo";
 import Link from "next/link";
-import { BiBookOpen } from "react-icons/bi";
 
 export default function SignupPage() {
   return (
-    <div className="flex items-center justify-center h-screen bg-fuchsia-50">
-      <div className="bg-white border border-gray-100 rounded-2xl p-9 w-full max-w-sm shadow-sm">
+    <div className="flex h-screen bg-zinc-50">
 
-        {/* Logo mark */}
-        <div className="w-10 h-10 rounded-xl bg-[#534AB7] flex items-center justify-center mb-6">
-          <BiBookOpen className="text-white w-5 h-5" />
+      {/* Left panel */}
+      <div className="hidden lg:flex w-1/2 bg-slate-800 flex-col justify-between p-12">
+        <Logo />
+        <div>
+          <p className="text-3xl font-semibold text-white leading-snug mb-3">
+            Start your language journey.
+          </p>
+          <p className="text-sm text-slate-400">
+            Save words as you read, study them with flashcards, and track your progress.
+          </p>
         </div>
+        <p className="text-xs text-slate-600">© 2026 Lingua</p>
+      </div>
 
-        <h1 className="text-xl font-medium text-gray-900 mb-1">Create an account</h1>
-        <p className="text-sm text-gray-400 mb-7">Start building your vocabulary</p>
+      {/* Right panel */}
+      <div className="flex flex-1 items-center justify-center px-6">
+        <div className="w-full max-w-sm">
 
-        <form action={addUser} className="flex flex-col gap-4">
-          <div>
-            <label className="text-xs text-gray-500 block mb-1.5">Email</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="you@example.com"
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#534AB7]/30 focus:border-[#534AB7]"
-            />
+          {/* Mobile logo */}
+          <div className="lg:hidden mb-8">
+            <Logo />
           </div>
 
-          <div>
-            <label className="text-xs text-gray-500 block mb-1.5">Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="••••••••"
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#534AB7]/30 focus:border-[#534AB7]"
-            />
-          </div>
+          <h1 className="text-2xl font-semibold text-slate-800 tracking-tight mb-1">
+            Create an account
+          </h1>
+          <p className="text-sm text-slate-400 mb-8">
+            Start building your vocabulary
+          </p>
 
-          <div>
-            <label className="text-xs text-gray-500 block mb-1.5">Confirm password</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="••••••••"
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#534AB7]/30 focus:border-[#534AB7]"
-            />
-          </div>
+          <form action={addUser} className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                placeholder="you@example.com"
+                className="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800
+                  placeholder-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition"
+              />
+            </div>
 
-          <button
-            type="submit"
-            className="w-full bg-[#534AB7] hover:bg-[#4840a0] text-white py-2.5 rounded-lg text-sm font-medium transition-colors mt-1"
-          >
-            Create account
-          </button>
-        </form>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                placeholder="••••••••"
+                className="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800
+                  placeholder-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition"
+              />
+            </div>
 
-        <p className="text-center text-sm text-gray-400 mt-5">
-          Already have an account?{" "}
-          <Link href="/login" className="text-[#534AB7] font-medium hover:underline">
-            Log in
-          </Link>
-        </p>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+                Confirm password
+              </label>
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="••••••••"
+                className="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800
+                  placeholder-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition"
+              />
+            </div>
 
+            <button
+              type="submit"
+              className="w-full bg-slate-800 hover:bg-slate-700 active:bg-slate-900 text-white
+                py-2.5 rounded-lg text-sm font-medium transition-colors mt-1 cursor-pointer"
+            >
+              Create account
+            </button>
+          </form>
+
+          <p className="text-center text-sm text-slate-400 mt-6">
+            Already have an account?{" "}
+            <Link href="/login" className="text-slate-700 font-medium hover:underline">
+              Log in
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   )
