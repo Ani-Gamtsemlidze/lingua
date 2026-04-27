@@ -2,6 +2,7 @@
 
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { BiLogOut } from "react-icons/bi";
 import { CiSettings } from "react-icons/ci";
@@ -70,13 +71,13 @@ export default function UserInfo() {
 
           {/* Menu items */}
           <div className="py-1">
-            <button
+            <Link href="/settings"
               onClick={() => setOpen(false)}
               className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-slate-700 transition-colors"
             >
               <CiSettings className="w-4 h-4 text-slate-400 shrink-0" />
               Settings
-            </button>
+            </Link>
           </div>
 
           <div className="border-t border-slate-700 py-1">
