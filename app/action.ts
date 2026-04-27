@@ -115,3 +115,12 @@ export async function updateFailCount(wordId: number) {
     UPDATE words SET fail_count = fail_count + 1 WHERE id = ${wordId} AND user_id = ${session?.user?.id}
   `;
 }
+
+export async function updateUserName (formData: FormData) {
+  const session = await getServerSession(authOptions);
+  const name = formData.get("name");
+  await sql`
+    UPDATE users SET username = ${name} WHERE id = ${session?.user?.id}
+  `;
+  revalidatePath("/settings");
+}

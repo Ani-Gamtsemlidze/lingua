@@ -8,7 +8,7 @@ import { BiLogOut } from "react-icons/bi";
 import { CiSettings } from "react-icons/ci";
 // import { Settings, LogOut } from "lucide-react";
 
-export default function UserInfo() {
+export default function UserInfo({ userName }: { userName?: string  }) {
   const { data } = useSession();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -50,7 +50,7 @@ export default function UserInfo() {
         </div>
         <div className="min-w-0 text-left">
           <p className="text-xs font-medium text-slate-200 truncate">
-            {data?.user?.name ?? "John Doe"}
+            { userName ? userName : data?.user?.name ?? "John Doe"}
           </p>
           <p className="text-xs text-slate-500 truncate">
             {data?.user?.email ?? "user@example.com"}

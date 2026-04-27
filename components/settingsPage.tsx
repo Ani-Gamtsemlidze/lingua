@@ -3,13 +3,13 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import SettingsEdit from "./settingsEdit";
 
-export default function SettingsPage() {
+export default function SettingsPage({ userName }: { userName: string }) {
   const { data } = useSession();
-  
-  const avatarUrl = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(
-    data?.user?.name ?? "John Doe",
-  )}&backgroundColor=1a1a2e&color=ffffff`;
 
+  const avatarUrl = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(
+   userName ? userName : data?.user?.name ?? "John Doe",
+  )}&backgroundColor=1a1a2e&color=ffffff`;
+  
 
   return (
     <>
@@ -27,7 +27,7 @@ export default function SettingsPage() {
           </div>
           <div className="min-w-0 text-left">
             <p className="text-xs tracking-tight text-slate-800 truncate font-bold">
-              {data?.user?.name ?? "John Doe"}
+              {userName ? userName :  data?.user?.name ?? "John Doe"}
             </p>
             <p className="text-xs text-slate-500 truncate">
               {data?.user?.email ?? "user@example.com"}
@@ -38,7 +38,7 @@ export default function SettingsPage() {
           title="Display name"
           content={data?.user?.name ?? "John Doe"}
           buttonText="edit"
-
+          userName={userName}
         />
         <SettingsEdit
           title="Email"
