@@ -24,8 +24,8 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials?.password) return null;
 
         const user =
-          await sql`SELECT id, email, password FROM users WHERE email = ${credentials.email}`;
-          if (!user[0]) return null;
+          await sql`SELECT id, email, password FROM users WHERE email = ${credentials.email} AND deleted_at IS NULL`;
+          if (!user[0] || user[0].deleted_at) return null;
           const isValid = await bcrypt.compare(
             credentials.password,
             user[0].password,
@@ -51,6 +51,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.sub = user.id;
       }
+      
       return token;
     },
     async session({ session, token, user }) {

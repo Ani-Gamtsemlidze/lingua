@@ -7,6 +7,7 @@ import { authOptions } from "./api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
 import { title } from "process";
+import { ActionResult } from "@/components/settingsEdit";
 
 export async function addWord(formData: FormData) {
   const session = await getServerSession(authOptions);
@@ -116,11 +117,12 @@ export async function updateFailCount(wordId: number) {
   `;
 }
 
-export async function updateUserName (formData: FormData) {
+export async function updateUserName (formData: FormData): Promise<ActionResult> {
   const session = await getServerSession(authOptions);
   const name = formData.get("name");
   await sql`
     UPDATE users SET username = ${name} WHERE id = ${session?.user?.id}
   `;
   revalidatePath("/settings");
+  return {success :true}
 }

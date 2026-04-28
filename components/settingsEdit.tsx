@@ -1,13 +1,16 @@
 "use client";
 
-import { updateUserName } from "@/app/action";
 import { useState } from "react";
+import { toast } from "sonner";
+import Modal from "./modal";
+import { deleteAccount } from "@/app/actions/user";
+import { signOut } from "next-auth/react";
+export type ActionResult = { success: true } | { error: string };
 
 export default function SettingsEdit({
   title,
   content,
   buttonText,
-  userName,
   type,
   action,
   isPassword,
@@ -15,22 +18,35 @@ export default function SettingsEdit({
   title: string;
   content: string;
   buttonText: string;
-  userName?: string;
   type: string;
   isPassword: boolean;
-  action: (formData: FormData) => Promise<void>;
+  action?: (formData: FormData) => Promise<ActionResult>;
 }) {
   const [editing, setEditing] = useState(false);
-  // const [localUserName, setLocalUserName] = useState(userName || content);
-  // const [sent, setSent] = useState(false);
-  const [error, setError] = useState(false);
+  const [deleteButton, setDeleteButton] = useState(false);
 
-  // setTimeout(() => {
-  //   setError(false);
-  // }, 1000);
+  const handleDelete = async () => {
+    const res = await deleteAccount();
+
+    if (res?.error) {
+      toast.error(res.error);
+      return;
+    }
+
+    toast.success("Account deleted");
+
+    // important: log out user
+    await signOut({ callbackUrl: "/login" });
+  };
 
   return (
     <div className="flex items-center w-full justify-between border-b px-3.5 py-4 border-slate-200">
+      <Modal
+        show={deleteButton}
+        onClose={() => setDeleteButton(false)}
+        title="Are you sure to delete your account?"
+        handleDelete={handleDelete}
+      />
       <div className="flex flex-col w-full justify-between">
         <span className="text-sm font-semibold text-slate-700 mt-2">
           {title}
@@ -40,22 +56,46 @@ export default function SettingsEdit({
           <form
             action={async (formData) => {
               if (isPassword) {
-                const newPassword = formData.get("newPassword");
-                const confirmPassword = formData.get("confirmPassword");
-                if(!newPassword || !confirmPassword) {
+                const newPassword = formData.get("newPassword") as string;
+                const confirmPassword = formData.get(
+                  "confirmPassword",
+                ) as string;
+                const currentPassword = formData.get(
+                  "currentPassword",
+                ) as string;
+
+                if (!currentPassword || !newPassword || !confirmPassword) {
+                  toast.error("Please fill in all fields", {});
                   return;
                 }
+
                 if (newPassword !== confirmPassword) {
-                  setError(true);
+                  toast.error("Passwords do not match");
                   return;
                 }
               }
-              setError(false);
+              const value = formData.get(type) as string;
+              if (!value?.trim()) {
+                toast.error("Field cannot be empty");
+                return;
+              }
 
-              await action(formData);
+              if (value === content) {
+                toast("Nothing changed");
+                return;
+              }
+
+              if (action) {
+                const res = await action(formData);
+                if ("error" in res) {
+                  toast.error(res.error);
+                  return;
+                }
+              }
+
+              toast.success("Updated successfully", {});
               setEditing(false);
             }}
-            className="w-full"
           >
             <div className="w-full flex items-center justify-between">
               {!isPassword && (
@@ -70,7 +110,6 @@ export default function SettingsEdit({
                   <input
                     name="currentPassword"
                     type="password"
-                    // defaultValue={content}
                     placeholder="current password"
                     className=" mt-2 text-sm text-[#94a3b8] border border-slate-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-slate-400"
                   />
@@ -88,21 +127,25 @@ export default function SettingsEdit({
                       className=" mt-2 text-sm text-[#94a3b8] border border-slate-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-slate-400"
                     />
                   </div>
-                  <div className="text-red-900!">
-                    {error && (
-                      <p className="text-sm text-red-900! mt-2 flex">
-                        passwords do not match
-                      </p>
-                    )}
-                  </div>{" "}
                 </div>
               )}
-              <button
-                type="submit"
-                className="py-1 px-3 text-sm capitalize font-medium border border-slate-300 rounded-md text-slate-700 hover:bg-slate-100 cursor-pointer"
+              <div
+                className={`${type === "password" && "!flex-col"}  flex gap-2`}
               >
-                Save
-              </button>
+                <button
+                  type="submit"
+                  className="py-1 px-3 text-sm capitalize font-medium border border-green-800 rounded-md text-green-800 hover:bg-slate-100 cursor-pointer"
+                >
+                  Save
+                </button>
+                <button
+                  // type="submit"
+                  onClick={() => setEditing(false)}
+                  className="py-1 px-3 text-sm capitalize font-medium border border-slate-300 rounded-md text-slate-700 hover:bg-slate-100 cursor-pointer"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </form>
         ) : (
@@ -110,8 +153,12 @@ export default function SettingsEdit({
             <span className="text-sm text-[#94a3b8]">{content}</span>
             <button
               // type="submit"
-              onClick={() => setEditing(true)}
-              className="py-1 px-3 text-sm capitalize font-medium border border-slate-300 rounded-md text-slate-700 hover:bg-slate-100 cursor-pointer"
+              onClick={() =>
+                buttonText === "delete"
+                  ? setDeleteButton(true)
+                  : setEditing(true)
+              }
+              className={` ${buttonText === "delete" && "!border-red-800 !text-red-800"}  py-1 px-3 text-sm capitalize font-medium border border-slate-300 rounded-md text-slate-700 hover:bg-slate-100 cursor-pointer`}
             >
               {buttonText}
             </button>

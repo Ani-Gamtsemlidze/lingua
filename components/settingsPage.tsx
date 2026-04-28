@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import SettingsEdit from "./settingsEdit";
 import { updateUserName } from "@/app/action";
-import {updateUserEmail, updateUserPassword} from "@/app/actions/user"
+import {deleteAccount, updateUserEmail, updateUserPassword} from "@/app/actions/user"
 
 export default function SettingsPage({ userName }: { userName: string }) {
   const { data } = useSession();
@@ -40,10 +40,9 @@ export default function SettingsPage({ userName }: { userName: string }) {
           title="Display name"
           content={ userName ? userName : data?.user?.name ?? "John Doe"}
           buttonText="edit"
-          userName={userName}
           action={updateUserName}
           type="name"
-
+          isPassword={false}
         />
         <SettingsEdit
           title="Email"
@@ -51,6 +50,7 @@ export default function SettingsPage({ userName }: { userName: string }) {
           buttonText="edit"
           type="email"
           action={updateUserEmail}
+          isPassword={false}
         />
         <SettingsEdit
           title="Password"
@@ -69,7 +69,8 @@ export default function SettingsPage({ userName }: { userName: string }) {
           title="Delete account"
           content="Permanently delete your account and all data"
           buttonText="delete"
-
+          type="password"
+          isPassword={false}
         />
       </div>
 
