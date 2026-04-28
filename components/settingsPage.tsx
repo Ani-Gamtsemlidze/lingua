@@ -2,6 +2,8 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import SettingsEdit from "./settingsEdit";
+import { updateUserName } from "@/app/action";
+import {updateUserEmail, updateUserPassword} from "@/app/actions/user"
 
 export default function SettingsPage({ userName }: { userName: string }) {
   const { data } = useSession();
@@ -36,19 +38,27 @@ export default function SettingsPage({ userName }: { userName: string }) {
         </div>
         <SettingsEdit
           title="Display name"
-          content={data?.user?.name ?? "John Doe"}
+          content={ userName ? userName : data?.user?.name ?? "John Doe"}
           buttonText="edit"
           userName={userName}
+          action={updateUserName}
+          type="name"
+
         />
         <SettingsEdit
           title="Email"
           content={data?.user?.email ?? "user@example.com"}
           buttonText="edit"
+          type="email"
+          action={updateUserEmail}
         />
         <SettingsEdit
           title="Password"
-          content="Last changed never"
+          content="password"
           buttonText="change"
+          type="password"
+          action={updateUserPassword}
+          isPassword = {true}
         />
       </div>
       <div className="bg-white rounded-lg shadow-md  w-full max-w-md mt-4">
