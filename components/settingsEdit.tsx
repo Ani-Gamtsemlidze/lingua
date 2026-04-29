@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import Modal from "./modal";
 import { deleteAccount } from "@/app/actions/user";
 import { signOut } from "next-auth/react";
+
 export type ActionResult = { success: true } | { error: string };
 
 export default function SettingsEdit({
@@ -14,6 +15,7 @@ export default function SettingsEdit({
   type,
   action,
   isPassword,
+  onSuccess,
 }: {
   title: string;
   content: string;
@@ -21,68 +23,64 @@ export default function SettingsEdit({
   type: string;
   isPassword: boolean;
   action?: (formData: FormData) => Promise<ActionResult>;
+  onSuccess?: (value: string) => void;
 }) {
   const [editing, setEditing] = useState(false);
   const [deleteButton, setDeleteButton] = useState(false);
-
   const handleDelete = async () => {
     const res = await deleteAccount();
-
     if (res?.error) {
       toast.error(res.error);
       return;
     }
-
     toast.success("Account deleted");
-
-    // important: log out user
     await signOut({ callbackUrl: "/login" });
   };
 
+  const isDelete = buttonText === "delete";
+
   return (
-    <div className="flex items-center w-full justify-between border-b px-3.5 py-4 border-slate-200">
+    <div className="flex items-center w-full justify-between border-b border-slate-100 px-4 py-4 last:border-none">
       <Modal
         show={deleteButton}
         onClose={() => setDeleteButton(false)}
         title="Are you sure to delete your account?"
         handleDelete={handleDelete}
       />
-      <div className="flex flex-col w-full justify-between">
-        <span className="text-sm font-semibold text-slate-700 mt-2">
-          {title}
-        </span>
+
+      <div className="flex flex-col w-full gap-2">
+        <span className="text-sm font-medium text-slate-700">{title}</span>
 
         {editing ? (
           <form
             action={async (formData) => {
               if (isPassword) {
+                const currentPassword = formData.get(
+                  "currentPassword",
+                ) as string;
                 const newPassword = formData.get("newPassword") as string;
                 const confirmPassword = formData.get(
                   "confirmPassword",
                 ) as string;
-                const currentPassword = formData.get(
-                  "currentPassword",
-                ) as string;
 
                 if (!currentPassword || !newPassword || !confirmPassword) {
-                  toast.error("Please fill in all fields", {});
+                  toast.error("Please fill in all fields");
                   return;
                 }
-
                 if (newPassword !== confirmPassword) {
                   toast.error("Passwords do not match");
                   return;
                 }
-              }
-              const value = formData.get(type) as string;
-              if (!value?.trim()) {
-                toast.error("Field cannot be empty");
-                return;
-              }
-
-              if (value === content) {
-                toast("Nothing changed");
-                return;
+              } else {
+                const value = formData.get(type) as string;
+                if (!value?.trim()) {
+                  toast.error("Field cannot be empty");
+                  return;
+                }
+                if (value === content) {
+                  toast("Nothing changed");
+                  return;
+                }
               }
 
               if (action) {
@@ -93,72 +91,80 @@ export default function SettingsEdit({
                 }
               }
 
-              toast.success("Updated successfully", {});
+              toast.success("Updated successfully");
+              if (onSuccess) {
+                onSuccess?.(formData.get(type) as string);
+              }
               setEditing(false);
             }}
+            className="flex flex-col gap-2"
           >
-            <div className="w-full flex items-center justify-between">
-              {!isPassword && (
+            {!isPassword ? (
+              <input
+                name={type}
+                defaultValue={content}
+                className="text-sm text-slate-500 border border-slate-200 rounded-lg px-3 py-2
+                  focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition w-full"
+              />
+            ) : (
+              <div className="flex flex-col gap-2">
                 <input
-                  name={type}
-                  defaultValue={content}
-                  className=" mt-2 text-sm text-[#94a3b8] border border-slate-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                  name="currentPassword"
+                  type="password"
+                  placeholder="Current password"
+                  className="text-sm text-slate-500 border border-slate-200 rounded-lg px-3 py-2
+                    focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition"
                 />
-              )}
-              {isPassword && (
-                <div>
-                  <input
-                    name="currentPassword"
-                    type="password"
-                    placeholder="current password"
-                    className=" mt-2 text-sm text-[#94a3b8] border border-slate-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-slate-400"
-                  />
-                  <div className="flex gap-2 items-center">
-                    <input
-                      name="newPassword"
-                      type="password"
-                      placeholder="new password"
-                      className=" mt-2 text-sm text-[#94a3b8] border border-slate-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-slate-400"
-                    />
-                    <input
-                      name="confirmPassword"
-                      type="password"
-                      placeholder="Confirm password"
-                      className=" mt-2 text-sm text-[#94a3b8] border border-slate-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-slate-400"
-                    />
-                  </div>
-                </div>
-              )}
-              <div
-                className={`${type === "password" && "!flex-col"}  flex gap-2`}
-              >
-                <button
-                  type="submit"
-                  className="py-1 px-3 text-sm capitalize font-medium border border-green-800 rounded-md text-green-800 hover:bg-slate-100 cursor-pointer"
-                >
-                  Save
-                </button>
-                <button
-                  // type="submit"
-                  onClick={() => setEditing(false)}
-                  className="py-1 px-3 text-sm capitalize font-medium border border-slate-300 rounded-md text-slate-700 hover:bg-slate-100 cursor-pointer"
-                >
-                  Cancel
-                </button>
+                <input
+                  name="newPassword"
+                  type="password"
+                  placeholder="New password"
+                  className="text-sm text-slate-500 border border-slate-200 rounded-lg px-3 py-2
+                    focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition"
+                />
+                <input
+                  name="confirmPassword"
+                  type="password"
+                  placeholder="Confirm new password"
+                  className="text-sm text-slate-500 border border-slate-200 rounded-lg px-3 py-2
+                    focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition"
+                />
               </div>
+            )}
+
+            <div className="flex gap-2 mt-1">
+              <button
+                type="submit"
+                className="py-1 px-3 text-sm font-medium border border-green-800 rounded-lg
+                  text-slate-800 hover:bg-slate-100 cursor-pointer transition-colors"
+              >
+                Save
+              </button>
+              <button
+                type="button"
+                onClick={() => setEditing(false)}
+                className="py-1 px-3 text-sm font-medium border border-slate-200 rounded-lg
+                  text-slate-500 hover:bg-slate-100 cursor-pointer transition-colors"
+              >
+                Cancel
+              </button>
             </div>
           </form>
         ) : (
-          <div className="w-full flex items-center justify-between">
-            <span className="text-sm text-[#94a3b8]">{content}</span>
+          <div className="w-full flex gap-2 items-center justify-between">
+            <span className="text-sm text-slate-400">
+              {isPassword ? "••••••••" : content}
+            </span>
             <button
-              // type="submit"
               onClick={() =>
-                buttonText === "delete"
-                  ? setDeleteButton(true)
-                  : setEditing(true)
+                isDelete ? setDeleteButton(true) : setEditing(true)
               }
-              className={` ${buttonText === "delete" && "!border-red-800 !text-red-800"}  py-1 px-3 text-sm capitalize font-medium border border-slate-300 rounded-md text-slate-700 hover:bg-slate-100 cursor-pointer`}
+              className={`py-1 px-3 text-sm font-medium rounded-lg border cursor-pointer transition-colors
+                ${
+                  isDelete
+                    ? "border-red-200 text-red-500 hover:bg-red-50"
+                    : "border-slate-200 text-slate-600 hover:bg-slate-100"
+                }`}
             >
               {buttonText}
             </button>
