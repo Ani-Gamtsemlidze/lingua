@@ -23,23 +23,36 @@ export default async function text({
   `;
   const tokens = userText[0]?.content.split(/(\s+)/);
   const userWords = await sql`
-    SELECT * FROM words WHERE user_id = ${session?.user.id}
-  `;
-const tokensWithTranslations: TokenWithTranslation[] = tokens.map((token: string) => {
-  const cleanToken = token.replace(/[^\p{L}\p{N}']/gu, "");
+  SELECT * FROM words 
+  WHERE language = ${userText[0].language} 
+  AND user_id = ${session?.user.id}
+`;
+  const tokensWithTranslations: TokenWithTranslation[] = tokens.map(
+    (token: string) => {
+      const cleanToken = token.replace(/[^\p{L}\p{N}']/gu, "");
 
-  if (!cleanToken) {
-    return { token, isEmpty : true }; 
-  }
+      if (!cleanToken) {
+        return { token, isEmpty: true };
+      }
 
-  const match = userWords.find((w) => w.word === cleanToken);
-  return match
-    ? { token, word: match.word, note: match.note, translation: match.translation, id: match.id }
-    : { token };
-});
-
+      const match = userWords.find((w) => w.word === cleanToken);
+      return match
+        ? {
+            token,
+            word: match.word,
+            note: match.note,
+            translation: match.translation,
+            id: match.id,
+          }
+        : { token };
+    },
+  );
 
   return (
-      <TextEdit userText={userText[0] as userText} matchWords={tokensWithTranslations} />
+    <TextEdit
+      userText={userText[0] as userText}
+      matchWords={tokensWithTranslations}
+      textLanguage={userText[0].language}
+    />
   );
 }

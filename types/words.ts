@@ -22,6 +22,7 @@ export type PartialWord = {
     wordData?: PartialWord;
     selectedWord?: string;
     textEdit?: boolean;
+    textLanguage?: string;
   };
 
   export type ProgressBarProps = {

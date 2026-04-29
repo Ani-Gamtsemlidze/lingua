@@ -13,6 +13,12 @@ export async function addWord(formData: FormData) {
   const session = await getServerSession(authOptions);
   const data =
     await sql`SELECT active_language FROM users WHERE id=${session?.user.id}`;
+  const language =
+    (formData.get("language") as string) ||
+    data[0].active_language ||
+    "english";
+
+
   const activeLanguage = data[0].active_language;
   const word = formData.get("word");
   const translation = formData.get("translation");
@@ -23,7 +29,7 @@ export async function addWord(formData: FormData) {
   }
   const existing = await sql`
   SELECT id FROM words 
-  WHERE word = ${word} AND user_id = ${session?.user?.id} AND language = ${activeLanguage}
+  WHERE word = ${word} AND user_id = ${session?.user?.id} AND language = ${language}
 `;
 
   if (existing.length > 0) {
@@ -31,7 +37,7 @@ export async function addWord(formData: FormData) {
   }
   await sql`
     INSERT INTO words (word, translation, note, language, user_id)
-    VALUES (${word}, ${translation}, ${note}, ${activeLanguage}, ${session?.user?.id})
+    VALUES (${word}, ${translation}, ${note}, ${language}, ${session?.user?.id})
   `;
   revalidatePath("/words");
 }
@@ -85,6 +91,7 @@ export async function saveText(formData: FormData) {
   const session = await getServerSession(authOptions);
   const text = formData.get("content");
   const title = formData.get("title");
+
   const result = await sql`
     INSERT INTO user_texts (content,title, language, user_id) VALUES (${text},${title}, (SELECT active_language FROM users WHERE id = ${session?.user?.id}), ${session?.user?.id})
     RETURNING id

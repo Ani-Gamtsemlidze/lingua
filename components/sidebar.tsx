@@ -35,7 +35,7 @@ export default async function Sidebar() {
       {/* Language switcher */}
       <div className="px-3 py-3 border-t border-slate-700 shrink-0">
         <p className="text-xs font-semibold uppercase tracking-widest text-slate-600 mb-2 px-1">
-          Language
+         Now Learning
         </p>
         <LanguageSwitcher  activeLanguage={activeLanguage[0]?.active_language ?? "english"}  />
       </div>

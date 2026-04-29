@@ -8,6 +8,7 @@ import { BiCheck, BiPencil } from "react-icons/bi";
 export default function TextEdit({
   matchWords,
   userText,
+  textLanguage
 }: {
   matchWords: {
     token: string;
@@ -22,6 +23,7 @@ export default function TextEdit({
     title: string;
     content: string;
   };
+  textLanguage: string
 }) {
   const [showWordAddForm, setShowWordAddForm] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
@@ -81,6 +83,7 @@ export default function TextEdit({
             selectedWord={selectedWord}
             textEdit={showWordAddForm}
             closeModal={() => setShowWordAddForm(false)}
+            textLanguage={textLanguage} 
           />
         )}
         {showEdit && (

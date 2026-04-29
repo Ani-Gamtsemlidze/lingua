@@ -11,6 +11,7 @@ export default function WordAddForm({
   wordData,
   selectedWord,
   textEdit,
+  textLanguage,
 }: Props) {
   async function handleSubmit(formData: FormData) {
     await updateWord(formData);
@@ -54,6 +55,9 @@ export default function WordAddForm({
         >
           {showEdit && (
             <input type="hidden" name="wordId" value={wordData?.id} />
+          )}
+          {textLanguage && (
+            <input type="hidden" name="language" value={textLanguage} />
           )}
 
           <div className="flex flex-col gap-1.5">
