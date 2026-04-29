@@ -91,7 +91,9 @@ export async function saveText(formData: FormData) {
   const session = await getServerSession(authOptions);
   const text = formData.get("content");
   const title = formData.get("title");
-
+   if(!text || !title) {
+    return {error: "Please fill in all fields"}
+   }
   const result = await sql`
     INSERT INTO user_texts (content,title, language, user_id) VALUES (${text},${title}, (SELECT active_language FROM users WHERE id = ${session?.user?.id}), ${session?.user?.id})
     RETURNING id

@@ -1,15 +1,17 @@
 "use client";
 import { saveText } from "@/app/action";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function Reader({
   textData: initialText,
 }: {
   textData: string;
 }) {
+  const router = useRouter();
   return (
     <div className="min-h-screen bg-slate-50 px-6 py-10">
       <div className="max-w-xl mx-auto">
-
         {/* Header */}
         <div className="mb-8">
           <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
@@ -23,8 +25,15 @@ export default function Reader({
           </p>
         </div>
 
-        <form action={saveText} className="flex flex-col gap-5">
-
+        <form
+          action={async (formData) => {
+            const res = await saveText(formData);
+            if (res?.error) {
+              toast.error(res.error);
+            }
+          }}
+          className="flex flex-col gap-5"
+        >
           {/* Title */}
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-semibold uppercase tracking-widest text-slate-400">
@@ -55,14 +64,25 @@ export default function Reader({
           {/* Submit */}
           {!initialText && (
             <div className="flex items-center justify-between pt-1">
-              <p className="text-xs text-slate-400">Tip: shorter texts work best.</p>
-              <button
-                type="submit"
-                className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 active:bg-slate-900
-                  transition-colors text-white text-sm font-medium px-5 py-2.5 rounded-lg cursor-pointer"
-              >
-                Save text
-              </button>
+              <p className="text-xs text-slate-400">
+                Tip: shorter texts work best.
+              </p>
+              <div>
+                <button
+                  type="button"
+                  onClick={() => router.back()}
+                  className="text-sm text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+                >
+                  ← Back
+                </button>
+                <button
+                  type="submit"
+                  className=" ml-3 inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 active:bg-slate-900
+                  transition-colors text-white text-sm font-medium px-3 py-2 rounded-lg cursor-pointer"
+                >
+                  Save text
+                </button>
+              </div>
             </div>
           )}
         </form>
