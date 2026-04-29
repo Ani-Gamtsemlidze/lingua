@@ -9,10 +9,13 @@ import { sql } from "@/lib/db";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
 import { ActionResult } from "@/components/settingsEdit";
+import { revalidatePath } from "next/cache";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export async function updateUserEmail(formData: FormData): Promise<ActionResult> {
+export async function updateUserEmail(
+  formData: FormData,
+): Promise<ActionResult> {
   const session = await getServerSession(authOptions);
   const email = formData.get("email") as string;
   const token = crypto.randomBytes(32).toString("hex");
@@ -30,7 +33,9 @@ export async function updateUserEmail(formData: FormData): Promise<ActionResult>
   redirect("/settings/email-sent");
 }
 
-export async function updateUserPassword(formData: FormData): Promise<ActionResult> {
+export async function updateUserPassword(
+  formData: FormData,
+): Promise<ActionResult> {
   const session = await getServerSession(authOptions);
   const currentPassword = formData.get("currentPassword") as string;
   const newPassword = formData.get("newPassword") as string;
@@ -67,4 +72,12 @@ export async function deleteAccount() {
   WHERE id = ${session.user.id}
 `;
   return { success: true };
+}
+
+export async function updateActiveLanguage(activeLanguage: string) {
+  const session = await getServerSession(authOptions);
+  await sql`UPDATE users SET active_language =${activeLanguage} WHERE id=${session?.user?.id}`;
+  revalidatePath("/words")
+  revalidatePath("/reader")
+  revalidatePath("/study/flashcards")
 }

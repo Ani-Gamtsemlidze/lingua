@@ -8,7 +8,7 @@ import { getServerSession } from "next-auth";
 export default async function Words() {
   const session = await getServerSession(authOptions);
   const words = (await sql`
-    SELECT * FROM words WHERE user_id = ${session?.user.id}
+    SELECT * FROM words WHERE language = (SELECT active_language FROM users WHERE id = ${session?.user?.id}) AND user_id = ${session?.user.id} ORDER BY id DESC
   `) as Word[];
 
   return <WordsView words={words} />;

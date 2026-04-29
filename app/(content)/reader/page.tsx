@@ -10,7 +10,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 export default async function reader() {
   const session = await getServerSession(authOptions);
   const TextData = await sql`
-    SELECT * FROM user_texts WHERE user_id = ${session?.user?.id} ORDER BY created_at DESC 
+    SELECT * FROM user_texts WHERE language = (SELECT active_language FROM users WHERE id = ${session?.user?.id}) AND user_id = ${session?.user?.id} ORDER BY created_at DESC 
  `;
   return (
     <div className="">

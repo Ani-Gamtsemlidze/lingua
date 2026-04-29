@@ -8,7 +8,7 @@ export default async function flashcards() {
   const session = await getServerSession(authOptions);
 
   const userWords = await sql`
-    SELECT * FROM words WHERE user_id = ${session?.user.id}
+    SELECT * FROM words WHERE language = (SELECT active_language FROM users WHERE id = ${session?.user?.id}) AND user_id = ${session?.user.id}
   `;
 
   return (

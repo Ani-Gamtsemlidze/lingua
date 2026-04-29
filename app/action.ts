@@ -11,17 +11,27 @@ import { ActionResult } from "@/components/settingsEdit";
 
 export async function addWord(formData: FormData) {
   const session = await getServerSession(authOptions);
-
+  const data =
+    await sql`SELECT active_language FROM users WHERE id=${session?.user.id}`;
+  const activeLanguage = data[0].active_language;
   const word = formData.get("word");
   const translation = formData.get("translation");
   const note = formData.get("note");
 
-  if(`${word}`.trim() === "") {
+  if (`${word}`.trim() === "") {
     return;
   }
+  const existing = await sql`
+  SELECT id FROM words 
+  WHERE word = ${word} AND user_id = ${session?.user?.id} AND language = ${activeLanguage}
+`;
+
+  if (existing.length > 0) {
+    return { error: "Word already exists in this language" };
+  }
   await sql`
-    INSERT INTO words (word, translation, note, user_id)
-    VALUES (${word}, ${translation}, ${note}, ${session?.user?.id})
+    INSERT INTO words (word, translation, note, language, user_id)
+    VALUES (${word}, ${translation}, ${note}, ${activeLanguage}, ${session?.user?.id})
   `;
   revalidatePath("/words");
 }
@@ -71,12 +81,12 @@ export async function addUser(formData: FormData) {
   redirect("/login");
 }
 
-export async function saveText (formData: FormData) {
+export async function saveText(formData: FormData) {
   const session = await getServerSession(authOptions);
   const text = formData.get("content");
   const title = formData.get("title");
-  const result = await sql `
-    INSERT INTO user_texts (content,title, user_id) VALUES (${text},${title}, ${session?.user?.id})
+  const result = await sql`
+    INSERT INTO user_texts (content,title, language, user_id) VALUES (${text},${title}, (SELECT active_language FROM users WHERE id = ${session?.user?.id}), ${session?.user?.id})
     RETURNING id
   `;
   const id = result[0].id;
@@ -117,12 +127,14 @@ export async function updateFailCount(wordId: number) {
   `;
 }
 
-export async function updateUserName (formData: FormData): Promise<ActionResult> {
+export async function updateUserName(
+  formData: FormData,
+): Promise<ActionResult> {
   const session = await getServerSession(authOptions);
   const name = formData.get("name");
   await sql`
     UPDATE users SET username = ${name} WHERE id = ${session?.user?.id}
   `;
   revalidatePath("/settings");
-  return {success :true}
+  return { success: true };
 }

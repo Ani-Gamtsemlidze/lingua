@@ -3,23 +3,32 @@
 import { addWord, updateWord } from "@/app/action";
 import { Props } from "@/types/words";
 import SubmitButton from "./submitButton";
+import { toast } from "sonner";
 
-export default function WordAddForm({ closeModal, showEdit, wordData, selectedWord, textEdit }: Props) {
-
+export default function WordAddForm({
+  closeModal,
+  showEdit,
+  wordData,
+  selectedWord,
+  textEdit,
+}: Props) {
   async function handleSubmit(formData: FormData) {
     await updateWord(formData);
     closeModal();
   }
 
   async function handleAddWord(formData: FormData) {
-    await addWord(formData);
+    const res = await addWord(formData);
+    if (res?.error) {
+      toast.error(res.error);
+      return;
+    }
     textEdit && closeModal();
   }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50">
       <div className="w-full max-w-md rounded-xl bg-white border border-slate-200 shadow-xl p-6">
-
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -39,7 +48,10 @@ export default function WordAddForm({ closeModal, showEdit, wordData, selectedWo
           </button>
         </div>
 
-        <form action={showEdit ? handleSubmit : handleAddWord} className="flex flex-col gap-4">
+        <form
+          action={showEdit ? handleSubmit : handleAddWord}
+          className="flex flex-col gap-4"
+        >
           {showEdit && (
             <input type="hidden" name="wordId" value={wordData?.id} />
           )}
@@ -51,7 +63,9 @@ export default function WordAddForm({ closeModal, showEdit, wordData, selectedWo
             <input
               name="word"
               placeholder="Word"
-              defaultValue={showEdit ? wordData?.word : textEdit ? selectedWord : undefined}
+              defaultValue={
+                showEdit ? wordData?.word : textEdit ? selectedWord : undefined
+              }
               className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800
                 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition"
             />
@@ -73,7 +87,9 @@ export default function WordAddForm({ closeModal, showEdit, wordData, selectedWo
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-semibold uppercase tracking-widest text-slate-400">
               Note{" "}
-              <span className="normal-case tracking-normal font-normal text-slate-300">(optional)</span>
+              <span className="normal-case tracking-normal font-normal text-slate-300">
+                (optional)
+              </span>
             </label>
             <textarea
               name="note"
