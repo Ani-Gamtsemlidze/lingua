@@ -20,7 +20,6 @@ export function useFlashCard(userWords: Word[]) {
 
   const sessionFailMap = useRef<Record<number, number>>({});
   const sessionFuzzyMap = useRef<Record<number, number>>({});
-
   const currentWord = queue[0];
 
   // cardsCount reflects actual queue size, not a fixed 10
@@ -121,18 +120,24 @@ export function useFlashCard(userWords: Word[]) {
     });
   };
 
-  const handleNextSession = () => {
-    setStats({ known: 0, learning: 0, fuzzy: 0 });
-    setCardsAnswered(0);
-    sessionFailMap.current = {};
-    sessionFuzzyMap.current = {};
-    setIsComplete(false);
-    setCardKey(0);
-    const activeCount = userWords.filter((w) => w.status !== "known").length;
-    setOffset((prev) =>
-      activeCount <= SESSION_SIZE ? 0 : (prev + SESSION_SIZE) % activeCount,
-    );
-  };
+ const handleNextSession = () => {
+  setStats({ known: 0, learning: 0, fuzzy: 0 });
+  setCardsAnswered(0);
+  sessionFailMap.current = {};
+  sessionFuzzyMap.current = {};
+  setIsComplete(false);
+  setCardKey(0);
+  setIsFlipped(false);
+  setQueue([]);
+  const activeWords = userWords.filter((w) => w.status !== "known");
+
+  const activeCount = activeWords.length;
+
+  const newOffset =
+    activeCount <= SESSION_SIZE ? 0 : (offset + SESSION_SIZE) % activeCount;
+
+  setOffset(newOffset);
+};
 
  const knownWidth = (stats.known / sessionSize) * 100;
 

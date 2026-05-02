@@ -6,6 +6,8 @@ import { Word } from "@/types/words";
 import { useFlashCard } from "./useFlashcard";
 import ProgressBar from "./progressBar";
 import { LuMousePointerClick } from "react-icons/lu";
+import { useEffect } from "react";
+import Link from "next/link";
 
 const archivoBlack = Archivo_Black({ weight: "400", subsets: ["latin"] });
 const roboto = Roboto({ weight: "400", subsets: ["latin"] });
@@ -28,6 +30,11 @@ export default function FlashCard({ userWords }: { userWords: Word[] }) {
     exitDirection,
     cardsCount,
   } = useFlashCard(userWords);
+
+  useEffect(() => {
+      if (!isComplete) return;
+    handleNextSession();
+  }, [userWords]);
 
   if (isComplete) {
     return (
@@ -55,19 +62,27 @@ export default function FlashCard({ userWords }: { userWords: Word[] }) {
             <p className="text-xs font-medium text-red-400 mt-0.5">Learning</p>
           </div>
         </div>
-
-        <button
-          onClick={handleNextSession}
-          className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 active:bg-slate-900
+        {userWords.filter((word) => word.status !== "known").length > 3 ? (
+          <button
+            onClick={handleNextSession}
+            className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 active:bg-slate-900
             transition-colors text-white text-sm font-medium px-5 py-2.5 rounded-lg"
-        >
-          Next session →
-        </button>
+          >
+            Next session →
+          </button>
+        ) : (
+          <Link
+            href={"/words"}
+            className="mt-2 px-4 py-2 rounded-md bg-slate-800 text-white text-sm"
+          >
+            Go to vocabulary
+          </Link>
+        )}
       </div>
     );
   }
 
-  if (userWords.length === 0 || !currentWord) {
+  if (userWords.length === 0) {
     return (
       <div className="flex flex-col items-center gap-3 text-center">
         <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
@@ -80,10 +95,32 @@ export default function FlashCard({ userWords }: { userWords: Word[] }) {
       </div>
     );
   }
+  if (!currentWord) {
+    return (
+      <div className="flex flex-col items-center gap-3 text-center">
+        <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
+          Study
+        </p>
+        <h2 className="text-xl font-semibold text-slate-800">
+          You're all caught up 🎉
+        </h2>
+
+        <p className="text-sm text-slate-400">
+          No words left to review right now.
+        </p>
+
+        <Link
+          href={"/words"}
+          className="mt-2 px-4 py-2 rounded-md bg-slate-800 text-white text-sm"
+        >
+          Go to vocabulary
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center justify-center gap-6">
-
       {/* Progress */}
       <ProgressBar
         knownWidth={knownWidth}
@@ -128,7 +165,9 @@ export default function FlashCard({ userWords }: { userWords: Word[] }) {
 
           {/* Back */}
           <div className="absolute w-full h-full rotate-y-180 [backface-visibility:hidden] flex items-center justify-center flex-col bg-[#2d3f55] rounded-2xl gap-2">
-            <span className={`text-slate-400 text-xs uppercase tracking-widest ${roboto.className}`}>
+            <span
+              className={`text-slate-400 text-xs uppercase tracking-widest ${roboto.className}`}
+            >
               Translation
             </span>
             <h2 className={`text-white text-xl ${roboto.className}`}>

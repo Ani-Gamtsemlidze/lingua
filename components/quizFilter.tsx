@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { RiStarSmileLine } from "react-icons/ri";
@@ -89,6 +90,7 @@ export default function QuizFilter({
                 setFilter(f.value);
                 setDropdownOpen(false);
               }}
+              disabled={filterCounts[f.value] === 0}
               className={`w-full flex items-center gap-2 px-3 py-2 text-xs font-medium
                 transition-colors cursor-pointer
                 ${filter === f.value ? "bg-slate-50 text-slate-800" : "text-slate-500 hover:bg-slate-50"}`}
