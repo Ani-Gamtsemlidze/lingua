@@ -12,6 +12,7 @@ export default function WordAddForm({
   selectedWord,
   textEdit,
   textLanguage,
+  aiTranslation
 }: Props) {
   async function handleSubmit(formData: FormData) {
     await updateWord(formData);
@@ -26,6 +27,7 @@ export default function WordAddForm({
     }
     textEdit && closeModal();
   }
+
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50">
@@ -68,7 +70,7 @@ export default function WordAddForm({
               name="word"
               placeholder="Word"
               defaultValue={
-                showEdit ? wordData?.word : textEdit ? selectedWord : undefined
+                showEdit ? wordData?.word : textEdit ? selectedWord : aiTranslation
               }
               className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800
                 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition"
@@ -82,7 +84,7 @@ export default function WordAddForm({
             <input
               name="translation"
               placeholder="Translation"
-              defaultValue={showEdit ? wordData?.translation : undefined}
+              defaultValue={showEdit ? wordData?.translation : aiTranslation}
               className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800
                 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition"
             />
