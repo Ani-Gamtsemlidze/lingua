@@ -1,49 +1,81 @@
+"use client";
 import Link from "next/link";
 import SidebarItem from "./sidebarItem";
 import { Logo } from "./logo";
 import UserInfo from "./UserInfo";
-import { sql } from "@/lib/db";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
 import LanguageSwitcher from "./languageSwitcher";
+import { useState } from "react";
+import { GiCancel } from "react-icons/gi";
+import { BiMenu } from "react-icons/bi";
 
-export default async function Sidebar() {
-  const session = await getServerSession(authOptions);
-  const userName =
-    await sql`SELECT username FROM users WHERE id = ${session?.user?.id}`;
-  const activeLanguage =
-    await sql`SELECT active_language FROM users WHERE id = ${session?.user?.id}`;
+export default function Sidebar({ userName, activeLanguage }: {
+  userName: string;
+  activeLanguage: string;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <aside className="w-52 bg-slate-800 flex flex-col h-full">
-
-      {/* Logo */}
-      <Link
-        href="/words"
-        className="h-14 flex items-center px-5 border-b border-slate-700 shrink-0"
-      >
-        <Logo />
-      </Link>
-
-      {/* Nav */}
-      <nav className="flex-1 px-3 py-5 flex flex-col gap-1">
-        <SidebarItem label="words" />
-        <SidebarItem label="reader" />
-        <SidebarItem label="study" />
-      </nav>
-
-      {/* Language switcher */}
-      <div className="px-3 py-3 border-t border-slate-700 shrink-0">
-        <p className="text-xs font-semibold uppercase tracking-widest text-slate-600 mb-2 px-1">
-         Now Learning
-        </p>
-        <LanguageSwitcher  activeLanguage={activeLanguage[0]?.active_language ?? "english"}  />
+    <>
+      <div className="lg:hidden fixed top-0 left-0 right-0 h-14 bg-slate-800 border-b border-slate-700
+        flex items-center justify-between px-4 z-40">
+        <Link href="/words">
+          <Logo />
+        </Link>
+        <button
+          onClick={() => setIsOpen(true)}
+          className="text-slate-400 hover:text-white transition-colors cursor-pointer"
+        >
+          <BiMenu className="w-5 h-5" />
+        </button>
       </div>
 
-      {/* User — pinned to bottom */}
-      <div className="px-3 py-4 border-t border-slate-700 shrink-0">
-        <UserInfo userName={userName[0]?.username} />
-      </div>
-    </aside>
+      {isOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/50 z-40"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      <aside className={`
+        fixed lg:relative top-0 left-0 h-full z-50
+        w-64 lg:w-52 bg-slate-800 flex flex-col
+        transition-transform duration-300 ease-in-out
+        ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+      `}>
+
+        <div className="h-14 flex items-center justify-between px-5 border-b border-slate-700 shrink-0">
+          <Link href="/words">
+            <Logo />
+          </Link>
+          <button
+            onClick={() => setIsOpen(false)}
+            className="lg:hidden text-slate-400 hover:text-white transition-colors cursor-pointer"
+          >
+            <GiCancel className="w-4 h-4" />
+          </button>
+        </div>
+
+        <nav className="flex-1 px-3 py-5 flex flex-col gap-1">
+          <SidebarItem label="words" onNavigate={() => setIsOpen(false)} />
+          <SidebarItem label="reader" onNavigate={() => setIsOpen(false)} />
+          <SidebarItem label="study" onNavigate={() => setIsOpen(false)} />
+        </nav>
+
+        {/* Language switcher */}
+        <div className="px-3 py-3 border-t border-slate-700 shrink-0">
+          <p className="text-xs font-semibold uppercase tracking-widest text-slate-600 mb-2 px-1">
+            Studying
+          </p>
+          <LanguageSwitcher
+            activeLanguage={activeLanguage}
+          />
+        </div>
+
+        {/* User */}
+        <div className="px-3 py-4 border-t border-slate-700 shrink-0">
+          <UserInfo userName={userName} />
+        </div>
+      </aside>
+    </>
   );
 }
