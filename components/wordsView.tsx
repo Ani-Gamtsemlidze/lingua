@@ -58,7 +58,7 @@ export default function WordsView({ words }: { words: Word[] }) {
       </div>
 
       {/* Modal */}
-      {isOpen && <WordAddForm closeModal={() => setIsOpen(false)} />}
+      {isOpen && <WordAddForm closeModal={() => setIsOpen(false)} aiTranslation="" />}
     </div>
   );
 }

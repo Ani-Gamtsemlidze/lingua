@@ -17,9 +17,6 @@ export async function addWord(formData: FormData) {
     (formData.get("language") as string) ||
     data[0].active_language ||
     "english";
-
-
-  const activeLanguage = data[0].active_language;
   const word = formData.get("word");
   const translation = formData.get("translation");
   const note = formData.get("note");
@@ -53,12 +50,16 @@ export async function deleteWord(wordId: number) {
 
 export async function updateWord(formData: FormData) {
   const session = await getServerSession(authOptions);
-  const wordId = formData.get("wordId");
   const word = formData.get("word");
   const translation = formData.get("translation");
   const note = formData.get("note");
+
+  const wordId = await sql`
+SELECT id FROM words 
+WHERE word = ${word} AND user_id = ${session?.user?.id}
+`;
   await sql`
-    UPDATE words SET word = ${word}, translation = ${translation}, note = ${note} WHERE id = ${wordId} AND user_id = ${session?.user?.id}
+    UPDATE words SET word = ${word}, translation = ${translation}, note = ${note} WHERE id = ${wordId[0].id} AND user_id = ${session?.user?.id}
   `;
   revalidatePath("/words");
 }
@@ -91,9 +92,9 @@ export async function saveText(formData: FormData) {
   const session = await getServerSession(authOptions);
   const text = formData.get("content");
   const title = formData.get("title");
-   if(!text || !title) {
-    return {error: "Please fill in all fields"}
-   }
+  if (!text || !title) {
+    return { error: "Please fill in all fields" };
+  }
   const result = await sql`
     INSERT INTO user_texts (content,title, language, user_id) VALUES (${text},${title}, (SELECT active_language FROM users WHERE id = ${session?.user?.id}), ${session?.user?.id})
     RETURNING id
@@ -116,8 +117,9 @@ export async function updateText(formData: FormData) {
   const session = await getServerSession(authOptions);
   const textId = formData.get("textId");
   const text = formData.get("content");
+  const title = formData.get("title");
   await sql`
-    UPDATE user_texts SET content = ${text} WHERE id = ${textId} AND user_id = ${session?.user?.id}
+    UPDATE user_texts SET  title = ${title}, content = ${text} WHERE id = ${textId} AND user_id = ${session?.user?.id}
   `;
   revalidatePath("/reader");
   redirect(`/reader/${textId}`);

@@ -35,6 +35,7 @@ export default function EditWord({
           wordData={wordData}
           showEdit={showEdit}
           closeModal={() => setShowEdit(false)}
+          aiTranslation=""
         />
       )}
       <BsTrash2
