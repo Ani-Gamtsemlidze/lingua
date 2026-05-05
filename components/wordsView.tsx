@@ -22,22 +22,22 @@ export default function WordsView({ words }: { words: Word[] }) {
         {/* Header */}
         <div className="flex items-end justify-between mb-6">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
+            <p className="text-[10px] md:text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
               Vocabulary
             </p>
-            <h1 className="text-2xl font-sans font-semibold text-slate-800 tracking-tight">
+            <h1 className="text-base md:text-2xl font-sans font-semibold text-slate-800 tracking-tight">
               My words
             </h1>
-            <p className="text-sm text-slate-400 mt-1">
+            <p className=" text-[10px] md:text-sm text-slate-400 mt-1">
               {words.length} word{words.length !== 1 ? "s" : ""} saved
             </p>
           </div>
           <button
             onClick={() => setIsOpen(true)}
             className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 active:bg-slate-900
-              transition-colors text-white text-sm font-medium px-4 py-2 rounded-lg cursor-pointer"
+              transition-colors text-white text-[10px] md:text-sm font-medium px-4 py-2 rounded-lg cursor-pointer"
           >
-            <BiPlus className="w-4 h-4" />
+            <BiPlus className="w-3 h-3 md:w-4 md:h-4 " />
             Add word
           </button>
         </div>

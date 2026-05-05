@@ -5,16 +5,18 @@ import Provider from "@/components/sessionProvider";
 
 export const metadata: Metadata = {
   icons: {
-    icon:"/favicon.svg",
+    icon: "/favicon.svg",
   },
   title: "Lingua - Read, Save, Remember",
-  description: "A language learning companion that helps you save and remember words as you read.",
+  description:
+    "A language learning companion that helps you save and remember words as you read.",
+  viewport: "width=device-width, initial-scale=1",
 };
 
 const dmSans = DM_Sans({
-subsets: ["latin"],
-weight: "800",
-variable: "--font-dm-sans",
+  subsets: ["latin"],
+  weight: "800",
+  variable: "--font-dm-sans",
 });
 
 export default function RootLayout({
