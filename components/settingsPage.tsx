@@ -21,7 +21,7 @@ export default function SettingsPage({ userName }: { userName: string }) {
 
   return (
     <div className="min-h-screen bg-zinc-50 px-6 py-10">
-      <div className="max-w-md mx-auto">
+      <div className=" md:mt-0 mt-8 max-w-md mx-auto">
 
         {/* Header */}
         <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">

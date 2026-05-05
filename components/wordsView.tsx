@@ -17,8 +17,8 @@ export default function WordsView({ words }: { words: Word[] }) {
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 px-6 py-10">
-      <div className=" mt-9 lg:mt-0 max-w-3xl mx-auto">
+    <div className="bg-slate-50 px-4 md:px-6 py-6 md:py-10 pt-20 md:pt-10">
+  <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="flex items-end justify-between mb-6">
           <div>

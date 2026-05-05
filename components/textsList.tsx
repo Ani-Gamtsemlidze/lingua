@@ -14,8 +14,8 @@ export default function TextsList({ textData }: { textData: textData[] }) {
     setShowModal(true);
   }
   return (
-    <div className="min-h-screen bg-slate-50 px-6 py-10">
-      <div className="max-w-xl mx-auto">
+    <div  className="bg-slate-50 px-4 md:px-6 py-6 md:py-10 pt-20 md:pt-10">
+      <div className=" mt-8 md:mt-0 max-w-xl mx-auto">
 
         {/* Header */}
         <div className="flex items-end justify-between mb-6">
@@ -54,7 +54,7 @@ export default function TextsList({ textData }: { textData: textData[] }) {
             </p>
           </div>
         ) : (
-          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+          <div className="bg-white overflow-y-auto max-h-80 rounded-xl border border-slate-200 overflow-hidden">
             <ul className="flex flex-col">
               {textData.map((text, index) => (
                 <li
@@ -84,21 +84,21 @@ export default function TextsList({ textData }: { textData: textData[] }) {
                   >
                     <BiX className="w-4 h-4" />
                   </button>
-                  <Modal 
-                  show={showModal}
-                  
-                  onClose={() => setShowModal(false)}
-                  handleDelete={() => {
-                    if (selectedTextId !== null) {
-                      deleteText(selectedTextId);
-                    }
-                    setShowModal(false);
-                  }}
-                  title="Delete this text?"
-                  />
                 </li>
               ))}
             </ul>
+              <Modal 
+              show={showModal}
+              
+              onClose={() => setShowModal(false)}
+              handleDelete={() => {
+                if (selectedTextId !== null) {
+                  deleteText(selectedTextId);
+                }
+                setShowModal(false);
+              }}
+              title="Delete this text?"
+              />
           </div>
         )}
       </div>

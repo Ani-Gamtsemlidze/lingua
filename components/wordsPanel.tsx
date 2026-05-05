@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { GiCancel, GiSparkles } from "react-icons/gi";
+import { GoSidebarCollapse, GoSidebarExpand } from "react-icons/go";
 
 export default function WordsPanel({
   activeWord,
@@ -12,6 +14,9 @@ export default function WordsPanel({
   handleSave,
   handleUpdate,
   panelMode,
+  togglePanel,
+  setIsWordsOpen,
+  isWordsOpen,
 }: {
   activeWord: string | null;
   textLanguage: string;
@@ -24,11 +29,21 @@ export default function WordsPanel({
   handleSave: () => void;
   handleUpdate: () => void;
   panelMode: "new" | "saved";
+  togglePanel: () => void;
 }) {
+  // const [isWordsOpen, setIsWordsOpen] = useState(true);
   return (
-    <div className="bg-slate-50 flex flex-col">
+    <div
+      className={`bg-slate-50 flex flex-col transition-all duration-300
+  ${isWordsOpen ? "w-80" : "w-10 md:w-12"}`}
+    >
+      <button className="flex " onClick={() => setIsWordsOpen(!isWordsOpen)}>
+        {isWordsOpen ? <GoSidebarCollapse className="text-slate-700" /> : <GoSidebarExpand className="text-slate-700" />}
+      </button>
       {!activeWord ? (
-        <div className="flex-1 flex flex-col items-center justify-center gap-3 p-6 text-center">
+        <div
+          className={` ${!isWordsOpen && "hidden"} flex-1 flex flex-col items-center justify-center gap-3 p-6 text-center `}
+        >
           <div className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
               <path

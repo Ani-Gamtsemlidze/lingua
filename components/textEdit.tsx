@@ -8,6 +8,8 @@ import { toast } from "sonner";
 import WordsPanel from "./wordsPanel";
 import ReaderPanel from "./readerPanel";
 import { TokenWithTranslation } from "@/app/(content)/reader/[id]/page";
+import WordsPanelDesktop from "./WordsPanelDesktop";
+import WordsPanelMobile from "./WordsPanelMobile";
 
 export default function TextEdit({
   matchWords,
@@ -30,9 +32,13 @@ export default function TextEdit({
   const [loadingTranslation, setLoadingTranslation] = useState(false);
   const [panelMode, setPanelMode] = useState<"new" | "saved">("new");
   const [textTitle, setTextTitle] = useState("");
-
+  const [isWordsOpen, setIsWordsOpen] = useState(true);
   const savedCount = matchWords.filter((w) => w.translation).length;
   const totalWords = matchWords.filter((w) => !w.isEmpty).length;
+
+  function togglePanel() {
+    setIsWordsOpen(!isWordsOpen);
+  }
 
   async function handleWordClick(token: string) {
     const cleanWord = token.replace(/[^\p{L}\p{N}']/gu, "");
@@ -66,13 +72,11 @@ export default function TextEdit({
       toast.error("Translation is required");
       return;
     }
-
     const formData = new FormData();
     formData.set("word", activeWord);
     formData.set("translation", aiTranslation);
     formData.set("note", note);
     formData.set("language", textLanguage);
-
     await addWord(formData);
     toast.success("Word saved!");
     handleClose();
@@ -87,8 +91,6 @@ export default function TextEdit({
     formData.set("word", activeWord);
     formData.set("note", note);
     formData.set("translation", aiTranslation);
-    // formData.set("language", textLanguage);
-
     await updateWord(formData);
     toast.success("Word updated!");
   }
@@ -124,9 +126,22 @@ export default function TextEdit({
     setLoadingTranslation(false);
   }
 
+  const wordsPanelProps = {
+    activeWord,
+    textLanguage,
+    handleClose,
+    aiTranslation,
+    setAiTranslation,
+    note,
+    setNote,
+    loadingTranslation,
+    handleSave,
+    panelMode,
+    handleUpdate: handleUpdateWord,
+  };
 
   return (
-    <div className="min-h-screen bg-slate-50 px-6 py-10">
+    <div className="bg-slate-50 px-4 md:px-6 pt-20 md:pt-10 pb-6 md:pb-10">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="flex items-start justify-between mb-6">
@@ -141,10 +156,10 @@ export default function TextEdit({
                 defaultValue={userText.title}
                 onChange={(e) => setTextTitle(e.target.value)}
                 className="w-full rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm text-slate-800
-  focus:outline-none focus:ring-2 focus:ring-slate-400"
+                  focus:outline-none focus:ring-2 focus:ring-slate-400"
               />
             ) : (
-              <h1 className="text-2xl font-semibold text-slate-800 tracking-tight">
+              <h1 className="text-xl md:text-2xl font-semibold text-slate-800 tracking-tight">
                 {userText.title}
               </h1>
             )}
@@ -157,7 +172,7 @@ export default function TextEdit({
           </div>
           <button
             onClick={() => setIsEditMode(!isEditMode)}
-            className={`mt-1 flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-lg border transition-all cursor-pointer
+            className={`mt-1 flex items-center gap-2 text-xs font-semibold px-3 md:px-4 py-2 rounded-lg border transition-all cursor-pointer
               ${
                 isEditMode
                   ? "bg-slate-800 text-white border-slate-800"
@@ -183,7 +198,7 @@ export default function TextEdit({
             <input type="hidden" name="title" value={textTitle} />
             <textarea
               name="content"
-              rows={12}
+              rows={10}
               defaultValue={userText.content
                 .replace(/\n/g, " ")
                 .replace(/\s+/g, " ")
@@ -209,35 +224,34 @@ export default function TextEdit({
             </div>
           </form>
         ) : (
-          <div className="grid grid-cols-[1fr_280px] gap-0 rounded-xl border border-slate-200 overflow-hidden">
-            {/* Reader */}
-            <ReaderPanel
-              savedCount={savedCount}
-              activeWord={activeWord}
-              totalWords={totalWords}
-              handleMouseUp={handleMouseUp}
-              matchWords={matchWords}
-              setActiveWord={setActiveWord}
-              setAiTranslation={setAiTranslation}
-              setNote={setNote}
-              handleWordClick={handleWordClick}
-              setPanelMode={setPanelMode}
-            />
-
-            <WordsPanel
-              activeWord={activeWord}
-              textLanguage={textLanguage}
-              handleClose={handleClose}
-              aiTranslation={aiTranslation}
-              setAiTranslation={setAiTranslation}
-              note={note}
-              setNote={setNote}
-              loadingTranslation={loadingTranslation}
-              handleSave={handleSave}
-              panelMode={panelMode}
-              handleUpdate={handleUpdateWord}
-            />
-          </div>
+          <>
+            <div
+              className={`grid grid-cols-1 md:grid-cols-[1fr_auto] gap-0 rounded-xl border border-slate-200 overflow-hidden`}
+            >
+              <ReaderPanel
+                savedCount={savedCount}
+                activeWord={activeWord}
+                totalWords={totalWords}
+                handleMouseUp={handleMouseUp}
+                matchWords={matchWords}
+                setActiveWord={setActiveWord}
+                setAiTranslation={setAiTranslation}
+                setNote={setNote}
+                handleWordClick={handleWordClick}
+                setPanelMode={setPanelMode}
+              />
+              <div className="hidden md:block">
+                <WordsPanelDesktop
+                  isOpen={isWordsOpen}
+                  setIsOpen={setIsWordsOpen}
+                  {...wordsPanelProps}
+                />
+              </div>
+              {activeWord && (
+                <WordsPanelMobile onClose={handleClose} {...wordsPanelProps} />
+              )}{" "}
+            </div>
+          </>
         )}
       </div>
     </div>

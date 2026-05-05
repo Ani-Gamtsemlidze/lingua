@@ -4,7 +4,7 @@ import SidebarItem from "./sidebarItem";
 import { Logo } from "./logo";
 import UserInfo from "./UserInfo";
 import LanguageSwitcher from "./languageSwitcher";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GiCancel } from "react-icons/gi";
 import { BiMenu } from "react-icons/bi";
 
@@ -14,10 +14,14 @@ export default function Sidebar({ userName, activeLanguage }: {
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+  document.body.style.overflow = isOpen ? "hidden" : "auto";
+}, [isOpen]);
+
   return (
     <>
-      <div className="lg:hidden fixed top-0 left-0 right-0 h-14 bg-slate-800 border-b border-slate-700
-        flex items-center justify-between px-4 z-40">
+      <div className="md:hidden fixed top-0 left-0 right-0 h-14 bg-slate-800 border-b border-slate-700
+        flex items-center justify-between px-4 z-30">
         <Link href="/words">
           <Logo />
         </Link>
@@ -31,16 +35,16 @@ export default function Sidebar({ userName, activeLanguage }: {
 
       {isOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black/50 z-40"
+          className="md:hidden fixed inset-0 bg-black/50 z-40"
           onClick={() => setIsOpen(false)}
         />
       )}
 
       <aside className={`
-        fixed lg:relative top-0 left-0 h-full z-50
-        w-64 lg:w-52 bg-slate-800 flex flex-col
-        transition-transform duration-300 ease-in-out
-        ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+        fixed md:relative top-0 left-0 h-full md:h-auto z-50
+        w-64 md:w-52 bg-slate-800 flex flex-col
+        transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]
+        ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
       `}>
 
         <div className="h-14 flex items-center justify-between px-5 border-b border-slate-700 shrink-0">
@@ -49,7 +53,7 @@ export default function Sidebar({ userName, activeLanguage }: {
           </Link>
           <button
             onClick={() => setIsOpen(false)}
-            className="lg:hidden text-slate-400 hover:text-white transition-colors cursor-pointer"
+            className="md:hidden text-slate-400 hover:text-white transition-colors cursor-pointer"
           >
             <GiCancel className="w-4 h-4" />
           </button>
@@ -73,7 +77,7 @@ export default function Sidebar({ userName, activeLanguage }: {
 
         {/* User */}
         <div className="px-3 py-4 border-t border-slate-700 shrink-0">
-          <UserInfo userName={userName} />
+          <UserInfo onNavigate={() => setIsOpen(false)} userName={userName} />
         </div>
       </aside>
     </>

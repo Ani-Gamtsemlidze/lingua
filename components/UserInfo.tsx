@@ -8,7 +8,7 @@ import { BiLogOut } from "react-icons/bi";
 import { CiSettings } from "react-icons/ci";
 // import { Settings, LogOut } from "lucide-react";
 
-export default function UserInfo({ userName }: { userName?: string  }) {
+export default function UserInfo({ userName, onNavigate }: { userName?: string; onNavigate?: () => void  }) {
   const { data } = useSession();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -70,7 +70,7 @@ export default function UserInfo({ userName }: { userName?: string  }) {
         <div className="rounded-xl border border-slate-700 bg-slate-800 overflow-hidden shadow-xl shadow-black/30">
 
           {/* Menu items */}
-          <div className="py-1">
+          <div onClick={onNavigate} className="py-1">
             <Link href="/settings"
               onClick={() => setOpen(false)}
               className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-slate-700 transition-colors"

@@ -37,7 +37,7 @@ export default function ReaderPanel({
       </div>
       <div
         onMouseUp={handleMouseUp}
-        className="px-4 py-8 leading-8 text-sm text-slate-700 overflow-y-auto max-h-[480px] overflow-x-hidden"
+        className="px-4 py-4 leading-8 text-sm text-slate-700 overflow-y-auto max-h-[480px] overflow-x-hidden"
       >
         {matchWords.map((t, i) => (
           <span
@@ -63,6 +63,7 @@ export default function ReaderPanel({
                 return;
               }
               handleWordClick(t.token);
+              setPanelMode("new")
             }}
           >
             {t.token}
