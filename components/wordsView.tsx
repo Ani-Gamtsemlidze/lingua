@@ -18,8 +18,7 @@ export default function WordsView({ words }: { words: Word[] }) {
 
   return (
     <div className="min-h-screen bg-slate-50 px-6 py-10">
-      <div className="max-w-3xl mx-auto">
-
+      <div className=" mt-9 lg:mt-0 max-w-3xl mx-auto">
         {/* Header */}
         <div className="flex items-end justify-between mb-6">
           <div>
@@ -45,20 +44,32 @@ export default function WordsView({ words }: { words: Word[] }) {
 
         {/* Table */}
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-          <div className="grid grid-cols-5 items-center bg-slate-50 border-b border-slate-200 px-5 py-3 gap-5">
-            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Word</p>
-            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Translation</p>
-            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Note</p>
-            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Status</p>
+          <div className="hidden md:grid grid-cols-5 items-center bg-slate-50 border-b border-slate-200 px-5 py-3 gap-5">
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+              Word
+            </p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+              Translation
+            </p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+              Note
+            </p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+              Status
+            </p>
+            <WordSearch setQuery={setQuery} />
+          </div>
+          <div className="md:hidden px-4 py-3 border-b border-slate-200">
             <WordSearch setQuery={setQuery} />
           </div>
           <WordsList query={query} words={filteredWords} />
         </div>
-
       </div>
 
       {/* Modal */}
-      {isOpen && <WordAddForm closeModal={() => setIsOpen(false)} aiTranslation="" />}
+      {isOpen && (
+        <WordAddForm closeModal={() => setIsOpen(false)} aiTranslation="" />
+      )}
     </div>
   );
 }
