@@ -5,7 +5,6 @@ import { updateText, addWord, updateWord } from "@/app/action";
 import { BiCheck, BiPencil } from "react-icons/bi";
 import { getAITranslation } from "@/app/actions/ai";
 import { toast } from "sonner";
-import WordsPanel from "./wordsPanel";
 import ReaderPanel from "./readerPanel";
 import { TokenWithTranslation } from "@/app/(content)/reader/[id]/page";
 import WordsPanelDesktop from "./WordsPanelDesktop";
