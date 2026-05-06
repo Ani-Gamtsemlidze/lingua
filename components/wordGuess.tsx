@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { BiBookOpen } from "react-icons/bi";
 
-const roboto = Roboto({ weight: "400", subsets: ["latin"] });
+const roboto = Roboto({ weight: ["400", "500"], subsets: ["latin"] });
 
 export default function WordGuess({ data }: { data: Word[] }) {
   const {
@@ -36,68 +36,62 @@ export default function WordGuess({ data }: { data: Word[] }) {
   function handleClick(word: string) {
     if (clickedAnswer || !currentWord) return;
     setClickedAnswer(word);
+
     if (word === currentWord.word) handleCorrect();
     else handleWrong();
+
     setTimeout(() => {
       setClickedAnswer(null);
       next();
-    }, 800);
+    }, 850);
   }
 
   useEffect(() => {
     restart();
   }, [pathName, data]);
 
-  // Not enough words
   if (data.length < 5) {
     return (
-      <div className="flex w-full h-full items-center justify-center">
-        <div className="bg-white border border-slate-200 rounded-xl p-8 max-w-sm w-full text-center">
-          <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <BiBookOpen className="w-5 h-5 text-slate-400" />
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
+        <div className="bg-white border border-slate-200 rounded-3xl p-8 max-w-md w-full text-center">
+          <div className="mx-auto w-12 h-12 bg-slate-100 rounded-2xl flex items-center justify-center mb-5">
+            <BiBookOpen className="w-6 h-6 text-slate-400" />
           </div>
-          <h2 className="text-sm font-semibold text-slate-700 mb-1">
-            Not enough words yet
-          </h2>
-          <p className="text-xs text-slate-400 mb-6 leading-relaxed">
-            You need at least 5 words to play. Head to the reader, save some words and come back!
-          </p>
+          <h2 className="text-lg font-semibold text-slate-800 mb-2">Not enough words</h2>
+          <p className="text-slate-500 text-sm mb-7">Need at least 5 words to play</p>
           <Link
             href="/words"
-            className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700
-              text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors"
+            className="block bg-slate-900 hover:bg-black text-white font-medium py-3 rounded-2xl transition-all active:scale-95"
           >
-            Go to vocabulary
+            Go to Vocabulary
           </Link>
         </div>
       </div>
     );
   }
 
-  // Session complete
   if (isComplete) {
     return (
-      <div className="flex w-full h-full items-center justify-center">
-        <div className="bg-white border border-slate-200 rounded-xl p-8 max-w-sm w-full text-center">
-          <p className="text-2xl mb-4">🎉</p>
-          <h2 className="text-lg font-semibold text-slate-800 tracking-tight mb-1">
-            Session complete!
-          </h2>
-          <p className="text-xs text-slate-400 mb-6">Here's how you did</p>
-          <div className="flex justify-center gap-3 mb-6">
-            <span className="text-xs font-medium bg-green-50 text-green-700 border border-green-100 px-3 py-1.5 rounded-full">
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
+        <div className="bg-white border border-slate-200 rounded-3xl p-8 max-w-md w-full text-center">
+          <div className="text-5xl mb-4">🎉</div>
+          <h2 className="text-xl font-semibold text-slate-800 mb-1">Session Complete</h2>
+          <p className="text-slate-500 text-sm mb-6">Here&apos;s how you did</p>
+
+          <div className="flex gap-3 justify-center mb-8">
+            <div className="inline-flex items-center gap-1 bg-green-100 text-green-700 text-xs font-semibold px-2.5 py-1 rounded-full">
               {correct} correct
-            </span>
-            <span className="text-xs font-medium bg-red-50 text-red-700 border border-red-100 px-3 py-1.5 rounded-full">
+            </div>
+            <div className="inline-flex items-center gap-1 bg-amber-100 text-amber-700 text-xs font-semibold px-2.5 py-1 rounded-full">
               {wrong} wrong
-            </span>
+            </div>
           </div>
+
           <button
             onClick={restart}
-            className="w-full bg-slate-800 hover:bg-slate-700 active:bg-slate-900
-              transition-colors text-white text-sm font-medium py-2.5 rounded-lg cursor-pointer"
+            className="w-full bg-slate-900 hover:bg-black py-3.5 rounded-2xl text-white font-medium transition-all active:scale-95"
           >
-            Try again
+            Try Again
           </button>
         </div>
       </div>
@@ -105,95 +99,101 @@ export default function WordGuess({ data }: { data: Word[] }) {
   }
 
   return (
-    <div className="flex w-full h-full items-center justify-center">
-      <div className="w-[480px] flex flex-col gap-4">
-
-        {/* Top row */}
-        <div className="flex items-center justify-between min-h-7">
-          <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
-            Word guess
-          </p>
-          <div className="flex items-center gap-3">
-            {/* Pills — fade in when started */}
-            <div className={`flex gap-2 transition-opacity duration-300 ${hasStarted ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
-              <span className="text-xs font-medium bg-green-50 text-green-700 border border-green-100 px-2.5 py-1 rounded-full">
-                {correct} correct
-              </span>
-              <span className="text-xs font-medium bg-red-50 text-red-700 border border-red-100 px-2.5 py-1 rounded-full">
-                {wrong} wrong
-              </span>
-              <span className="text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200 px-2.5 py-1 rounded-full">
-                {session.length - index} left
-              </span>
-            </div>
-            <QuizFilter
-              filter={filter}
-              setFilter={setFilter}
-              filterCounts={filterCounts}
-              hasStarted={hasStarted}
-            />
-          </div>
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-2 py-4">
+      <div className="w-full max-w-[500px]">
+        <div className="flex justify-end mb-6">
+          <QuizFilter
+            filter={filter}
+            setFilter={setFilter}
+            filterCounts={filterCounts}
+            hasStarted={hasStarted}
+          />
         </div>
 
-        {/* Progress bar */}
-        <div className={`overflow-hidden transition-all duration-500 ${hasStarted ? "h-1.5" : "h-0"}`}>
-          <div className="h-full bg-slate-200 rounded-full overflow-hidden">
+        {hasStarted && (
+          <div className="h-1 bg-slate-700 rounded-full mb-8 overflow-hidden">
             <div
-              className="h-full bg-slate-700 rounded-full transition-all duration-500"
+              className="h-full bg-white transition-all duration-700"
               style={{ width: `${(index / session.length) * 100}%` }}
             />
           </div>
-        </div>
+        )}
 
-        {/* Card */}
-        {!currentWord ? (
-          <div className="bg-slate-800 flex flex-col items-center justify-center px-10 py-12 rounded-2xl gap-3">
-            <p className="text-slate-500 text-sm">Select a set and start guessing</p>
-          </div>
-        ) : (
-          <div className="bg-slate-800 flex flex-col items-center justify-center px-10 py-12 rounded-2xl">
-            <span className={`text-xs text-slate-500 uppercase tracking-widest ${roboto.className}`}>
-              What is the word for
-            </span>
-            <div className={`text-3xl text-slate-100 font-medium mt-3 tracking-tight ${roboto.className}`}>
-              {currentWord.translation}
+        {hasStarted && (
+          <div className="flex gap-2 flex-wrap mb-6">
+            <div className="inline-flex items-center gap-1 bg-green-100 text-green-700 text-xs font-semibold px-2.5 py-1 rounded-full">
+              {correct} correct
+            </div>
+            <div className="inline-flex items-center gap-1 bg-amber-100 text-amber-700 text-xs font-semibold px-2.5 py-1 rounded-full">
+              {wrong} wrong
+            </div>
+            <div className="inline-flex items-center gap-1 bg-slate-100 text-slate-600 text-xs font-semibold px-2.5 py-1 rounded-full">
+              {session.length - index} left
             </div>
           </div>
         )}
 
-        {/* Options */}
-        {currentWord && (
-          <div className="gap-2 grid grid-cols-2">
-            {options.map((word, i) => (
-              <div
-                key={i}
-                onClick={() => handleClick(word)}
-                className={`border py-3 px-4 rounded-xl cursor-pointer text-sm font-medium lowercase transition-colors
-                  ${clickedAnswer
-                    ? word === currentWord.word
-                      ? "bg-green-50 border-green-200 text-green-700"
-                      : word === clickedAnswer
-                        ? "bg-red-50 border-red-200 text-red-700"
-                        : "bg-white border-slate-200 text-slate-400"
-                    : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300"
-                  }`}
-              >
-                {word}
+        {!currentWord ? (
+          <div className="flex items-center justify-center">
+            <div className="bg-slate-700 rounded-3xl p-10 sm:p-12 text-center text-white w-full max-w-[520px]">
+              <div className="w-14 h-14 mx-auto mb-5 bg-white/10 rounded-2xl flex items-center justify-center text-3xl">
+                🎯
               </div>
-            ))}
+              <p className="text-slate-200 text-[17px] font-medium">
+                Ready to start guessing?
+              </p>
+            </div>
           </div>
-        )}
+        ) : (
+          <>
+            <div className="bg-slate-700 rounded-3xl p-10 sm:p-10 text-center text-white">
+              <span className="uppercase text-[10px] tracking-[2px] text-slate-400 font-medium">
+                WHAT IS THE WORD FOR
+              </span>
+              <div
+                className={`mt-3 text-[26px] sm:text-[28px] leading-tight tracking-tight font-medium ${roboto.className}`}
+              >
+                {currentWord.translation}
+              </div>
+            </div>
 
-        {/* Skip */}
-        {currentWord && (
-          <div className="flex justify-start">
-            <button
-              onClick={() => { setClickedAnswer(null); next(); }}
-              className="text-sm text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
-            >
-              Skip →
-            </button>
-          </div>
+            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {options.map((word, i) => (
+                <button
+                  key={i}
+                  onClick={() => handleClick(word)}
+                  disabled={!!clickedAnswer}
+                  className={`
+                    py-[10px] px-4 text-[15.5px] font-medium border-2 rounded-2xl text-left
+                    transition-all active:scale-[0.985]
+                    ${
+                      clickedAnswer
+                        ? word === currentWord.word
+                          ? "bg-green-100 border-green-600 text-green-800"
+                          : word === clickedAnswer
+                            ? "bg-red-100 border-red-600 text-red-800"
+                            : "bg-white border-slate-200 text-slate-400"
+                        : "bg-white border-slate-200 hover:border-slate-300 text-slate-700"
+                    }
+                  `}
+                >
+                  {word}
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-6 text-center">
+              <button
+                onClick={() => {
+                  setClickedAnswer(null);
+                  next();
+                }}
+                className="text-sm text-slate-400 hover:text-slate-500 transition-colors"
+              >
+                Skip →
+              </button>
+            </div>
+          </>
         )}
       </div>
     </div>
