@@ -32,13 +32,13 @@ export default function FlashCard({ userWords }: { userWords: Word[] }) {
   } = useFlashCard(userWords);
 
   useEffect(() => {
-      if (!isComplete) return;
+    if (!isComplete) return;
     handleNextSession();
   }, [userWords]);
 
   if (isComplete) {
     return (
-      <div className="flex flex-col items-center gap-6 text-center">
+      <div className="flex flex-col items-center gap-6 text-center px-4">
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
             Session complete
@@ -49,19 +49,20 @@ export default function FlashCard({ userWords }: { userWords: Word[] }) {
         </div>
 
         <div className="flex gap-3">
-          <div className="bg-green-50 border border-green-100 text-green-700 px-6 py-4 rounded-xl text-center">
+          <div className="bg-green-50 border border-green-100 text-green-700 px-4 sm:px-6 py-4 rounded-xl text-center">
             <p className="text-2xl font-semibold">{stats.known}</p>
             <p className="text-xs font-medium text-green-500 mt-0.5">Known</p>
           </div>
-          <div className="bg-amber-50 border border-amber-100 text-amber-700 px-6 py-4 rounded-xl text-center">
+          <div className="bg-amber-50 border border-amber-100 text-amber-700 px-4 sm:px-6 py-4 rounded-xl text-center">
             <p className="text-2xl font-semibold">{stats.fuzzy}</p>
             <p className="text-xs font-medium text-amber-500 mt-0.5">Fuzzy</p>
           </div>
-          <div className="bg-red-50 border border-red-100 text-red-700 px-6 py-4 rounded-xl text-center">
+          <div className="bg-red-50 border border-red-100 text-red-700 px-4 sm:px-6 py-4 rounded-xl text-center">
             <p className="text-2xl font-semibold">{stats.learning}</p>
             <p className="text-xs font-medium text-red-400 mt-0.5">Learning</p>
           </div>
         </div>
+
         {userWords.filter((word) => word.status !== "known").length > 3 ? (
           <button
             onClick={handleNextSession}
@@ -84,7 +85,7 @@ export default function FlashCard({ userWords }: { userWords: Word[] }) {
 
   if (userWords.length === 0) {
     return (
-      <div className="flex flex-col items-center gap-3 text-center">
+      <div className="flex flex-col items-center gap-3 text-center px-4">
         <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
           Study
         </p>
@@ -95,20 +96,19 @@ export default function FlashCard({ userWords }: { userWords: Word[] }) {
       </div>
     );
   }
+
   if (!currentWord) {
     return (
-      <div className="flex flex-col items-center gap-3 text-center">
+      <div className="flex flex-col items-center gap-3 text-center px-4">
         <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
           Study
         </p>
         <h2 className="text-xl font-semibold text-slate-800">
           You're all caught up 🎉
         </h2>
-
         <p className="text-sm text-slate-400">
           No words left to review right now.
         </p>
-
         <Link
           href={"/words"}
           className="mt-2 px-4 py-2 rounded-md bg-slate-800 text-white text-sm"
@@ -120,7 +120,7 @@ export default function FlashCard({ userWords }: { userWords: Word[] }) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center gap-6">
+    <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 w-full px-4">
       {/* Progress */}
       <ProgressBar
         knownWidth={knownWidth}
@@ -132,7 +132,7 @@ export default function FlashCard({ userWords }: { userWords: Word[] }) {
       {/* Card */}
       <div
         key={cardKey}
-        className={`relative w-[460px] h-[260px] [perspective:1000px] cursor-pointer ${
+        className={`relative w-full max-w-[460px] h-[280px] sm:h-[260px] [perspective:1000px] cursor-pointer ${
           isExiting
             ? exitDirection === "left"
               ? "card-exit-left"
@@ -153,8 +153,10 @@ export default function FlashCard({ userWords }: { userWords: Word[] }) {
           } [transform-style:preserve-3d]`}
         >
           {/* Front */}
-          <div className="absolute w-full h-full [backface-visibility:hidden] flex items-center justify-center flex-col  bg-[#2d3f55] rounded-2xl gap-3">
-            <h2 className={`text-white text-4xl ${archivoBlack.className}`}>
+          <div className="absolute w-full h-full [backface-visibility:hidden] flex items-center justify-center flex-col bg-[#2d3f55] rounded-2xl gap-3 px-6">
+            <h2
+              className={`text-white text-3xl sm:text-4xl text-center break-words ${archivoBlack.className}`}
+            >
               {currentWord?.word}
             </h2>
             <span className="text-slate-400 flex items-center gap-1.5 text-xs">
@@ -164,17 +166,19 @@ export default function FlashCard({ userWords }: { userWords: Word[] }) {
           </div>
 
           {/* Back */}
-          <div className="absolute w-full h-full rotate-y-180 [backface-visibility:hidden] flex items-center justify-center flex-col bg-[#2d3f55] rounded-2xl gap-2">
+          <div className="absolute w-full h-full rotate-y-180 [backface-visibility:hidden] flex items-center justify-center flex-col bg-[#2d3f55] rounded-2xl gap-2 px-6">
             <span
               className={`text-slate-400 text-xs uppercase tracking-widest ${roboto.className}`}
             >
               Translation
             </span>
-            <h2 className={`text-white text-xl ${roboto.className}`}>
+            <h2
+              className={`text-white text-lg sm:text-xl text-center break-words ${roboto.className}`}
+            >
               {currentWord?.translation}
             </h2>
             {currentWord?.note && (
-              <p className="text-slate-400 text-xs mt-1 px-8 text-center">
+              <p className="text-slate-400 text-xs mt-1 px-4 sm:px-8 text-center">
                 {currentWord.note}
               </p>
             )}

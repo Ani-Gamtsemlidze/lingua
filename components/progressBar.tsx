@@ -3,7 +3,7 @@ import { ProgressBarProps } from "@/types/words";
 export default function ProgressBar({ knownWidth, learningWidth, stats, cardsCount }: ProgressBarProps) {
 
   return (
-    <div className="w-[460px]">
+    <div className="w-full max-w-[460px]">
       <div className="flex justify-between text-xs mb-2">
         <span className="inline-flex items-center gap-1 bg-green-100 text-green-700 text-xs font-semibold px-2.5 py-1 rounded-full">{stats.known} learned</span>
  <span className="inline-flex items-center gap-1 bg-slate-100 text-slate-600 text-xs font-semibold px-2.5 py-1 rounded-full">

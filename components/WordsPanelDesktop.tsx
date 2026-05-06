@@ -33,10 +33,14 @@ export default function WordsPanelDesktop({
       <button
         onClick={() => setIsOpen((prev) => !prev)}
         className={`flex ${
-          !isOpen ? "justify-center" : "justify-end mr-2"
+          !isOpen ? "justify-center" : "justify-end"
         } py-3 hover:bg-slate-100`}
       >
-        {isOpen ? <GoSidebarCollapse /> : <GoSidebarExpand />}
+        {isOpen ? (
+          <GoSidebarCollapse className="text-slate-700 mr-2" />
+        ) : (
+          <GoSidebarExpand className="text-slate-700" />
+        )}
       </button>
 
       {isOpen && <WordsPanelContent {...props} />}
