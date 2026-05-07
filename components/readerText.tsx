@@ -12,7 +12,6 @@ export default function Reader({
   return (
     <div className="bg-slate-50 px-4 md:px-6 py-6 md:py-10 pt-20 md:pt-10">
   <div className="max-w-xl mx-auto">
-        {/* Header */}
         <div className="mb-8">
           <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
             Reader
@@ -34,7 +33,6 @@ export default function Reader({
           }}
           className="flex flex-col gap-5"
         >
-          {/* Title */}
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-semibold uppercase tracking-widest text-slate-400">
               Title
@@ -47,7 +45,6 @@ export default function Reader({
             />
           </div>
 
-          {/* Content */}
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-semibold uppercase tracking-widest text-slate-400">
               Text
@@ -61,7 +58,6 @@ export default function Reader({
             />
           </div>
 
-          {/* Submit */}
           {!initialText && (
             <div className="flex items-center justify-between pt-1">
               <p className="text-xs text-slate-400">

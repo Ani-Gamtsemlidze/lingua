@@ -12,10 +12,12 @@ export default async function reader() {
   const TextData = await sql`
     SELECT * FROM user_texts WHERE language = (SELECT active_language FROM users WHERE id = ${session?.user?.id}) AND user_id = ${session?.user?.id} ORDER BY created_at DESC 
  `;
+ const activeLanguageData = await sql`SELECT active_language FROM users WHERE id = ${session?.user?.id}`;
+ const activeLanguage = activeLanguageData[0]?.active_language || "english";
   return (
     <div className="">
 
-      <TextsList textData={TextData as textData[]} />
+      <TextsList textData={TextData as textData[]} activeLanguage={activeLanguage} />
     </div>
   );
 }

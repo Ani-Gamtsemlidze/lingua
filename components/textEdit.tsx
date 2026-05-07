@@ -47,17 +47,23 @@ export default function TextEdit({
     setNote("");
     setLoadingTranslation(true);
 
-    const result = await getAITranslation(cleanWord, textLanguage);
-    setAiTranslation(result.translation ?? "");
-    setNote(
-      result.example
-        ? result.exampleTranslation
-          ? `${result.example}\n${result.exampleTranslation}`
-          : result.example
-        : "",
-    );
-    setBaseWord(result.baseForm);
-    setLoadingTranslation(false);
+    try {
+      const result = await getAITranslation(cleanWord, textLanguage);
+      setAiTranslation(result.translation ?? "");
+      setNote(
+        result.example
+          ? result.exampleTranslation
+            ? `${result.example}\n${result.exampleTranslation}`
+            : result.example
+          : "",
+      );
+      setBaseWord(result.baseForm);
+    } catch (error) {
+      toast.error("AI translation unavailable, please type manually");
+      setLoadingTranslation(false);
+    } finally {
+      setLoadingTranslation(false);
+    }
   }
 
   function handleClose() {

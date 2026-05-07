@@ -19,7 +19,6 @@ export default function WordsView({ words }: { words: Word[] }) {
   return (
     <div className="bg-slate-50 px-4 md:px-6 py-6 md:py-10 pt-20 md:pt-10">
   <div className="max-w-3xl mx-auto">
-        {/* Header */}
         <div className="flex items-end justify-between mb-6">
           <div>
             <p className="text-[10px] md:text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
@@ -42,7 +41,6 @@ export default function WordsView({ words }: { words: Word[] }) {
           </button>
         </div>
 
-        {/* Table */}
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
           <div className="hidden md:grid grid-cols-5 items-center bg-slate-50 border-b border-slate-200 px-5 py-3 gap-5">
             <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
@@ -65,8 +63,6 @@ export default function WordsView({ words }: { words: Word[] }) {
           <WordsList query={query} words={filteredWords} />
         </div>
       </div>
-
-      {/* Modal */}
       {isOpen && (
         <WordAddForm closeModal={() => setIsOpen(false)} aiTranslation="" />
       )}

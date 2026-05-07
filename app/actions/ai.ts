@@ -1,16 +1,16 @@
 "use server";
 
 import { GoogleGenAI } from "@google/genai";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { sql } from "@/lib/db";
 
 const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
 
-export async function getAITranslation(
-  word: string,
-  language: string,
-) {
+export async function getAITranslation(word: string, language: string) {
   const isEnglish = language.toLowerCase() === "english";
   const response = await genAI.models.generateContent({
-    model: "gemini-3.1-flash-lite-preview",
+    model: "gemini-flash-latest",
     contents: `You are a language learning assistant.
     The word is: "${word}" 
     Language: ${language}
@@ -33,5 +33,50 @@ export async function getAITranslation(
     return parsed;
   } catch {
     return { translation: response.text ?? "" };
+  } 
+}
+
+export async function generateAIText(language: string,level: string, topic?: string) {
+  const prompt = `
+You are an expert language teacher creating materials for ${language} learners.
+Generate **one high-quality reading text** with the following requirements:
+- Target Language: ${language}
+- Level: ${level}
+- Topic: ${topic || "Everyday life and interesting situations"  }
+Rules:
+- Write between 130 and 180 words.
+- Use natural, correct ${language}.
+- Match vocabulary and grammar difficulty to the ${level} level.
+- Make the text engaging and slightly motivating.
+- Include useful vocabulary for learners.
+Return your response in this exact JSON format (nothing else):
+
+{
+  "title": "Short, catchy title in ${language}",
+  "content": "The full text here...",
+}
+`;
+const response = await genAI.models.generateContent({ model: "gemini-flash-latest", contents: prompt });
+ try {
+    const parsed = JSON.parse(response.text ?? "{}");
+    return parsed;
+  } catch {
+    return { translation: response.text ?? "" };
   }
+
+}
+
+export async function generateAndSaveText(language: string, level: string, topic?: string) {
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.id) {
+    throw new Error("Unauthorized");
+  }
+    const ai = await generateAIText(language, level, topic);
+
+   const result = await sql`
+    INSERT INTO user_texts (content,title, language, user_id) VALUES (${ai.content},${ai.title}, (SELECT active_language FROM users WHERE id = ${session?.user?.id}), ${session?.user?.id})
+    RETURNING id
+  `;
+  return result[0];
+
 }
