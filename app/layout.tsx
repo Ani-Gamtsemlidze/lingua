@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "flag-icons/css/flag-icons.min.css";
 import Provider from "@/components/sessionProvider";
 
 export const metadata: Metadata = {
@@ -10,7 +11,6 @@ export const metadata: Metadata = {
   title: "Lingua - Read, Save, Remember",
   description:
     "A language learning companion that helps you save and remember words as you read.",
-  viewport: "width=device-width, initial-scale=1",
 };
 
 const dmSans = DM_Sans({

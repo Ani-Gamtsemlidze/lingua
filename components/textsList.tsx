@@ -5,6 +5,7 @@ import Link from "next/link";
 import { BiBookOpen, BiPlus, BiX } from "react-icons/bi";
 import Modal from "./modal";
 import { useState } from "react";
+import { MdOutlineMenuBook } from "react-icons/md";
 
 export default function TextsList({ textData }: { textData: textData[] }) {
   const [showModal, setShowModal] = useState(false);
@@ -14,9 +15,8 @@ export default function TextsList({ textData }: { textData: textData[] }) {
     setShowModal(true);
   }
   return (
-    <div  className="bg-slate-50 px-4 md:px-6 py-6 md:py-10 pt-20 md:pt-10">
+    <div className="bg-slate-50 px-4 md:px-6 py-6 md:py-10 pt-20 md:pt-10">
       <div className=" mt-8 md:mt-0 max-w-xl mx-auto">
-
         {/* Header */}
         <div className="flex items-end justify-between mb-6">
           <div>
@@ -39,8 +39,6 @@ export default function TextsList({ textData }: { textData: textData[] }) {
             Add text
           </Link>
         </div>
-
-        {/* Empty state */}
         {textData.length === 0 ? (
           <div className="bg-white rounded-xl border border-slate-200 py-16 text-center">
             <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center mx-auto mb-3">
@@ -48,7 +46,10 @@ export default function TextsList({ textData }: { textData: textData[] }) {
             </div>
             <p className="text-sm font-medium text-slate-400">
               No texts yet.{" "}
-              <Link href="/reader/new" className="text-slate-600 underline underline-offset-2 hover:text-slate-800">
+              <Link
+                href="/reader/new"
+                className="text-slate-600 underline underline-offset-2 hover:text-slate-800"
+              >
                 Add your first one
               </Link>
             </p>
@@ -59,12 +60,12 @@ export default function TextsList({ textData }: { textData: textData[] }) {
               {textData.map((text, index) => (
                 <li
                   key={index}
-                  className="flex items-center gap-3 px-4 py-3.5 border-b border-slate-100 last:border-none hover:bg-slate-50 transition-colors group"
+                  className="flex cursor-pointer items-center gap-3 px-4 py-3.5 border-b border-slate-100 last:border-none hover:bg-slate-50 transition-colors group"
                 >
                   {/* Initial chip */}
                   <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0">
                     <span className="text-xs font-semibold text-slate-500">
-                      {text.title.charAt(0).toUpperCase()}
+                      <MdOutlineMenuBook className="w-4 h-4 object-cover text-slate-700" />
                     </span>
                   </div>
 
@@ -87,9 +88,8 @@ export default function TextsList({ textData }: { textData: textData[] }) {
                 </li>
               ))}
             </ul>
-              <Modal 
+            <Modal
               show={showModal}
-              
               onClose={() => setShowModal(false)}
               handleDelete={() => {
                 if (selectedTextId !== null) {
@@ -98,7 +98,7 @@ export default function TextsList({ textData }: { textData: textData[] }) {
                 setShowModal(false);
               }}
               title="Delete this text?"
-              />
+            />
           </div>
         )}
       </div>

@@ -60,22 +60,20 @@ export default function Sidebar({ userName, activeLanguage }: {
         </div>
 
         <nav className="flex-1 px-3 py-5 flex flex-col gap-1">
-          <SidebarItem label="words" onNavigate={() => setIsOpen(false)} />
           <SidebarItem label="reader" onNavigate={() => setIsOpen(false)} />
+          <SidebarItem label="words" onNavigate={() => setIsOpen(false)} />
           <SidebarItem label="study" onNavigate={() => setIsOpen(false)} />
         </nav>
 
-        {/* Language switcher */}
         <div className="px-3 py-3 border-t border-slate-700 shrink-0">
           <p className="text-xs font-semibold uppercase tracking-widest text-slate-600 mb-2 px-1">
-            Studying
+            target language
           </p>
           <LanguageSwitcher
             activeLanguage={activeLanguage}
           />
         </div>
 
-        {/* User */}
         <div className="px-3 py-4 border-t border-slate-700 shrink-0">
           <UserInfo onNavigate={() => setIsOpen(false)} userName={userName} />
         </div>
