@@ -35,14 +35,12 @@ export default function LoginPage() {
         <p className="text-xs text-slate-700">© 2026 Lingua</p>
       </div>
 
-      {/* Right — white form */}
-      <div className="flex flex-1 items-center justify-center px-8 bg-white">
+      <div className="flex flex-1 items-center justify-center px-8 bg-slate-50">
         <div className="w-full max-w-sm">
 
-          {/* Mobile brand */}
-          <p className="lg:hidden text-sm font-medium text-slate-500 tracking-widest uppercase mb-8">
-            Lingua
-          </p>
+          <div className="lg:hidden text-sm font-medium text-slate-500 tracking-widest uppercase mb-4">
+            <Logo isLogin={true} />
+          </div>
 
           <h1 className="text-2xl font-semibold text-slate-800 tracking-tight mb-1">
             Welcome back

@@ -2,7 +2,7 @@ import { Nunito } from "next/font/google";
 
 const nunito = Nunito({ weight: "900", subsets: ["latin"] });
 
-export function Logo() {
+export function Logo({ isLogin }: { isLogin?: boolean }) {
   return (
     <div className="flex items-center gap-2">
       <svg width="30" height="30" viewBox="0 0 58 58" fill="none">
@@ -39,7 +39,7 @@ export function Logo() {
         <ellipse cx="36" cy="49.5" rx="3" ry="1.5" fill="#AFA9EC" />
       </svg>
         <span
-          className={`${nunito.className} text-2xl text-[#fff] tracking-tight`}
+          className={`${nunito.className} ${isLogin && 'text-slate-500' } text-[#fff] tracking-tight`}
         >
           lingua
         </span>
