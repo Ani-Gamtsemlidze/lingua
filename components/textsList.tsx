@@ -22,6 +22,8 @@ export default function TextsList({
   const [showModal, setShowModal] = useState(false);
   const [generateModal, setGenerateModal] = useState(false);
   const [selectedTextId, setSelectedTextId] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   // const [showModal, setShowModal] = useState(false);
   const router = useRouter();
   function handleDeleteText(id: number) {
@@ -31,12 +33,15 @@ export default function TextsList({
 
   const handleGenerate = async (level: string, topic: string) => {
     try {
+      setIsLoading(true);
       const result = await generateAndSaveText(activeLanguage, level, topic);
       setGenerateModal(false);
       router.push(`/reader/${result.id}`);
     } catch (error) {
       toast.error("Failed to generate text, please try again");
-    }
+    } finally {
+    setIsLoading(false);
+  }
   };
 
   return (
@@ -164,6 +169,7 @@ export default function TextsList({
         open={generateModal}
         onClose={() => setGenerateModal(false)}
         onGenerate={handleGenerate}
+        isLoading={isLoading}
       />
     </div>
   );

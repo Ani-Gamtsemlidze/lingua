@@ -8,6 +8,7 @@ type Props = {
   open: boolean;
   onClose: () => void;
   onGenerate: (level: string, topic: string) => void;
+  isLoading: boolean;
 };
 
 const LEVELS = [
@@ -21,6 +22,7 @@ export default function GenerateTextModal({
   open,
   onClose,
   onGenerate,
+  isLoading,
 }: Props) {
   const [level, setLevel] = useState("A1");
   const [topic, setTopic] = useState("");
@@ -55,11 +57,14 @@ export default function GenerateTextModal({
               Generate a text
             </h2>
           </div>
-          <button onClick={() => {
-            onClose();
-            setTopic("");
-            setLevel("A1");
-          }} className=" ">
+          <button
+            onClick={() => {
+              onClose();
+              setTopic("");
+              setLevel("A1");
+            }}
+            className=" "
+          >
             <TiDeleteOutline className="w-6 h-6 object-contain text-slate-700 hover:text-slate-600 cursor-pointer" />
           </button>
         </div>
@@ -114,8 +119,30 @@ export default function GenerateTextModal({
               className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 active:bg-slate-900
                 transition-colors text-white text-sm font-medium px-5 py-2.5 rounded-lg cursor-pointer"
             >
-              <GiSparkles className="w-3.5 h-3.5" />
-              Generate
+              {isLoading ? (
+                <svg
+                  className="w-3.5 h-3.5 animate-spin"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8z"
+                  />
+                </svg>
+              ) : (
+                <GiSparkles className="w-3.5 h-3.5" />
+              )}
+              {isLoading ? "Generating..." : "Generate"}
             </button>
           </div>
         </div>

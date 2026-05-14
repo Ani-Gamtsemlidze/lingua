@@ -10,7 +10,8 @@ export default function ReaderPanel({
   setAiTranslation,
   setNote,
   handleWordClick,
-  setPanelMode
+  setPanelMode,
+  loadingTranslation,
 }: ReaderPanelProps
 ) {
   return (
@@ -63,6 +64,7 @@ export default function ReaderPanel({
                 setPanelMode("saved")
                 return;
               }
+             if( loadingTranslation ) return;
               handleWordClick(t.token);
               setPanelMode("new")
             }}

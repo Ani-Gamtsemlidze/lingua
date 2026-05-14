@@ -14,20 +14,19 @@ export default function WordsPanelContent({
   if (!activeWord) {
     return (
       <div className="flex flex-1 items-center justify-center gap-3 p-6 text-center text-slate-400 text-xs">
-        Click any word<br />to save it
+        Click any word
+        <br />
+        to save it
       </div>
     );
   }
 
   return (
     <div className="flex flex-col flex-1">
-
       <div className="flex-1 flex flex-col gap-4 p-4">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-lg font-medium text-slate-800">
-              {activeWord}
-            </p>
+            <p className="text-lg font-medium text-slate-800">{activeWord}</p>
             <p className="text-xs text-slate-400 mt-0.5 capitalize">
               {textLanguage}
             </p>
@@ -61,16 +60,41 @@ export default function WordsPanelContent({
             )}
           </div>
 
-          <input
-            value={loadingTranslation ? "" : aiTranslation}
-            onChange={(e) => setAiTranslation(e.target.value)}
-            placeholder={loadingTranslation ? "Translating..." : "Add translation"}
-            disabled={loadingTranslation}
-            className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm
-              bg-white text-slate-800 placeholder-slate-300
-              focus:outline-none focus:ring-2 focus:ring-slate-400
-              transition disabled:opacity-50"
-          />
+          {loadingTranslation ? (
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-sm text-slate-500">
+                <svg
+                  className="animate-spin h-3.5 w-3.5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                <span>Translating...</span>
+              </div>
+              <div className="w-full h-[38px] rounded-lg bg-slate-100 animate-pulse" />
+            </div>
+          ) : (
+            <input
+              value={aiTranslation}
+              onChange={(e) => setAiTranslation(e.target.value)}
+              placeholder="Add translation"
+              className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm..."
+            />
+          )}
         </div>
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">
@@ -79,17 +103,45 @@ export default function WordsPanelContent({
               (optional)
             </span>
           </p>
-
-          <textarea
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-            placeholder="Example sentence or note…"
-            rows={3}
-            className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm
+          {loadingTranslation ? (
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-sm text-slate-500">
+                <svg
+                  className="animate-spin h-3.5 w-3.5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                <span>Translating...</span>
+              </div>
+              <div className="w-full h-[38px] rounded-lg bg-slate-100 animate-pulse" />
+            </div>
+          ) : (
+            <textarea
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              placeholder="Example sentence or note…"
+              rows={3}
+              className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm
               bg-white text-slate-800 placeholder-slate-300
               resize-none focus:outline-none focus:ring-2 focus:ring-slate-400
               transition min-h-36"
-          />
+            />
+          )}
         </div>
       </div>
 

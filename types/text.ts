@@ -15,4 +15,5 @@ export type ReaderPanelProps = {
   setNote: React.Dispatch<React.SetStateAction<string>>;
   handleWordClick: (word: string) => void;
   setPanelMode: React.Dispatch<React.SetStateAction<"new" | "saved">>;
+  loadingTranslation: boolean;
 };

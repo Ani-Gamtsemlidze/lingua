@@ -9,6 +9,8 @@ import ReaderPanel from "./readerPanel";
 import { TokenWithTranslation } from "@/app/(content)/reader/[id]/page";
 import WordsPanelDesktop from "./WordsPanelDesktop";
 import WordsPanelMobile from "./WordsPanelMobile";
+import { HiArrowLeft } from "react-icons/hi";
+import Link from "next/link";
 
 export default function TextEdit({
   matchWords,
@@ -151,6 +153,13 @@ export default function TextEdit({
         {/* Header */}
         <div className="flex items-start justify-between mb-6">
           <div>
+            <Link
+              href="/reader"
+              className="inline-flex mb-2 items-center gap-2 bg-violet-600 hover:bg-violet-700 transition-colors text-white text-xs font-extrabold px-4 py-2 rounded-full"
+            >
+              <HiArrowLeft className="w-3.5 h-3.5" />
+              Back
+            </Link>
             <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
               Reader
             </p>
@@ -164,9 +173,11 @@ export default function TextEdit({
                   focus:outline-none focus:ring-2 focus:ring-slate-400"
               />
             ) : (
-              <h1 className="text-xl md:text-2xl font-semibold text-slate-800 tracking-tight">
-                {userText.title}
-              </h1>
+              <div>
+                <h1 className="text-xl md:text-2xl font-semibold text-slate-800 tracking-tight">
+                  {userText.title}
+                </h1>
+              </div>
             )}
             {savedCount > 0 && (
               <p className="mt-1.5 text-xs text-slate-400 flex items-center gap-1.5">
@@ -244,6 +255,7 @@ export default function TextEdit({
                 setNote={setNote}
                 handleWordClick={handleWordClick}
                 setPanelMode={setPanelMode}
+                loadingTranslation={loadingTranslation}
               />
               <div className="hidden md:block">
                 <WordsPanelDesktop
