@@ -155,7 +155,7 @@ export default function TextEdit({
           <div>
             <Link
               href="/reader"
-              className="inline-flex mb-2 items-center gap-2 bg-violet-600 hover:bg-violet-700 transition-colors text-white text-xs font-extrabold px-4 py-2 rounded-full"
+              className="inline-flex mb-2 items-center gap-2 bg-slate-700 hover:bg-slate-800 transition-colors text-white text-xs font-extrabold px-4 py-2 rounded-full"
             >
               <HiArrowLeft className="w-3.5 h-3.5" />
               Back

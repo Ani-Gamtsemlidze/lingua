@@ -13,7 +13,7 @@ export default function SignupPage() {
       <div className="flex flex-1 items-center justify-center px-6 bg-slate-50">
         <div className="w-full max-w-sm">
           <div className="lg:hidden mb-6">
-            <Logo />
+            <Logo isLogin={true} />
           </div>
           <div className="lg:hidden flex flex-col gap-1 bg-slate-100 border border-slate-200 rounded-xl px-3 py-2.5 mb-6">
             <div className="flex items-center gap-2">
