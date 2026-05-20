@@ -3,13 +3,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { BiBookOpen, BiLibrary } from "react-icons/bi";
-import { BsLayers, BsPuzzle } from "react-icons/bs";
+import { BsLayers, BsPuzzle, BsChatDots } from "react-icons/bs";
 import { FaGraduationCap } from "react-icons/fa";
 
 const icons: Record<string, React.ReactNode> = {
   words: <BiLibrary className="w-4 h-4 shrink-0" />,
   reader: <BiBookOpen className="w-4 h-4 shrink-0" />,
   study: <FaGraduationCap className="w-4 h-4 shrink-0" />,
+  chat: <BsChatDots className="w-4 h-4 shrink-0" />,
 };
 
 const subItems: Record<

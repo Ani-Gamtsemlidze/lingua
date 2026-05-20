@@ -63,6 +63,7 @@ export default function Sidebar({ userName, activeLanguage }: {
           <SidebarItem label="reader" onNavigate={() => setIsOpen(false)} />
           <SidebarItem label="words" onNavigate={() => setIsOpen(false)} />
           <SidebarItem label="study" onNavigate={() => setIsOpen(false)} />
+          <SidebarItem label="chat" onNavigate={() => setIsOpen(false)} />
         </nav>
 
         <div className="px-3 py-3 border-t border-slate-700 shrink-0">
