@@ -12,8 +12,8 @@ export default function SettingsPage({ userName }: { userName: string }) {
   const [optimisticName, setOptimisticName] = useState(userName);
 
 
-  const displayName = userName || data?.user?.name || "John Doe";
-  const displayEmail = data?.user?.email || "user@example.com";
+  const displayName = userName ?? data?.user?.name ?? "John Doe";
+  const displayEmail = data?.user?.email ?? "user@example.com";
 
   const avatarUrl = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(
     displayName,
@@ -23,18 +23,14 @@ export default function SettingsPage({ userName }: { userName: string }) {
     <div className="min-h-screen bg-zinc-50 px-6 py-10">
       <div className=" md:mt-0 mt-8 max-w-md mx-auto">
 
-        {/* Header */}
         <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
           Settings
         </p>
         <h1 className="text-2xl font-semibold text-slate-800 tracking-tight mb-6">
           Account
         </h1>
-
-        {/* Account card */}
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden mb-4">
 
-          {/* Avatar row */}
           <div className="flex gap-3 items-center px-4 py-4 border-b border-slate-100">
             <Image
               className="rounded-full shrink-0"
@@ -79,7 +75,6 @@ export default function SettingsPage({ userName }: { userName: string }) {
           />
         </div>
 
-        {/* Danger zone card */}
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
           <div className="px-4 py-3 border-b border-slate-100">
             <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">

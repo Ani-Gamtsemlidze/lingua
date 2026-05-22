@@ -48,7 +48,7 @@ export default function Sidebar({ userName, activeLanguage }: {
       `}>
 
         <div className="h-14 flex items-center justify-between px-5 border-b border-slate-700 shrink-0">
-          <Link href="/words">
+          <Link href="/dashboard">
             <Logo />
           </Link>
           <button

@@ -27,7 +27,7 @@ export default async function ContentLayout({
   WHERE id = ${userId}
 `) as { username: string; active_language: string }[];
 
-  const username = user?.[0]?.username ?? "User";
+  const username = user?.[0]?.username ?? session?.user?.name ?? "John Doe";
   const activeLanguage = user?.[0]?.active_language ?? "english";
   return (
     <div

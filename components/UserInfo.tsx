@@ -27,10 +27,10 @@ export default function UserInfo({ userName, onNavigate }: { userName?: string; 
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+
   return (
     <div ref={ref} className="relative">
 
-      {/* Trigger — full-width row */}
       <button
         onClick={() => setOpen((prev) => !prev)}
         className={`w-full flex items-center gap-3 rounded-lg px-2 py-2 transition-colors cursor-pointer
@@ -58,7 +58,6 @@ export default function UserInfo({ userName, onNavigate }: { userName?: string; 
         </div>
       </button>
 
-      {/* Dropdown — opens upward */}
       <div
         className={`absolute bottom-full left-0 mb-2 w-52 transition-all duration-150 ${
           open
@@ -69,7 +68,6 @@ export default function UserInfo({ userName, onNavigate }: { userName?: string; 
       >
         <div className="rounded-xl border border-slate-700 bg-slate-800 overflow-hidden shadow-xl shadow-black/30">
 
-          {/* Menu items */}
           <div onClick={onNavigate} className="py-1">
             <Link href="/settings"
               onClick={() => setOpen(false)}
@@ -82,7 +80,7 @@ export default function UserInfo({ userName, onNavigate }: { userName?: string; 
 
           <div className="border-t border-slate-700 py-1">
             <button
-              onClick={() => signOut({ callbackUrl: "/login" })}
+              onClick={() => signOut({ callbackUrl: "/" })}
               className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-red-400 hover:bg-slate-700 transition-colors"
             >
               <BiLogOut className="w-4 h-4 shrink-0" />
