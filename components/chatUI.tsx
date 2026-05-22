@@ -29,19 +29,20 @@ export default function ChatUI({
 }) {
   const storageKey = `chat_history_${userName}`;
 
-  const [messages, setMessages] = useState<Message[]>(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      const saved = sessionStorage.getItem(storageKey);
-      return saved ? (JSON.parse(saved) as Message[]) : [];
-    } catch {
-      return [];
-    }
-  });
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem(storageKey);
+      if (saved) setMessages(JSON.parse(saved) as Message[]);
+    } catch {
+      // sessionStorage unavailable
+    }
+  }, [storageKey]);
 
   useEffect(() => {
     sessionStorage.setItem(storageKey, JSON.stringify(messages));
