@@ -3,10 +3,14 @@ import Link from "next/link";
 import { Logo } from "./logo";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const searchParams = useSearchParams();
+
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -14,7 +18,7 @@ export default function Login() {
       email,
       password,
       redirect: true,
-      callbackUrl: "/dashboard",
+      callbackUrl,
     });
   };
   return (
