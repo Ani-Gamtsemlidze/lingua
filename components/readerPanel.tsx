@@ -43,7 +43,7 @@ export default function ReaderPanel({
       <div
         onMouseUp={handleMouseUp}
         onTouchEnd={handleMouseUp}
-        className="flex-1 bg-slate-900 px-6 max-h-[500px] sm:px-8 py-8 leading-[2.2] text-[15px] text-slate-200 
+        className="flex-1 bg-slate-900 px-6  sm:px-8 py-8 leading-[2.2] text-[15px] text-slate-200 
           overflow-y-auto overflow-x-hidden selection:bg-violet-500/30"
       >
         {matchWords.map((t, i) => (
