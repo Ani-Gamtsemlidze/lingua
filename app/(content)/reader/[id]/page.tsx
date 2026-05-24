@@ -1,7 +1,7 @@
 import { sql } from "@/lib/db";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
-import TextEdit from "@/components/textEdit";
+import TextReader from "@/components/textReader";
 
 export interface TokenWithTranslation {
   token: string;
@@ -132,7 +132,7 @@ while (i < tokensWithTranslations.length) {
 }
 
   return (
-    <TextEdit
+    <TextReader
       userText={userText[0] as userText}
       matchWords={groupedTokens}
       textLanguage={userText[0].language}

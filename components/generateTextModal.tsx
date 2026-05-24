@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { GiSparkles, GiXylophone } from "react-icons/gi";
-import { TiDeleteOutline } from "react-icons/ti";
+import { HiSparkles, HiX } from "react-icons/hi";
 
 type Props = {
   open: boolean;
@@ -15,7 +14,7 @@ const LEVELS = [
   { value: "A1", label: "A1 — Beginner" },
   { value: "A2", label: "A2 — Elementary" },
   { value: "B1", label: "B1 — Intermediate" },
-  { value: "B2", label: "B2 — Upper intermediate" },
+  { value: "B2", label: "B2 — Upper Intermediate" },
 ];
 
 export default function GenerateTextModal({
@@ -27,52 +26,51 @@ export default function GenerateTextModal({
   const [level, setLevel] = useState("A1");
   const [topic, setTopic] = useState("");
 
+  const handleClose = () => {
+    onClose();
+    setTopic("");
+    setLevel("A1");
+  };
+
   if (!open) return null;
 
   return (
     <div
-      className="fixed inset-0 bg-slate-900/50 flex items-end md:items-center justify-center z-50"
-      onClick={() => {
-        onClose();
-        setTopic("");
-        setLevel("A1");
-      }}
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-end md:items-center justify-center z-50"
+      onClick={handleClose}
     >
       <div
-        className="w-full md:max-w-sm bg-white rounded-t-2xl md:rounded-xl border border-slate-200
-          shadow-xl p-6 max-h-[85dvh] overflow-y-auto"
+        className="w-full md:max-w-lg bg-slate-800 border border-slate-700 rounded-t-2xl md:rounded-2xl
+          shadow-2xl p-6 max-h-[85dvh] overflow-y-auto "
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="w-10 h-1 bg-slate-200 rounded-full mx-auto mb-4 md:hidden" />
-
         <div className="flex items-start justify-between mb-6">
           <div>
-            <div className="flex items-center gap-2 mb-1">
-              <GiSparkles className="w-4 h-4 text-slate-500" />
-              <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+            <div className="flex items-center gap-2 mb-2">
+              <HiSparkles className="w-5 h-5 text-violet-400" />
+              <p className="text-xs font-semibold uppercase tracking-wider text-violet-400">
                 AI Generate
               </p>
             </div>
-            <h2 className="text-xl font-semibold text-slate-800 tracking-tight">
-              Generate a text
-            </h2>
+            <h2 className="text-2xl font-bold text-white">Generate a Text</h2>
+            <p className="text-sm text-slate-400 mt-1">
+              Create a custom reading text at your level
+            </p>
           </div>
           <button
-            onClick={() => {
-              onClose();
-              setTopic("");
-              setLevel("A1");
-            }}
-            className=" "
+            onClick={handleClose}
+            className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg 
+              text-slate-400 hover:text-white hover:bg-slate-700 transition-all ml-3"
+            aria-label="Close"
           >
-            <TiDeleteOutline className="w-6 h-6 object-contain text-slate-700 hover:text-slate-600 cursor-pointer" />
+            <HiX className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold uppercase tracking-widest text-slate-400">
-              Level
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-3">
+              Language Level
             </label>
             <div className="grid grid-cols-2 gap-2">
               {LEVELS.map((l) => (
@@ -80,11 +78,11 @@ export default function GenerateTextModal({
                   key={l.value}
                   type="button"
                   onClick={() => setLevel(l.value)}
-                  className={`px-3 py-2 rounded-lg border text-sm font-medium transition-colors cursor-pointer text-left
+                  className={`px-4 py-3 rounded-xl border text-sm font-medium transition-all cursor-pointer
                     ${
                       level === l.value
-                        ? "bg-slate-800 text-white border-slate-800"
-                        : "bg-white text-slate-600 border-slate-200 hover:border-slate-300"
+                        ? "bg-violet-600 text-white border-violet-600 shadow-lg shadow-violet-500/20"
+                        : "bg-slate-900/50 text-slate-300 border-slate-600 hover:border-slate-500 hover:bg-slate-900"
                     }`}
                 >
                   {l.label}
@@ -92,57 +90,71 @@ export default function GenerateTextModal({
               ))}
             </div>
           </div>
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-3">
               Topic{" "}
-              <span className="normal-case tracking-normal font-normal text-slate-300">
-                (optional)
-              </span>
+              <span className="font-normal text-slate-500">(optional)</span>
             </label>
             <input
               value={topic}
               onChange={(e) => setTopic(e.target.value)}
-              placeholder="e.g. travel, food, daily life…"
-              className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800
-                placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition"
+              placeholder="e.g. travel, food, daily routines…"
+              className="w-full rounded-xl border border-slate-600 bg-slate-900/50 px-4 py-3 text-sm text-white
+                placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50 
+                focus:border-violet-500/50 transition-all"
             />
+            <p className="text-xs text-slate-500 mt-2">
+              💡 Leave blank for a random topic
+            </p>
           </div>
-          <div className="flex items-center justify-between pt-1">
+
+          <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-3 pt-2">
             <button
-              onClick={onClose}
-              className="text-sm text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+              onClick={handleClose}
+              disabled={isLoading}
+              className="flex-1 px-5 py-3 rounded-xl bg-slate-700/50 hover:bg-slate-700 
+                border border-slate-600 text-slate-300 hover:text-white text-sm font-medium 
+                transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Cancel
             </button>
             <button
               onClick={() => onGenerate(level, topic)}
-              className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 active:bg-slate-900
-                transition-colors text-white text-sm font-medium px-5 py-2.5 rounded-lg cursor-pointer"
+              disabled={isLoading}
+              className="flex-1 inline-flex items-center justify-center gap-2 bg-violet-600 hover:bg-violet-700 
+                active:bg-violet-800 text-white text-sm font-medium px-5 py-3 rounded-xl transition-all
+                hover:shadow-lg hover:shadow-violet-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
-                <svg
-                  className="w-3.5 h-3.5 animate-spin"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8v8z"
-                  />
-                </svg>
+                <>
+                  <svg
+                    className="w-4 h-4 animate-spin"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v8z"
+                    />
+                  </svg>
+                  <span>Generating...</span>
+                </>
               ) : (
-                <GiSparkles className="w-3.5 h-3.5" />
+                <>
+                  <HiSparkles className="w-4 h-4" />
+                  <span>Generate Text</span>
+                </>
               )}
-              {isLoading ? "Generating..." : "Generate"}
             </button>
           </div>
         </div>

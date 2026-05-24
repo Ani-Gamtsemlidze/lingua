@@ -1,8 +1,8 @@
-import Reader from "@/components/readerText";
+import AddText from "@/components/addText";
 
 export default function newText() {
     return ( 
-        <Reader textData={""} />
+        <AddText textData={""} />
     )
 
 }

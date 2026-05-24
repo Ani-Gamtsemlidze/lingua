@@ -27,19 +27,20 @@ export default function WordsPanelDesktop({
 }: WordsPanelDesktopProps) {
   return (
     <div
-      className={`bg-slate-50 flex flex-col transition-all duration-300
-      ${isOpen ? "w-64 lg:w-80" : "w-12"}`}
+      className={`bg-slate-900 border-l border-slate-700/40 flex flex-col transition-all duration-300
+      ${isOpen ? "w-80 lg:w-96 h-full" : "w-14"}`}
     >
       <button
         onClick={() => setIsOpen((prev) => !prev)}
         className={`flex ${
           !isOpen ? "justify-center" : "justify-end"
-        } py-3 hover:bg-slate-100`}
+        } py-4 px-3 hover:bg-slate-800/50 transition-colors border-b border-slate-700/40`}
+        aria-label={isOpen ? "Collapse panel" : "Expand panel"}
       >
         {isOpen ? (
-          <GoSidebarCollapse className="text-slate-700 mr-2" />
+          <GoSidebarCollapse className="text-slate-400 hover:text-white transition-colors w-5 h-5" />
         ) : (
-          <GoSidebarExpand className="text-slate-700" />
+          <GoSidebarExpand className="text-slate-400 hover:text-white transition-colors w-5 h-5" />
         )}
       </button>
 
