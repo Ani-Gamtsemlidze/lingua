@@ -11,27 +11,24 @@ export default function SettingsPage({ userName }: { userName: string }) {
 
   const [optimisticName, setOptimisticName] = useState(userName);
 
-
   const displayName = userName ?? data?.user?.name ?? "John Doe";
   const displayEmail = data?.user?.email ?? "user@example.com";
 
   const avatarUrl = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(
     displayName,
-  )}&backgroundColor=1e293b&color=ffffff`;
+  )}&backgroundColor=6366f1&color=ffffff`;
 
   return (
-    <div className="min-h-screen bg-zinc-50 px-6 py-10">
-      <div className=" md:mt-0 mt-8 max-w-md mx-auto">
-
-        <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
+    <div className="min-h-screen bg-slate-950 px-6 py-10">
+      <div className="md:mt-0 mt-8 max-w-md mx-auto">
+        <p className="text-xs font-semibold uppercase tracking-widest text-violet-400 mb-1">
           Settings
         </p>
-        <h1 className="text-2xl font-semibold text-slate-800 tracking-tight mb-6">
+        <h1 className="text-2xl font-semibold text-slate-50 tracking-tight mb-6">
           Account
         </h1>
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden mb-4">
-
-          <div className="flex gap-3 items-center px-4 py-4 border-b border-slate-100">
+        <div className="bg-slate-900/60 rounded-xl border border-slate-700 overflow-hidden mb-4">
+          <div className="flex gap-3 items-center px-4 py-4 border-b border-slate-700/40">
             <Image
               className="rounded-full shrink-0"
               unoptimized
@@ -41,8 +38,8 @@ export default function SettingsPage({ userName }: { userName: string }) {
               height={32}
             />
             <div className="min-w-0">
-              <p className="text-sm font-medium text-slate-800 truncate tracking-tight">
-                { optimisticName || displayName}
+              <p className="text-sm font-medium text-slate-100 truncate tracking-tight">
+                {optimisticName || displayName}
               </p>
               <p className="text-xs text-slate-400 truncate">{displayEmail}</p>
             </div>
@@ -75,9 +72,9 @@ export default function SettingsPage({ userName }: { userName: string }) {
           />
         </div>
 
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-          <div className="px-4 py-3 border-b border-slate-100">
-            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+        <div className="bg-slate-900/60 rounded-xl border border-slate-700 overflow-hidden">
+          <div className="px-4 py-3 border-b border-slate-700/40">
+            <p className="text-xs font-semibold uppercase tracking-widest text-red-400">
               Danger zone
             </p>
           </div>
@@ -90,7 +87,6 @@ export default function SettingsPage({ userName }: { userName: string }) {
             // onSuccess={null}
           />
         </div>
-
       </div>
     </div>
   );

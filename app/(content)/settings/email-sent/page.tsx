@@ -10,20 +10,19 @@ export default async function EmailSent() {
   const newEmail = result[0]?.pending_email;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-zinc-50 px-6">
-      <div className="bg-white border border-slate-200 rounded-xl px-10 py-10  max-w-sm w-full text-center">
-
-        <div className="w-12 h-12 bg-slate-100 border border-slate-200 rounded-full flex items-center justify-center mx-auto mb-5">
-          <MdOutlineAttachEmail className="w-5 h-5 text-slate-500" />
+    <div className="flex flex-col items-center justify-center min-h-screen bg-slate-950 px-6">
+      <div className="bg-slate-900/60 border border-slate-700 rounded-xl px-10 py-10 max-w-sm w-full text-center">
+        <div className="w-12 h-12 bg-violet-500/15 border border-violet-400/30 rounded-full flex items-center justify-center mx-auto mb-5">
+          <MdOutlineAttachEmail className="w-5 h-5 text-violet-400" />
         </div>
 
-        <h1 className="text-xl font-semibold text-slate-800 tracking-tight mb-2">
+        <h1 className="text-xl font-semibold text-slate-50 tracking-tight mb-2">
           Check your inbox
         </h1>
-        <p className="text-sm text-slate-400 mb-2 leading-relaxed">
+        <p className="text-sm text-slate-300 mb-2 leading-relaxed">
           We sent a confirmation link to
         </p>
-        <p className="text-sm font-medium text-slate-700 mb-8">
+        <p className="text-sm font-medium text-slate-100 mb-8">
           {newEmail}
         </p>
 
@@ -33,7 +32,7 @@ export default async function EmailSent() {
 
         <Link
           href="/settings"
-          className="text-sm text-slate-500 hover:text-slate-700 font-medium transition-colors"
+          className="text-sm text-slate-300 hover:text-slate-100 font-medium transition-colors"
         >
           ← Back to settings
         </Link>

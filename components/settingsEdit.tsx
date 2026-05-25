@@ -40,7 +40,7 @@ export default function SettingsEdit({
   const isDelete = buttonText === "delete";
 
   return (
-    <div className="flex items-center w-full justify-between border-b border-slate-100 px-4 py-4 last:border-none">
+    <div className="flex items-center w-full justify-between border-b border-slate-700/40 px-4 py-4 last:border-none">
       <Modal
         show={deleteButton}
         onClose={() => setDeleteButton(false)}
@@ -49,7 +49,7 @@ export default function SettingsEdit({
       />
 
       <div className="flex flex-col w-full gap-2">
-        <span className="text-sm font-medium text-slate-700">{title}</span>
+        <span className="text-sm font-medium text-slate-200">{title}</span>
 
         {editing ? (
           <form
@@ -103,8 +103,9 @@ export default function SettingsEdit({
               <input
                 name={type}
                 defaultValue={content}
-                className="text-sm text-slate-500 border border-slate-200 rounded-lg px-3 py-2
-                  focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition w-full"
+                className="text-sm text-slate-100 bg-slate-800/50 border border-slate-600 rounded-lg px-3 py-2
+                  focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all w-full
+                  hover:border-slate-500"
               />
             ) : (
               <div className="flex flex-col gap-2">
@@ -112,22 +113,25 @@ export default function SettingsEdit({
                   name="currentPassword"
                   type="password"
                   placeholder="Current password"
-                  className="text-sm text-slate-500 border border-slate-200 rounded-lg px-3 py-2
-                    focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition"
+                  className="text-sm text-slate-100 bg-slate-800/50 border border-slate-600 rounded-lg px-3 py-2
+                    placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent 
+                    transition-all hover:border-slate-500"
                 />
                 <input
                   name="newPassword"
                   type="password"
                   placeholder="New password"
-                  className="text-sm text-slate-500 border border-slate-200 rounded-lg px-3 py-2
-                    focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition"
+                  className="text-sm text-slate-100 bg-slate-800/50 border border-slate-600 rounded-lg px-3 py-2
+                    placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent 
+                    transition-all hover:border-slate-500"
                 />
                 <input
                   name="confirmPassword"
                   type="password"
                   placeholder="Confirm new password"
-                  className="text-sm text-slate-500 border border-slate-200 rounded-lg px-3 py-2
-                    focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition"
+                  className="text-sm text-slate-100 bg-slate-800/50 border border-slate-600 rounded-lg px-3 py-2
+                    placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent 
+                    transition-all hover:border-slate-500"
                 />
               </div>
             )}
@@ -135,16 +139,16 @@ export default function SettingsEdit({
             <div className="flex gap-2 mt-1">
               <button
                 type="submit"
-                className="py-1 px-3 text-sm font-medium border border-green-800 rounded-lg
-                  text-slate-800 hover:bg-slate-100 cursor-pointer transition-colors"
+                className="py-1 px-3 text-sm font-medium border-2 border-emerald-400/30 bg-emerald-500/15 rounded-lg
+                  text-emerald-200 hover:bg-emerald-500/25 hover:border-emerald-400/40 cursor-pointer transition-all"
               >
                 Save
               </button>
               <button
                 type="button"
                 onClick={() => setEditing(false)}
-                className="py-1 px-3 text-sm font-medium border border-slate-200 rounded-lg
-                  text-slate-500 hover:bg-slate-100 cursor-pointer transition-colors"
+                className="py-1 px-3 text-sm font-medium border border-slate-600 rounded-lg
+                  text-slate-300 hover:bg-slate-800/60 hover:border-slate-500 cursor-pointer transition-all"
               >
                 Cancel
               </button>
@@ -159,11 +163,11 @@ export default function SettingsEdit({
               onClick={() =>
                 isDelete ? setDeleteButton(true) : setEditing(true)
               }
-              className={`py-1 px-3 text-sm font-medium rounded-lg border cursor-pointer transition-colors
+              className={`py-1 px-3 text-sm font-medium rounded-lg border cursor-pointer transition-all
                 ${
                   isDelete
-                    ? "border-red-200 text-red-500 hover:bg-red-50"
-                    : "border-slate-200 text-slate-600 hover:bg-slate-100"
+                    ? "border-red-400/30 bg-red-500/15 text-red-200 hover:bg-red-500/25 hover:border-red-400/40"
+                    : "border-slate-600 text-slate-300 hover:bg-slate-800/60 hover:border-slate-500"
                 }`}
             >
               {buttonText}
