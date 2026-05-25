@@ -39,7 +39,7 @@ export default function TextsList({
       setGenerateModal(false);
       router.push(`/reader/${result.id}`);
     } catch (error) {
-      toast.error("Failed to generate text, please try again");
+      toast.error("Our AI tutor is currently busy. Please wait a moment and try again.");
     } finally {
       setIsLoading(false);
     }

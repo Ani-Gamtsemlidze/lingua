@@ -40,13 +40,16 @@ export default function SidebarItem({ label, onNavigate }: SidebarItemProps) {
       className={`
         flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium
         transition-all duration-200
-        ${isActive 
-          ? "bg-slate-800/60 text-white shadow-sm" 
-          : "text-slate-400 hover:text-white hover:bg-slate-800/40"
+        ${
+          isActive
+            ? "bg-slate-800/60 text-white shadow-sm"
+            : "text-slate-400 hover:text-white hover:bg-slate-800/40"
         }
       `}
     >
-      <span className={`${isActive ? colors[label] : "text-slate-500"} transition-colors`}>
+      <span
+        className={`${isActive ? colors[label] : "text-slate-500"} transition-colors`}
+      >
         {icons[label]}
       </span>
       <span>{displayLabel}</span>

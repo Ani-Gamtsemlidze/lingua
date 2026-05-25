@@ -61,7 +61,7 @@ export default function TextReader({
       );
       setBaseWord(result.baseForm);
     } catch (error) {
-      toast.error("AI translation unavailable, please type manually");
+      toast.error("Our AI tutor is currently busy. Please wait a moment and try again.");
       setLoadingTranslation(false);
     } finally {
       setLoadingTranslation(false);
