@@ -46,9 +46,6 @@ export function useChat(userName: string, activeLanguage: string) {
     }
   }, [messages]);
 
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, loading]);
 
   function clearChat() {
     skipNextSaveRef.current = true;
