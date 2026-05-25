@@ -32,25 +32,22 @@ export default function WordAddForm({
     <>
       <div
         onClick={closeModal}
-        className="fixed inset-0 z-50 flex items-end md:items-center md:justify-center bg-slate-900/50"
+        className="fixed inset-0 z-50 flex items-end md:items-center md:justify-center bg-slate-950/80 backdrop-blur-sm"
       >
         <div
           onClick={(e) => e.stopPropagation()}
-          className=" w-full
-  max-h-[85dvh] overflow-y-auto
-  bg-white border border-slate-200 shadow-xl p-6
-
-  rounded-t-2xl
-  md:rounded-xl md:max-w-md "
+          className="w-full max-h-[85dvh] overflow-y-auto
+            bg-slate-900 border border-slate-700 shadow-2xl p-6
+            rounded-t-2xl md:rounded-xl md:max-w-md"
         >
-      <div className="w-10 h-1 bg-slate-200 rounded-full mx-auto mb-4 md:hidden" />
-          {/* Header */}
+          <div className="w-10 h-1 bg-slate-700 rounded-full mx-auto mb-4 md:hidden" />
+
           <div className="flex items-center justify-between mb-6">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-0.5">
+              <p className="text-xs font-semibold uppercase tracking-widest text-violet-400 mb-0.5">
                 {showEdit ? "Edit word" : "New word"}
               </p>
-              <h2 className="text-xl font-semibold text-slate-800 tracking-tight">
+              <h2 className="text-xl font-semibold text-slate-50 tracking-tight">
                 {showEdit
                   ? wordData?.word
                   : selectedWord || "Add to vocabulary"}
@@ -58,8 +55,8 @@ export default function WordAddForm({
             </div>
             <button
               onClick={closeModal}
-              className="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200
-              text-slate-400 hover:border-slate-300 hover:text-slate-600 transition-colors cursor-pointer text-sm"
+              className="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-600
+                text-slate-400 hover:border-slate-500 hover:text-slate-200 transition-colors cursor-pointer text-sm"
             >
               ✕
             </button>
@@ -77,7 +74,7 @@ export default function WordAddForm({
             )}
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+              <label className="text-xs font-semibold uppercase tracking-widest text-slate-300">
                 Word
               </label>
               <input
@@ -90,28 +87,30 @@ export default function WordAddForm({
                       ? selectedWord
                       : aiTranslation
                 }
-                className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800
-                placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition"
+                className="w-full font-bold rounded-lg border border-slate-600 bg-slate-800/50 px-4 py-2.5 text-sm text-purple-300
+                  placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent 
+                  transition-all hover:border-slate-500"
               />
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+              <label className="text-xs font-semibold uppercase tracking-widest text-slate-300">
                 Translation
               </label>
               <input
                 name="translation"
                 placeholder="Translation"
                 defaultValue={showEdit ? wordData?.translation : aiTranslation}
-                className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800
-                placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition"
+                className="w-full rounded-lg border border-slate-600 bg-slate-800/50 px-4 py-2.5 text-sm text-slate-100
+                  placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent 
+                  transition-all hover:border-slate-500"
               />
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+              <label className="text-xs font-semibold uppercase tracking-widest text-slate-300">
                 Note{" "}
-                <span className="normal-case tracking-normal font-normal text-slate-300">
+                <span className="normal-case tracking-normal font-normal text-slate-400">
                   (optional)
                 </span>
               </label>
@@ -120,8 +119,9 @@ export default function WordAddForm({
                 placeholder="Explanation or example sentence…"
                 defaultValue={showEdit ? wordData?.note : undefined}
                 rows={3}
-                className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800
-                placeholder-slate-300 resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition"
+                className="w-full rounded-lg border border-slate-600 bg-slate-800/50 px-4 py-2.5 text-sm text-slate-100
+                  placeholder-slate-500 resize-none focus:outline-none focus:ring-2 focus:ring-violet-500 
+                  focus:border-transparent transition-all hover:border-slate-500"
               />
             </div>
 

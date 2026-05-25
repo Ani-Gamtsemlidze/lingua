@@ -4,20 +4,22 @@ type Props = {
 };
 
 export default function HighlightText({ text, query }: Props) {
-  if (!query)
-    return <p className="text-xs lg:text-sm font-bold text-purple-950  break-words min-w-0">{text}</p>;
+  if (!query || !text) {
+    return <span className="break-words">{text}</span>;
+  }
 
-  const index = text?.toLowerCase().indexOf(query.toLowerCase());
-  if (index === -1)
-    return <p className=" text-xs lg:text-sm font-bold text-purple-950">{text}</p>;
+  const index = text.toLowerCase().indexOf(query.toLowerCase());
+  if (index === -1) {
+    return <span className="break-words">{text}</span>;
+  }
 
   return (
-    <p className=" text-xs lg:text-sm font-bold text-purple-950">
-      {text?.slice(0, index)}
-      <span className="text-violet-600 bg-violet-100 rounded px-0.5">
-        {text?.slice(index, index + query.length)}
-      </span>
-      {text?.slice(index + query.length)}
-    </p>
+    <span className="break-words">
+      {text.slice(0, index)}
+      <mark className="text-purple-300 bg-violet-600/40 rounded px-1 py-0.5 font-medium">
+        {text.slice(index, index + query.length)}
+      </mark>
+      {text.slice(index + query.length)}
+    </span>
   );
 }

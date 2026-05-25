@@ -61,20 +61,20 @@ export default function WordGuess({ data }: { data: Word[] }) {
 
   if (data.length < 5) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
-        <div className="bg-white border border-slate-200 rounded-3xl p-8 max-w-md w-full text-center">
-          <div className="mx-auto w-12 h-12 bg-slate-100 rounded-2xl flex items-center justify-center mb-5">
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4">
+        <div className="bg-slate-900/60 border border-slate-700 rounded-3xl p-8 max-w-md w-full text-center">
+          <div className="mx-auto w-12 h-12 bg-slate-800/50 rounded-2xl flex items-center justify-center mb-5">
             <BiBookOpen className="w-6 h-6 text-slate-400" />
           </div>
-          <h2 className="text-lg font-semibold text-slate-800 mb-2">
+          <h2 className="text-lg font-semibold text-slate-50 mb-2">
             Not enough words
           </h2>
-          <p className="text-slate-500 text-sm mb-7">
+          <p className="text-slate-300 text-sm mb-7">
             Need at least 5 words to play
           </p>
           <Link
             href="/words"
-            className="block bg-slate-900 hover:bg-black text-white font-medium py-3 rounded-2xl transition-all active:scale-95"
+            className="block bg-violet-600 hover:bg-violet-700 text-white font-medium py-3 rounded-2xl transition-all active:scale-95"
           >
             Go to Vocabulary
           </Link>
@@ -85,26 +85,26 @@ export default function WordGuess({ data }: { data: Word[] }) {
 
   if (isComplete) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
-        <div className="bg-white border border-slate-200 rounded-3xl p-8 max-w-md w-full text-center">
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4">
+        <div className="bg-slate-900/60 border border-slate-700 rounded-3xl p-8 max-w-md w-full text-center">
           <div className="text-5xl mb-4">🎉</div>
-          <h2 className="text-xl font-semibold text-slate-800 mb-1">
+          <h2 className="text-xl font-semibold text-slate-50 mb-1">
             Session Complete
           </h2>
-          <p className="text-slate-500 text-sm mb-6">Here&apos;s how you did</p>
+          <p className="text-slate-300 text-sm mb-6">Here&apos;s how you did</p>
 
           <div className="flex gap-3 justify-center mb-8">
-            <div className="inline-flex items-center gap-1 bg-green-100 text-green-700 text-xs font-semibold px-2.5 py-1 rounded-full">
+            <div className="inline-flex items-center gap-1 bg-emerald-500/20 text-emerald-200 text-xs font-semibold px-2.5 py-1 rounded-full border border-emerald-400/30">
               {correct} correct
             </div>
-            <div className="inline-flex items-center gap-1 bg-amber-100 text-amber-700 text-xs font-semibold px-2.5 py-1 rounded-full">
+            <div className="inline-flex items-center gap-1 bg-orange-500/20 text-orange-200 text-xs font-semibold px-2.5 py-1 rounded-full border border-orange-400/30">
               {wrong} wrong
             </div>
           </div>
 
           <button
             onClick={restart}
-            className="w-full bg-slate-700 hover:bg-slate-800 cursor-pointer py-3.5 rounded-2xl text-white font-medium transition-all active:scale-95"
+            className="w-full bg-violet-600 hover:bg-violet-700 cursor-pointer py-3.5 rounded-2xl text-white font-medium transition-all active:scale-95"
           >
             Try Again
           </button>
@@ -114,7 +114,7 @@ export default function WordGuess({ data }: { data: Word[] }) {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4">
       <div className="w-full max-w-[500px]">
         <div className="flex justify-end mb-6">
           {/* <QuizFilter
@@ -126,9 +126,9 @@ export default function WordGuess({ data }: { data: Word[] }) {
         </div>
 
         {hasStarted && (
-          <div className="h-1 bg-slate-700 rounded-full mb-8 overflow-hidden">
+          <div className="h-1 bg-slate-800 rounded-full mb-8 overflow-hidden border border-slate-700">
             <div
-              className="h-full bg-slate-300 transition-all duration-700"
+              className="h-full bg-violet-500 transition-all duration-700"
               style={{ width: `${(index / session.length) * 100}%` }}
             />
           </div>
@@ -136,13 +136,13 @@ export default function WordGuess({ data }: { data: Word[] }) {
 
         {hasStarted && (
           <div className="flex gap-2 flex-wrap mb-6">
-            <div className="inline-flex items-center gap-1 bg-green-100 text-green-700 text-xs font-semibold px-2.5 py-1 rounded-full">
+            <div className="inline-flex items-center gap-1 bg-emerald-500/20 text-emerald-200 text-xs font-semibold px-2.5 py-1 rounded-full border border-emerald-400/30">
               {correct} correct
             </div>
-            <div className="inline-flex items-center gap-1 bg-amber-100 text-amber-700 text-xs font-semibold px-2.5 py-1 rounded-full">
+            <div className="inline-flex items-center gap-1 bg-orange-500/20 text-orange-200 text-xs font-semibold px-2.5 py-1 rounded-full border border-orange-400/30">
               {wrong} wrong
             </div>
-            <div className="inline-flex items-center gap-1 bg-slate-100 text-slate-600 text-xs font-semibold px-2.5 py-1 rounded-full">
+            <div className="inline-flex items-center gap-1 bg-slate-800/60 text-slate-300 text-xs font-semibold px-2.5 py-1 rounded-full border border-slate-700">
               {session.length - index} left
             </div>
           </div>
@@ -151,19 +151,19 @@ export default function WordGuess({ data }: { data: Word[] }) {
         {!currentWord ? (
           <>
             <div className="flex items-center justify-center">
-              <div className="bg-slate-700 rounded-3xl p-10 sm:p-12 flex flex-col items-center text-center text-white w-full max-w-[520px]">
-                <div className="w-14 h-14 mx-auto mb-5 flex items-center justify-center  bg-white/10 rounded-2xl">
-                  <span className="mx-auto text-3xl ">🎯</span>
+              <div className="bg-slate-800/80 border border-slate-700 rounded-3xl p-10 sm:p-12 flex flex-col items-center text-center text-white w-full max-w-[520px]">
+                <div className="w-14 h-14 mx-auto mb-5 flex items-center justify-center bg-violet-500/20 rounded-2xl border border-violet-400/30">
+                  <span className="mx-auto text-3xl">🎯</span>
                 </div>
-                <p className="text-slate-200 text-[17px] mb-5 font-medium">
+                <p className="text-slate-100 text-[17px] mb-5 font-medium">
                   Ready to start guessing?
                 </p>
               </div>
             </div>
             {!hasStarted && (
               <div className="flex justify-center items-center mt-6 gap-2">
-                <RiStarSmileLine className="w-3.5 h-3.5 text-slate-400" />
-                <span className="text-md text-slate-400">
+                <RiStarSmileLine className="w-3.5 h-3.5 text-violet-400" />
+                <span className="text-md text-slate-300">
                   Pick a set for practice!
                 </span>
               </div>
@@ -177,12 +177,12 @@ export default function WordGuess({ data }: { data: Word[] }) {
           </>
         ) : (
           <>
-            <div className="bg-slate-700 rounded-3xl p-10 sm:p-10 text-center text-white">
-              <span className="uppercase text-[10px] tracking-[2px] text-slate-400 font-medium">
+            <div className="bg-slate-800/80 border border-slate-700 rounded-3xl p-10 sm:p-10 text-center text-white">
+              <span className="uppercase text-[10px] tracking-[2px] text-violet-400 font-medium">
                 WHAT IS THE WORD FOR
               </span>
               <div
-                className={`mt-3 text-[26px] sm:text-[28px] leading-tight tracking-tight font-medium ${roboto.className}`}
+                className={`mt-3 text-[26px] sm:text-[28px] leading-tight tracking-tight font-medium text-slate-50 ${roboto.className}`}
               >
                 {currentWord.translation}
               </div>
@@ -200,11 +200,11 @@ export default function WordGuess({ data }: { data: Word[] }) {
                     ${
                       clickedAnswer
                         ? word === currentWord.word
-                          ? "bg-green-100 border-green-600 text-green-800"
+                          ? "bg-emerald-500/20 border-emerald-400 text-emerald-200"
                           : word === clickedAnswer
-                            ? "bg-red-100 border-red-600 text-red-800"
-                            : "bg-white border-slate-200 text-slate-400"
-                        : "bg-white border-slate-200 hover:border-slate-300 text-slate-700"
+                            ? "bg-red-500/20 border-red-400 text-red-200"
+                            : "bg-slate-800/40 border-slate-700 text-slate-500"
+                        : "bg-slate-800/60 border-slate-600 hover:border-slate-500 hover:bg-slate-800/80 text-slate-100"
                     }
                   `}
                 >
@@ -219,7 +219,7 @@ export default function WordGuess({ data }: { data: Word[] }) {
                   setClickedAnswer(null);
                   next();
                 }}
-                className="text-sm text-slate-400 hover:text-slate-500 transition-colors"
+                className="text-sm text-slate-400 hover:text-slate-300 transition-colors"
               >
                 Skip →
               </button>
