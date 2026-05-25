@@ -45,13 +45,16 @@ export default function Sidebar({
         />
       )}
 
-      <aside className={`
-        fixed nav:relative top-0 left-0 h-full z-50
-        w-64 nav:w-60 bg-slate-900 border-r border-slate-800/50 
-        flex flex-col shadow-2xl nav:shadow-none
-        transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]
-        ${isOpen ? "translate-x-0" : "-translate-x-full nav:translate-x-0"}
-      `}>
+      <aside  className={`
+    fixed nav:sticky nav:top-0
+    inset-y-0 left-0 z-50
+    w-64 nav:w-60 nav:h-screen
+    bg-slate-900 border-r border-slate-800/50
+    flex flex-col shadow-2xl nav:shadow-none
+    transform transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]
+
+    ${isOpen ? "translate-x-0" : "-translate-x-full nav:translate-x-0"}
+  `}>
         
         <div className="h-14 flex items-center justify-between px-5 border-b border-slate-800/50 shrink-0">
           <Link href="/dashboard" className="hover:opacity-80 transition-opacity">

@@ -4,7 +4,7 @@ import { PiKeyboardLight } from "react-icons/pi";
 
 export default function Study() {
   return (
-    <div className="min-h-screen bg-slate-950 px-4 md:px-6 py-6 nav:py-10 flex items-center justify-center">
+    <div className="min-h-screen bg-slate-950 px-4 md:px-6 py-20 nav:py-10 flex justify-center">
       <div className="max-w-xl w-full">
         <div className="mb-8 text-center">
           <p className="text-xs font-semibold uppercase tracking-widest text-violet-400 mb-2">

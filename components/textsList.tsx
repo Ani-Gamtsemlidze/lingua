@@ -46,7 +46,7 @@ export default function TextsList({
   };
 
   return (
-    <div className="min-h-full bg-slate-950 px-4 sm:px-6 lg:px-8 py-8 pt-20 nav:pt-8">
+    <div className="min-h-screen bg-slate-950 px-4 sm:px-6 lg:px-8 py-8 pt-20 nav:pt-8">
       <div className="fixed inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-blue-500/5 pointer-events-none" />
       
       <div className="relative z-10 max-w-5xl mx-auto">

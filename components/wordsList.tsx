@@ -64,7 +64,9 @@ export default function WordsList({
   };
 
   return (
-    <div className="overflow-y-auto max-h-[600px]">
+    <div className="h-[calc(100vh-200px)] overflow-hidden">
+      <div className="h-full overflow-y-auto">
+
       <div className="hidden md:block">
         {words.map((word) => {
           const status = statusConfig[word.status] ?? {
@@ -207,6 +209,7 @@ export default function WordsList({
             </div>
           );
         })}
+      </div>
       </div>
     </div>
   );

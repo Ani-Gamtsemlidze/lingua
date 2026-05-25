@@ -148,7 +148,7 @@ export default function TextReader({
   };
 
   return (
-    <div className="min-h-full bg-slate-950 px-4 md:px-6 pt-20 nav:pt-10 pb-6 md:pb-10">
+    <div className="min-h-screen bg-slate-950 px-4 md:px-6 pt-20 nav:pt-10 pb-6 md:pb-10">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
           <div className="flex-1">

@@ -31,12 +31,12 @@ export default async function ContentLayout({
   const activeLanguage = user?.[0]?.active_language ?? "english";
   return (
     <div
-      className={`flex relative h-screen overflow-hidden ${dmSans.variable} font-sans`}
+      className={`flex relative min-h-screen ${dmSans.variable} font-sans`}
     >
       <Sidebar userName={username} activeLanguage={activeLanguage} />
       <div className="flex flex-col flex-1">
         {/* <Header /> */}
-        <main className="flex-1 overflow-y-auto">{children}</main>
+        <main className="flex-1 ">{children}</main>
         <Toaster position="top-center" richColors />
       </div>
     </div>
