@@ -1,5 +1,4 @@
 export function formatMessage(content: string) {
-  console.log("Formatting message:", content);
   const parts: React.ReactNode[] = [];
   const lines = content.split("\n");
   let key = 0;

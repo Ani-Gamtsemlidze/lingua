@@ -102,13 +102,18 @@ Keep responses concise and educational. Always use ${activeLanguage} examples wh
     );
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
-    if (
-      msg.includes("503") ||
-      msg.toLowerCase().includes("unavailable") ||
-      msg.toLowerCase().includes("high demand")
-    ) {
+
+    if (msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED")) {
+      throw new Error("Too many requests. Please wait a moment and try again.");
+    }
+    if (msg.includes("401") || msg.includes("403") || msg.includes("API_KEY")) {
       throw new Error(
-        "The AI is experiencing high demand right now. Please try again in a moment.",
+        "AI service authentication failed. Please contact support.",
+      );
+    }
+    if (msg.includes("503") || msg.includes("UNAVAILABLE")) {
+      throw new Error(
+        "The AI is temporarily unavailable. Please try again in a moment.",
       );
     }
     throw new Error("Something went wrong. Please try again.");

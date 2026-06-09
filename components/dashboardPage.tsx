@@ -7,8 +7,6 @@ import { BiBookOpen, BiLibrary } from "react-icons/bi";
 import { BsChatDots } from "react-icons/bs";
 import { FaGraduationCap } from "react-icons/fa";
 import { HiSparkles, HiArrowRight } from "react-icons/hi";
-import { Language } from "@google/genai";
-import LanguageSwitcher from "./languageSwitcher";
 
 interface DashboardData {
   user: {
@@ -24,11 +22,6 @@ interface DashboardData {
     language: string;
     date: string;
   }>;
-  continueReading?: {
-    title: string;
-    progress: number;
-    href: string;
-  };
 }
 
 const features = [
@@ -191,31 +184,6 @@ export default function DashboardPage({ data }: DashboardPageProps) {
                 <p className="text-xs text-slate-500 mt-1">Keep reading to learn more</p>
               </div>
             </div>
-          )}
-
-          {dashboardData.continueReading && (
-            <Link
-              href={dashboardData.continueReading.href}
-              className="block bg-gradient-to-br from-violet-600/20 to-indigo-600/20 border border-violet-500/30 rounded-2xl p-6 sm:p-8 hover:border-violet-500/50 transition-all group mb-8"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest text-violet-400 mb-2">
-                    Continue Reading
-                  </p>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
-                    {dashboardData.continueReading.title}
-                  </h3>
-                </div>
-                <HiArrowRight className="w-6 h-6 text-violet-400 group-hover:translate-x-1 transition-transform flex-shrink-0" />
-              </div>
-              <div className="w-full bg-slate-800/50 rounded-full h-2 overflow-hidden">
-                <div
-                  className="bg-gradient-to-r from-violet-500 to-indigo-500 h-full rounded-full transition-all"
-                  style={{ width: `${dashboardData.continueReading.progress}%` }}
-                />
-              </div>
-            </Link>
           )}
         </section>
 

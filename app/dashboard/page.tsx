@@ -33,10 +33,6 @@ export default async function Dashboard() {
     })
   );
 
-  const lastText = recentTextRows[0] as { id: number; title: string } | undefined;
-  const continueReading = lastText
-    ? { title: lastText.title, progress: 0, href: `/reader/${lastText.id}` }
-    : undefined;
 
   return (
     <DashboardPage
@@ -44,7 +40,6 @@ export default async function Dashboard() {
         user: { name: user.username || session?.user?.name || "User", email: user.email },
         stats: { wordsLearned, textsRead },
         recentWords,
-        continueReading,
       }}
     />
   );
